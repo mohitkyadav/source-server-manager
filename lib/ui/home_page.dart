@@ -14,7 +14,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _counter = 0;
   static const _title = 'Turrant';
 
   void _toggleTheme(BuildContext context) {
@@ -43,10 +42,7 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
+              'Themed text',
               style: Theme.of(context).textTheme.headline4,
             ),
           ],
@@ -56,7 +52,7 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {
           _toggleTheme(context);
         },
-        tooltip: 'Increment',
+        tooltip: 'Toggle Theme',
         child: Icon(Icons.lightbulb),
       ),
     );
