@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:turrant/themes/theme_notifier.dart';
 import 'package:turrant/themes/app_themes.dart';
-
-import 'package:turrant/ui/home_page.dart';
+import 'package:turrant/routes/custom_router.dart';
+import 'package:turrant/routes/route_names.dart';
 
 void main () {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,7 +14,6 @@ void main () {
     runApp(MyApp(darkModeOn));
   });
 }
-
 
 class MyApp extends StatelessWidget {
   MyApp(this._darkModeOn);
@@ -44,7 +42,8 @@ class ThemedMaterialApp extends StatelessWidget {
     return MaterialApp(
       title: 'Turrant',
       theme: themeNotifier.getAppTheme.themeData,
-      home: HomePage(),
+      onGenerateRoute: CustomRouter.allRoutes,
+      initialRoute: homeRoute,
     );
   }
 }
