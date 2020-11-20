@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:turrant/localization/app_localizations.dart';
 import 'package:turrant/routes/route_names.dart';
 
 class HomeDrawerList extends StatelessWidget {
@@ -24,14 +25,16 @@ class HomeDrawerList extends StatelessWidget {
                 leading: Icon(
                   Icons.settings,
                 ),
-                title: Text('Go to Settings Page'),
+                title: Text(AppLocalizations.of(context)
+                    .getTranslatedValue('drawer_settings_btn_txt')),
                 onTap: () => Navigator.pushNamed(context, settingsRoute),
               ),
               ListTile(
                 leading: Icon(
                   Icons.info,
                 ),
-                title: Text('Go to About Page'),
+                title: Text(AppLocalizations.of(context)
+                    .getTranslatedValue('drawer_about_btn_txt')),
                 onTap: () => Navigator.pushNamed(context, aboutRoute),
               ),
             ],

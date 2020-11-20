@@ -9,7 +9,7 @@ import 'package:turrant/app_bootstrap.dart';
 
 void main () {
   WidgetsFlutterBinding.ensureInitialized();
-  // get selected preferences for theme and locale
+  // get selected settings for theme and locale
   SharedPreferences.getInstance().then((prefs) {
     var darkModeOn = prefs.getBool('darkMode') ?? true;
     var selectedLocaleCode = prefs.getString('selectedLocale');
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<ThemeNotifier>
-            .value(value: ThemeNotifier(_darkModeOn ? darkTheme : lightTheme))
+          .value(value: ThemeNotifier(_darkModeOn ? darkTheme : lightTheme))
       ],
       child: AppBootstrap(_selectedLocale),
     );

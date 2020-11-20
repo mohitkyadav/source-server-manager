@@ -7,8 +7,9 @@
   "form_dob_field_txt": "تاريخ الولادة",
   "form_dob_field_err": "لا يمكن أن يكون DOB فارغًا",
   "form_submit_btn_txt": "إرسال بيانات النموذج",
-  "drawer_settings_btn_txt": "انتقل إلى حول الصفحة",
-  "drawer_about_btn_txt": "انتقل إلى صفحة الإعدادات",
+  "drawer_settings_btn_txt": "انتقل إلى صفحة الإعدادات",
+  "drawer_about_btn_txt": "انتقل إلى حول الصفحة",
   "setting_page_app_bar_title": "إعدادات",
+  "setting_page_theme_toggle_txt": "تبديل الموضوع",
   "about_page_app_bar_title": "حول"
 }

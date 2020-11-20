@@ -43,7 +43,6 @@ class _AppBootstrapState extends State<AppBootstrap> {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Turrant',
       theme: themeNotifier.getAppTheme.themeData,
       onGenerateRoute: CustomRouter.allRoutes,
       initialRoute: homeRoute,
@@ -60,6 +59,7 @@ class _AppBootstrapState extends State<AppBootstrap> {
         if (_selectedLocale != null) {
           return _selectedLocale;
         }
+        // set device locale as selected locale
         for (var locale in supportedLocales) {
           if (locale.languageCode == deviceLocale.languageCode
               && locale.countryCode == deviceLocale.countryCode) {

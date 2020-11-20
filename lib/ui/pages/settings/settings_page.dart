@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:turrant/localization/app_localizations.dart';
 import 'package:turrant/themes/app_themes.dart';
 import 'package:turrant/themes/theme_notifier.dart';
 
@@ -14,7 +15,6 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  static const _title = 'Settings';
   bool isDarkModeOn = false;
 
   @override
@@ -25,6 +25,8 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final _title = AppLocalizations.of(context)
+        .getTranslatedValue('setting_page_app_bar_title');
 
     return Scaffold(
       appBar: AppBar(
@@ -36,7 +38,8 @@ class _SettingsPageState extends State<SettingsPage> {
           children: [
             ListTile(
               leading: Icon(isDarkModeOn ? Icons.lightbulb_outline : Icons.lightbulb),
-              title: Text('Toggle theme'),
+              title: Text(AppLocalizations.of(context)
+                  .getTranslatedValue('setting_page_theme_toggle_txt')),
               onTap: () =>_toggleTheme(context),
             ),
             Divider(),

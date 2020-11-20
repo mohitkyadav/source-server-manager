@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:turrant/localization/app_localizations.dart';
 
 class HomeForm extends StatefulWidget {
 
@@ -18,19 +19,24 @@ class _HomeFormState extends State<HomeForm> {
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-            Container(child: Text('Input form')),
+            Container(child: Text(AppLocalizations.of(context)
+                .getTranslatedValue('input_form'))),
             const SizedBox(height: 20,),
             TextFormField(
-              validator: (val)  => val.isEmpty ? 'Required field' : null,
+              validator: (val)  => val.isEmpty ? AppLocalizations.of(context)
+                  .getTranslatedValue('form_name_field_err') : null,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                labelText: 'Name',
-                hintText: 'Enter Name',
+                labelText: AppLocalizations.of(context)
+                    .getTranslatedValue('form_name_field_txt'),
+                hintText: AppLocalizations.of(context)
+                    .getTranslatedValue('form_name_field_txt'),
               ),
             ),
             const SizedBox(height: 20,),
             TextFormField(
-              validator: (val)  => val.isEmpty ? 'Required field' : null,
+              validator: (val)  => val.isEmpty ? AppLocalizations.of(context)
+                  .getTranslatedValue('form_dob_field_err') : null,
               onTap: () async {
                 FocusScope.of(context).requestFocus(FocusNode());
                 final pickedDate = await showDatePicker(
@@ -43,8 +49,10 @@ class _HomeFormState extends State<HomeForm> {
               },
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                labelText: 'Date of birth',
-                hintText: 'Enter DOB',
+                labelText: AppLocalizations.of(context)
+                    .getTranslatedValue('form_dob_field_txt'),
+                hintText: AppLocalizations.of(context)
+                    .getTranslatedValue('form_dob_field_txt'),
               ),
             ),
             const SizedBox(height: 20,),
@@ -57,7 +65,8 @@ class _HomeFormState extends State<HomeForm> {
               height: 60,
               shape: StadiumBorder(),
               color: Theme.of(context).accentColor,
-              child: Text('Submit form data'),
+              child: Text(AppLocalizations.of(context)
+                  .getTranslatedValue('form_submit_btn_txt')),
             ),
           ],
         ),

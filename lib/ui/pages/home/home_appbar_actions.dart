@@ -33,9 +33,10 @@ class HomeAppbarActions extends StatelessWidget {
 
   void _changeLanguage(BuildContext context, Language language) {
     SharedPreferences.getInstance().then((prefs) {
-      prefs.setString(
-        'selectedLocale', '${language.languageCode}-${language.countryCode}');
-      AppBootstrap.setLocale(context, Locale(language.languageCode, language.countryCode));
+      prefs.setString('selectedLocale',
+          '${language.languageCode}-${language.countryCode}');
+      AppBootstrap.setLocale(context,
+          Locale(language.languageCode, language.countryCode));
     });
   }
 }

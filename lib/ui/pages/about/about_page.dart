@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:turrant/localization/app_localizations.dart';
+
 class AboutPage extends StatefulWidget {
   AboutPage({Key key,}) : super(key: key);
 
@@ -8,10 +10,11 @@ class AboutPage extends StatefulWidget {
 }
 
 class _AboutPageState extends State<AboutPage> {
-  static const _title = 'About Turrant';
 
   @override
   Widget build(BuildContext context) {
+    final _title = AppLocalizations.of(context)
+        .getTranslatedValue('about_page_app_bar_title');
 
     return Scaffold(
       appBar: AppBar(
@@ -21,10 +24,7 @@ class _AboutPageState extends State<AboutPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'About page',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+            Text(_title, style: Theme.of(context).textTheme.headline4,),
           ],
         ),
       ),
