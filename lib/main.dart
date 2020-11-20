@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:turrant/themes/theme_notifier.dart';
 import 'package:turrant/themes/app_themes.dart';
@@ -45,6 +47,17 @@ class ThemedMaterialApp extends StatelessWidget {
       theme: themeNotifier.getAppTheme.themeData,
       onGenerateRoute: CustomRouter.allRoutes,
       initialRoute: homeRoute,
+      localizationsDelegates: [
+        // ... app-specific localization delegate[s] here
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('en', 'US'), // English, USA
+        const Locale('hi', 'IN'), // Hindi, India
+        const Locale('ar', 'SA'), // Arabic, Saudi Arabia
+      ],
     );
   }
 }
