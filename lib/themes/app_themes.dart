@@ -10,6 +10,10 @@ final darkTheme = AppTheme('darkTheme', 'Dark', ThemeData(
     accentColor: AppStyles.lightPurple,
     accentIconTheme: IconThemeData(color: AppStyles.black),
     dividerColor: AppStyles.lightGray,
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+        foregroundColor: AppStyles.black,
+        backgroundColor: AppStyles.lightPurple,
+    ),
     colorScheme: ColorScheme.dark(
         primary: AppStyles.lightPurple,
         secondary: AppStyles.lightGray,
@@ -24,6 +28,10 @@ final lightTheme = AppTheme('lightTheme', 'Light', ThemeData(
     accentColor: AppStyles.lightPurple,
     accentIconTheme: IconThemeData(color: AppStyles.white),
     dividerColor: AppStyles.lightGray,
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+        foregroundColor: AppStyles.white,
+        backgroundColor: AppStyles.lightPurple,
+    ),
     colorScheme: ColorScheme.light(
         primary: AppStyles.lightPurple,
         secondary: AppStyles.lightGray,

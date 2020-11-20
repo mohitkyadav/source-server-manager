@@ -49,7 +49,6 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).primaryColor,
         onPressed: () {
           _toggleTheme(context);
         },
