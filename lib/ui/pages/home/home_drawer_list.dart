@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:turrant/routes/route_names.dart';
 
 class HomeDrawerList extends StatelessWidget {
-  
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
