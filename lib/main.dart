@@ -40,6 +40,7 @@ class ThemedMaterialApp extends StatelessWidget {
     final themeNotifier = Provider.of<ThemeNotifier>(context);
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Turrant',
       theme: themeNotifier.getAppTheme.themeData,
       onGenerateRoute: CustomRouter.allRoutes,
