@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:turrant/routes/route_names.dart';
 import 'package:turrant/ui/pages/home_page.dart';
 import 'package:turrant/ui/pages/about_page.dart';
+import 'package:turrant/ui/pages/settings_page.dart';
 
 class CustomRouter {
 
@@ -12,6 +13,8 @@ class CustomRouter {
         return MaterialPageRoute(builder: (_) => HomePage());
       case aboutRoute:
         return MaterialPageRoute(builder: (_) => AboutPage());
+      case settingsRoute:
+        return MaterialPageRoute(builder: (_) => SettingsPage());
 
       default:
         return MaterialPageRoute(builder: (_) => HomePage());

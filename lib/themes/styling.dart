@@ -45,5 +45,9 @@ class AppStyles {
       blurRadius: 30,
       spreadRadius: 0
   );
+
+  static const textH1 = TextStyle(
+    fontSize: 36,
+  );
 }
 

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:turrant/routes/route_names.dart';
+import 'package:turrant/themes/styling.dart';
 import 'package:turrant/themes/theme_notifier.dart';
 import 'package:turrant/themes/app_themes.dart';
 
@@ -37,6 +39,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text(_title),
       ),
+      drawer: _buildDrawer(context),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -54,6 +57,42 @@ class _HomePageState extends State<HomePage> {
         },
         tooltip: 'Toggle Theme',
         child: Icon(Icons.lightbulb,),
+      ),
+    );
+  }
+
+  Widget _buildDrawer(BuildContext context) {
+    return Drawer(
+      child: SafeArea(
+        child: Container(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              DrawerHeader(
+                child: Container(
+                  child: Icon(
+                    Icons.home_filled,
+                    size: 100,
+                  ),
+                ),
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.settings,
+                ),
+                title: Text('Go to Settings Page'),
+                onTap: () => Navigator.pushNamed(context, settingsRoute),
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.info,
+                ),
+                title: Text('Go to About Page'),
+                onTap: () => Navigator.pushNamed(context, aboutRoute),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
