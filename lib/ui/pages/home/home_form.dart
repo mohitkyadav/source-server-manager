@@ -11,6 +11,7 @@ class _HomeFormState extends State<HomeForm> {
 
   @override
   Widget build(BuildContext context) {
+
     return Form(
       key: _key,
       child: Padding(
@@ -32,12 +33,13 @@ class _HomeFormState extends State<HomeForm> {
               validator: (val)  => val.isEmpty ? 'Required field' : null,
               onTap: () async {
                 FocusScope.of(context).requestFocus(FocusNode());
-                await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(DateTime.now().year - 20),
-                    lastDate: DateTime.now(),
+                final pickedDate = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(DateTime.now().year - 20),
+                  lastDate: DateTime.now(),
                 );
+                print(pickedDate);
               },
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
