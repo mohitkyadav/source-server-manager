@@ -1,17 +1,23 @@
+import 'package:flutter/material.dart';
+
 class Language {
-  Language(this.id, this.flag, this.name, this.languageCode);
+  Language(this.id, this.flag, this.name, this.languageCode, this.countryCode);
 
   final int id;
   final String flag;
   final String name;
   final String languageCode;
+  final String countryCode;
 
   @override
   String toString () =>  name;
 
   static List<Language> supportedLanguages = [
-    Language(0, '🇺🇸', 'English', 'en'),
-    Language(1, '🇮🇳', 'हिंदी', 'hi'),
-    Language(0, '🇸🇦', 'عربى', 'ar'),
+    Language(0, '🇺🇸', 'English', 'en', 'US'),
+    Language(1, '🇮🇳', 'हिंदी', 'hi', 'IN'),
+    Language(0, '🇸🇦', 'عربى', 'ar', 'SA'),
   ];
+
+  static List<Locale> supportedLocales() => supportedLanguages
+    .map((lang) => Locale(lang.languageCode, lang.countryCode)).toList();
 }

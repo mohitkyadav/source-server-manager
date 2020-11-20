@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:turrant/models/language.dart';
 
@@ -28,6 +29,9 @@ class HomeAppbarActions extends StatelessWidget {
   }
 
   void _changeLanguage(Language language) {
-    print(language);
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setString(
+        'selectedLocale', '${language.languageCode}-${language.countryCode}');
+    });
   }
 }

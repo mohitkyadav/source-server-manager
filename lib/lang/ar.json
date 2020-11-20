@@ -1,0 +1,14 @@
+{
+  "app_bar_title": "Turrant",
+  "home_page": "الصفحة الرئيسية",
+  "input_form": "نموذج الإدخال",
+  "form_name_field_txt": "اسم",
+  "form_name_field_err": "لا يمكن أن يكون الاسم فارغًا",
+  "form_dob_field_txt": "تاريخ الولادة",
+  "form_dob_field_err": "لا يمكن أن يكون DOB فارغًا",
+  "form_submit_btn_txt": "إرسال بيانات النموذج",
+  "drawer_settings_btn_txt": "انتقل إلى حول الصفحة",
+  "drawer_about_btn_txt": "انتقل إلى صفحة الإعدادات",
+  "setting_page_app_bar_title": "إعدادات",
+  "about_page_app_bar_title": "حول"
+}
