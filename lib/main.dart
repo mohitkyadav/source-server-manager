@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
-
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:turrant/models/language.dart';
 
 import 'package:turrant/themes/theme_notifier.dart';
 import 'package:turrant/themes/app_themes.dart';
-import 'package:turrant/routes/custom_router.dart';
-import 'package:turrant/routes/route_names.dart';
 
-import 'localization/app_localizations.dart';
+import 'package:turrant/app_bootstrap.dart';
 
 void main () {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,22 +21,11 @@ void main () {
   });
 }
 
-class MyApp extends StatefulWidget {
-  MyApp(this.darkModeOn, this.selectedLocale);
+class MyApp extends StatelessWidget {
+  MyApp(this._darkModeOn, this._selectedLocale,);
 
-  final bool darkModeOn;
-  Locale selectedLocale;
-
-  @override
-  _MyAppState createState() => _MyAppState();
-
-  static void setLocale(BuildContext context, Locale locale) {
-    _MyAppState state = context.findAncestorStateOfType<_MyAppState>();
-    state.setLocale(locale);
-  }
-}
-
-class _MyAppState extends State<MyApp> {
+  final bool _darkModeOn;
+  final Locale _selectedLocale;
 
   @override
   Widget build(BuildContext context) {
@@ -49,56 +33,9 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<ThemeNotifier>
-            .value(value: ThemeNotifier(widget.darkModeOn ? darkTheme : lightTheme))
+            .value(value: ThemeNotifier(_darkModeOn ? darkTheme : lightTheme))
       ],
-      child: ThemedMaterialApp(widget.selectedLocale),
-    );
-  }
-
-  void setLocale(Locale locale) {
-    setState(() {
-      widget.selectedLocale = locale;
-    });
-  }
-}
-
-class ThemedMaterialApp extends StatelessWidget {
-  ThemedMaterialApp(this._selectedLocale);
-
-  final Locale _selectedLocale;
-
-  @override
-  Widget build(BuildContext context) {
-    final themeNotifier = Provider.of<ThemeNotifier>(context);
-
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Turrant',
-      theme: themeNotifier.getAppTheme.themeData,
-      onGenerateRoute: CustomRouter.allRoutes,
-      initialRoute: homeRoute,
-      localizationsDelegates: [
-        // ... app-specific localization delegate[s] here
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        AppLocalizations.delegate,
-      ],
-      locale: _selectedLocale,
-      supportedLocales: Language.supportedLocales(),
-      localeResolutionCallback: (deviceLocale, supportedLocales) {
-        if (_selectedLocale != null) {
-          return _selectedLocale;
-        }
-        for (var locale in supportedLocales) {
-          if (locale.languageCode == deviceLocale.languageCode
-              && locale.countryCode == deviceLocale.countryCode) {
-            return deviceLocale;
-          }
-        }
-
-        return supportedLocales.first;
-      },
+      child: AppBootstrap(_selectedLocale),
     );
   }
 }

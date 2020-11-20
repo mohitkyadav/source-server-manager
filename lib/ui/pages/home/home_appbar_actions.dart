@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:turrant/main.dart';
+import 'package:turrant/app_bootstrap.dart';
 import 'package:turrant/models/language.dart';
 
 class HomeAppbarActions extends StatelessWidget {
@@ -35,7 +35,7 @@ class HomeAppbarActions extends StatelessWidget {
     SharedPreferences.getInstance().then((prefs) {
       prefs.setString(
         'selectedLocale', '${language.languageCode}-${language.countryCode}');
-      MyApp.setLocale(context, Locale(language.languageCode, language.countryCode));
+      AppBootstrap.setLocale(context, Locale(language.languageCode, language.countryCode));
     });
   }
 }
