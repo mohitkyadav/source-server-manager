@@ -26,22 +26,39 @@ void main () {
   });
 }
 
-class MyApp extends StatelessWidget {
-  MyApp(this._darkModeOn, this._selectedLocale);
+class MyApp extends StatefulWidget {
+  MyApp(this.darkModeOn, this.selectedLocale);
 
-  final bool _darkModeOn;
-  final Locale _selectedLocale;
+  final bool darkModeOn;
+  Locale selectedLocale;
 
   @override
- Widget build(BuildContext context) {
+  _MyAppState createState() => _MyAppState();
+
+  static void setLocale(BuildContext context, Locale locale) {
+    _MyAppState state = context.findAncestorStateOfType<_MyAppState>();
+    state.setLocale(locale);
+  }
+}
+
+class _MyAppState extends State<MyApp> {
+
+  @override
+  Widget build(BuildContext context) {
 
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<ThemeNotifier>
-            .value(value: ThemeNotifier(_darkModeOn ? darkTheme : lightTheme))
+            .value(value: ThemeNotifier(widget.darkModeOn ? darkTheme : lightTheme))
       ],
-      child: ThemedMaterialApp(_selectedLocale),
+      child: ThemedMaterialApp(widget.selectedLocale),
     );
+  }
+
+  void setLocale(Locale locale) {
+    setState(() {
+      widget.selectedLocale = locale;
+    });
   }
 }
 
@@ -67,6 +84,7 @@ class ThemedMaterialApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
         AppLocalizations.delegate,
       ],
+      locale: _selectedLocale,
       supportedLocales: Language.supportedLocales(),
       localeResolutionCallback: (deviceLocale, supportedLocales) {
         if (_selectedLocale != null) {

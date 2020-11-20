@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:turrant/main.dart';
 import 'package:turrant/models/language.dart';
 
 class HomeAppbarActions extends StatelessWidget {
@@ -11,7 +12,9 @@ class HomeAppbarActions extends StatelessWidget {
       padding: EdgeInsets.all(5),
       child: DropdownButton(
         underline: const SizedBox(),
-        onChanged: _changeLanguage,
+        onChanged: (language) {
+          _changeLanguage(context, language);
+        },
         iconEnabledColor: Theme.of(context).accentColor,
         icon: Icon(Icons.language),
         items: Language.supportedLanguages.map((lan) => DropdownMenuItem(
@@ -28,10 +31,11 @@ class HomeAppbarActions extends StatelessWidget {
     );
   }
 
-  void _changeLanguage(Language language) {
+  void _changeLanguage(BuildContext context, Language language) {
     SharedPreferences.getInstance().then((prefs) {
       prefs.setString(
         'selectedLocale', '${language.languageCode}-${language.countryCode}');
+      MyApp.setLocale(context, Locale(language.languageCode, language.countryCode));
     });
   }
 }
