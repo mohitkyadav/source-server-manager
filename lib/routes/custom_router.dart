@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:turrant/routes/route_names.dart';
-import 'package:turrant/ui/pages/home_page.dart';
-import 'package:turrant/ui/pages/about_page.dart';
-import 'package:turrant/ui/pages/settings_page.dart';
+import 'package:turrant/ui/pages/home/home_page.dart';
+import 'package:turrant/ui/pages/about/about_page.dart';
+import 'package:turrant/ui/pages/settings/settings_page.dart';
 
 class CustomRouter {
 
