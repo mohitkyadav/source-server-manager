@@ -49,11 +49,12 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).primaryColor,
         onPressed: () {
           _toggleTheme(context);
         },
         tooltip: 'Toggle Theme',
-        child: Icon(Icons.lightbulb),
+        child: Icon(Icons.lightbulb,),
       ),
     );
   }
