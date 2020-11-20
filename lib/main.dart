@@ -11,11 +11,16 @@ void main () {
   WidgetsFlutterBinding.ensureInitialized();
   // get selected settings for theme and locale
   SharedPreferences.getInstance().then((prefs) {
-    var darkModeOn = prefs.getBool('darkMode') ?? true;
-    var selectedLocaleCode = prefs.getString('selectedLocale');
-    var selectedLocale = selectedLocaleCode.split('-').length != 2 ? null
-      : Locale(selectedLocaleCode.split('-')[0],
-        selectedLocaleCode.split('-')[1]);
+    final darkModeOn = prefs.getBool('darkMode') ?? true;
+    final selectedLocaleCode = prefs.getString('selectedLocale');
+    var selectedLocale;
+
+    if (selectedLocaleCode != null) {
+      if (selectedLocaleCode.split('-').length == 2) {
+        selectedLocale = Locale(
+            selectedLocaleCode.split('-')[0], selectedLocaleCode.split('-')[1]);
+      }
+    }
 
     runApp(MyApp(darkModeOn, selectedLocale));
   });
