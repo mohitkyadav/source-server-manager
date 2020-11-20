@@ -8,7 +8,7 @@ class AboutPage extends StatefulWidget {
 }
 
 class _AboutPageState extends State<AboutPage> {
-  static const _title = 'Turrant';
+  static const _title = 'About Turrant';
 
   @override
   Widget build(BuildContext context) {

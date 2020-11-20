@@ -14,7 +14,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  static const _title = 'Turrant';
+  static const _title = 'Settings';
   bool isDarkModeOn = false;
 
   @override
@@ -38,7 +38,8 @@ class _SettingsPageState extends State<SettingsPage> {
               leading: Icon(isDarkModeOn ? Icons.lightbulb_outline : Icons.lightbulb),
               title: Text('Toggle theme'),
               onTap: () =>_toggleTheme(context),
-            )
+            ),
+            Divider(),
           ],
         ),
       ),
