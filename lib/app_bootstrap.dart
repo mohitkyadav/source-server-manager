@@ -17,7 +17,8 @@ class AppBootstrap extends StatefulWidget {
   _AppBootstrapState createState() => _AppBootstrapState();
 
   static void setLocale(BuildContext context, Locale locale) {
-    _AppBootstrapState state = context.findAncestorStateOfType<_AppBootstrapState>();
+    _AppBootstrapState state = context
+        .findAncestorStateOfType<_AppBootstrapState>();
     state.setLocale(locale);
   }
 }

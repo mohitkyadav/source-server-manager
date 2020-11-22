@@ -37,8 +37,8 @@ class MyApp extends StatelessWidget {
 
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<ThemeNotifier>
-          .value(value: ThemeNotifier(_darkModeOn ? darkTheme : lightTheme))
+        ChangeNotifierProvider<ThemeNotifier>.value(
+            value: ThemeNotifier(_darkModeOn ? darkTheme : lightTheme))
       ],
       child: AppBootstrap(_selectedLocale),
     );
