@@ -4,10 +4,10 @@ import 'package:turrant/localization/app_localizations.dart';
 
 import 'home_appbar_actions.dart';
 import 'home_drawer_list.dart';
-import 'home_form.dart';
+import 'servers_list.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key,}) : super(key: key);
+  const HomePage({Key key,}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       drawer: HomeDrawerList(),
-      body: SingleChildScrollView(child: HomeForm()),
+      body: const SingleChildScrollView(child: ServersList()),
     );
   }
 }

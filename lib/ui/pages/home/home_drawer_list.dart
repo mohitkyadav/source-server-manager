@@ -15,14 +15,14 @@ class HomeDrawerList extends StatelessWidget {
             children: [
               DrawerHeader(
                 child: Container(
-                  child: Icon(
+                  child: const Icon(
                     Icons.home_filled,
                     size: 100,
                   ),
                 ),
               ),
               ListTile(
-                leading: Icon(
+                leading: const Icon(
                   Icons.settings,
                 ),
                 title: Text(AppLocalizations.of(context)
@@ -30,7 +30,7 @@ class HomeDrawerList extends StatelessWidget {
                 onTap: () => Navigator.pushNamed(context, settingsRoute),
               ),
               ListTile(
-                leading: Icon(
+                leading: const Icon(
                   Icons.info,
                 ),
                 title: Text(AppLocalizations.of(context)
