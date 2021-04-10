@@ -6,6 +6,7 @@ import 'package:source_server/source_server.dart';
 import 'package:turrant/models/player.dart';
 
 import 'package:turrant/models/server.dart';
+import 'package:turrant/ui/pages/server_details/server_details_header.dart';
 
 class ServerDetailsPage extends StatefulWidget {
   const ServerDetailsPage(this.server);
@@ -53,14 +54,15 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
       appBar: AppBar(
         title: Text(widget.server.serverName),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(widget.server.serverIp,
-              style: Theme.of(context).textTheme.headline4,),
-          ],
-        ),
+      body: Column(
+        children: <Widget>[
+          ServerDetailsHeader(
+            widget.server,
+            map,
+            numOfPlayers,
+            maxPlayers
+          ),
+        ],
       ),
     );
   }
