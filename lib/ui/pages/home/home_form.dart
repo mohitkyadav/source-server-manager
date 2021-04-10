@@ -99,11 +99,13 @@ class _HomeFormState extends State<HomeForm> {
 
     const String ip2 = '13.235.82.124';
     const int port2 = 27815;
-    const String password2 = 'arcadia';
+    const String password2 = 'mintu@512';
 
-      var server = SourceServer(InternetAddress(ip2), port2, password2);
+      final SourceServer server = SourceServer(InternetAddress(ip2), 27815);
       await server.connect();
-      print(await server.getStatus());
-      server.close();
+
+      // var status = await server.getStatus();
+      // print(await server.getStatus());
+      // server.close();
   }
 }
