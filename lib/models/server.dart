@@ -21,8 +21,8 @@ class Server {
     'serverGame': serverGame,
   };
 
-  static Server fromJson(Map<String, String> json) => Server(
-    json['serverName'], json['serverName'], json['serverName'],
-    json['serverName'], json['serverName']
+  static Server fromJson(Map<String, dynamic> json) => Server(
+    json['serverName'].toString(), json['serverIp'].toString(), json['serverPort'].toString(),
+    json['serverRcon'].toString(), json['serverGame'].toString()
   );
 }

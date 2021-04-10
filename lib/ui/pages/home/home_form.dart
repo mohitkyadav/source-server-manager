@@ -95,23 +95,29 @@ class _HomeFormState extends State<HomeForm> {
   }
 
   Future<void> _connectToServer () async {
-
     final SourceServer server = SourceServer(InternetAddress(ip), port, password);
     await server.connect();
+
     final Map<String, dynamic> serverInfo = await server.getInfo();
 
     final Server localServer = Server(serverInfo['name'].toString(), ip,
         port.toString(), password, serverInfo['game'].toString());
 
-    // await server.send('say sab nub apan gawd!');
     SharedPreferences.getInstance().then((SharedPreferences prefs) {
       final List<String> currentAddedServers = prefs
           .getStringList('addedServers') ?? <String>[];
-      print(currentAddedServers);
+
       final String jsonLocalServer = jsonEncode(localServer.toJson());
-      // print(Server.fromJson(json.decode(jsonLocalServer) as Map<String, String>));
-      // prefs.setStringList('addedServers', <String>[...currentAddedServers,
-      //   localServer.toJson().toString()]);
+      print(currentAddedServers.indexOf(jsonLocalServer));
+      if (currentAddedServers.contains(jsonLocalServer)) {
+        print(localServer);
+        print('pass this to a new page with details');
+      } else {
+        prefs.setStringList('addedServers', <String>[...currentAddedServers,
+          jsonLocalServer]);
+        print(localServer);
+        print('pass this to a new page with details');
+      }
     });
     server.close();
   }
