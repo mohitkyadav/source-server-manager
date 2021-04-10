@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -49,20 +48,21 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-
+    // RefreshIndicator(
+    //     key: const ValueKey('PullToRefreshBlocks'),
+    //     onRefresh: () => _loadPractice(),
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.server.serverName),
       ),
-      body: Column(
-        children: <Widget>[
-          ServerDetailsHeader(
-            widget.server,
-            map,
-            numOfPlayers,
-            maxPlayers
-          ),
-        ],
+      body: RefreshIndicator(
+        key: const ValueKey<String> ('PullToRefreshServerDetails'),
+        onRefresh: () => _connectToServer(),
+        child: ListView(
+          children: <Widget>[
+            ServerDetailsHeader(widget.server, map, numOfPlayers, maxPlayers),
+          ],
+        ),
       ),
     );
   }
@@ -73,7 +73,6 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
     final Map<String, dynamic> serverInfo = await sourceServer.getInfo();
     final Map<String, dynamic> playerInfo = await sourceServer.getPlayers();
 
-    print(playerInfo.values);
     setState(() {
       players = playerInfo.values
           .map((dynamic player) => Player
@@ -83,10 +82,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
       numOfPlayers = serverInfo['players'].toString();
       maxPlayers = serverInfo['maxplayers'].toString();
     });
-    print(map);
-    print(numOfPlayers);
-    print(maxPlayers);
-    print(players);
-    sourceServer.send('sm_kick haaboo [reason is this]').then((String value) => print(value));
+
+    // sourceServer.send('sm_kick haaboo [reason is this]').then((String value) => print(value));
   }
 }

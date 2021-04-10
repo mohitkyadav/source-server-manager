@@ -16,13 +16,11 @@ class ServersList extends StatefulWidget {
 }
 
 class _ServersListState extends State<ServersList> {
-
   List<Server> servers = <Server>[];
 
   @override
   void initState() {
     super.initState();
-
     _getServers();
   }
 
@@ -52,12 +50,11 @@ class _ServersListState extends State<ServersList> {
     );
   }
 
-  void _getServers() {
-    SharedPreferences.getInstance().then((SharedPreferences prefs) {
+  Future<void> _getServers() {
+    return SharedPreferences.getInstance().then((SharedPreferences prefs) {
       final List<String> currentAddedServers = prefs
           .getStringList('addedServers') ?? <String>[];
 
-      print(currentAddedServers);
       final List<Server> currentServers = currentAddedServers.map((String server) => Server
           .fromJson(jsonDecode(server) as Map<String, dynamic>)
       ).toList();
