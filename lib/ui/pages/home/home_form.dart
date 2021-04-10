@@ -17,7 +17,7 @@ class _HomeFormState extends State<HomeForm> {
 
   // state
   String ip;
-  String port;
+  int port;
   String password;
 
   @override
@@ -48,7 +48,8 @@ class _HomeFormState extends State<HomeForm> {
             TextFormField(
               validator: (String val)  => val.isEmpty ? AppLocalizations.of(context)
                   .getTranslatedValue('form_port_field_err') : null,
-              onSaved: (String val) => setState(() => port = val),
+              onSaved: (String val) => setState(() => port = int.parse(val)),
+              keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 border: const OutlineInputBorder(),
                 labelText: AppLocalizations.of(context)
@@ -93,19 +94,10 @@ class _HomeFormState extends State<HomeForm> {
   }
 
   Future<void> _connectToServer () async {
-    print(ip);
-    print(port);
-    print(password);
+    final SourceServer server = SourceServer(InternetAddress(ip), port, password);
+    await server.connect();
 
-    const String ip2 = '13.235.82.124';
-    const int port2 = 27815;
-    const String password2 = 'mintu@512';
-
-      final SourceServer server = SourceServer(InternetAddress(ip2), 27815);
-      await server.connect();
-
-      // var status = await server.getStatus();
-      // print(await server.getStatus());
-      // server.close();
+    print(await server.getStatus());
+    server.close();
   }
 }
