@@ -1,4 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+
+import 'package:source_server/source_server.dart';
+
 import 'package:turrant/localization/app_localizations.dart';
 
 class HomeForm extends StatefulWidget {
@@ -9,6 +14,11 @@ class HomeForm extends StatefulWidget {
 
 class _HomeFormState extends State<HomeForm> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
+
+  // state
+  String ip;
+  String port;
+  String password;
 
   @override
   Widget build(BuildContext context) {
@@ -24,32 +34,50 @@ class _HomeFormState extends State<HomeForm> {
             const SizedBox(height: 20,),
             TextFormField(
               validator: (String val)  => val.isEmpty ? AppLocalizations.of(context)
-                  .getTranslatedValue('form_name_field_err') : null,
+                  .getTranslatedValue('form_ip_field_err') : null,
+              onSaved: (String val) => setState(() => ip = val),
               decoration: InputDecoration(
                 border: const OutlineInputBorder(),
                 labelText: AppLocalizations.of(context)
-                    .getTranslatedValue('form_name_field_txt'),
+                    .getTranslatedValue('form_ip_field_txt'),
                 hintText: AppLocalizations.of(context)
-                    .getTranslatedValue('form_name_field_txt'),
+                    .getTranslatedValue('form_ip_field_txt'),
               ),
             ),
             const SizedBox(height: 20,),
             TextFormField(
               validator: (String val)  => val.isEmpty ? AppLocalizations.of(context)
-                  .getTranslatedValue('form_dob_field_err') : null,
+                  .getTranslatedValue('form_port_field_err') : null,
+              onSaved: (String val) => setState(() => port = val),
               decoration: InputDecoration(
                 border: const OutlineInputBorder(),
                 labelText: AppLocalizations.of(context)
-                    .getTranslatedValue('form_dob_field_txt'),
+                    .getTranslatedValue('form_port_field_txt'),
                 hintText: AppLocalizations.of(context)
-                    .getTranslatedValue('form_dob_field_txt'),
+                    .getTranslatedValue('form_port_field_txt'),
+              ),
+            ),
+            const SizedBox(height: 20,),
+            TextFormField(
+              validator: (String val)  => val.isEmpty ? AppLocalizations.of(context)
+                  .getTranslatedValue('form_pass_field_err') : null,
+              onSaved: (String val) => setState(() => password = val),
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(),
+                labelText: AppLocalizations.of(context)
+                    .getTranslatedValue('form_pass_field_txt'),
+                hintText: AppLocalizations.of(context)
+                    .getTranslatedValue('form_pass_field_txt'),
               ),
             ),
             const SizedBox(height: 20,),
             MaterialButton(
               onPressed: () {
+                _connectToServer();
                 if (_key.currentState.validate()) {
+                  _key.currentState.save();
                   print('successfully validated form');
+                  _connectToServer();
                 }
               },
               height: 60,
@@ -62,5 +90,20 @@ class _HomeFormState extends State<HomeForm> {
         ),
       ),
     );
+  }
+
+  Future<void> _connectToServer () async {
+    print(ip);
+    print(port);
+    print(password);
+
+    const String ip2 = '13.235.82.124';
+    const int port2 = 27815;
+    const String password2 = 'arcadia';
+
+      var server = SourceServer(InternetAddress(ip2), port2, password2);
+      await server.connect();
+      print(await server.getStatus());
+      server.close();
   }
 }
