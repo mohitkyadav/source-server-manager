@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:turrant/localization/app_localizations.dart';
 
 class AboutPage extends StatefulWidget {
-  AboutPage({Key key,}) : super(key: key);
+  const AboutPage({Key key,}) : super(key: key);
 
   @override
   _AboutPageState createState() => _AboutPageState();
@@ -13,7 +13,7 @@ class _AboutPageState extends State<AboutPage> {
 
   @override
   Widget build(BuildContext context) {
-    final _title = AppLocalizations.of(context)
+    final String _title = AppLocalizations.of(context)
         .getTranslatedValue('about_page_app_bar_title');
 
     return Scaffold(
