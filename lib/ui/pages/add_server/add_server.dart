@@ -9,14 +9,14 @@ import 'package:source_server/source_server.dart';
 import 'package:turrant/localization/app_localizations.dart';
 import 'package:turrant/models/server.dart';
 
-class AddServerForm extends StatefulWidget {
-  const AddServerForm({Key key,}) : super(key: key);
+class AddServerPage extends StatefulWidget {
+  const AddServerPage({Key key,}) : super(key: key);
 
   @override
-  _AddServerFormState createState() => _AddServerFormState();
+  _AddServerPageState createState() => _AddServerPageState();
 }
 
-class _AddServerFormState extends State<AddServerForm> {
+class _AddServerPageState extends State<AddServerPage> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
 
   // state

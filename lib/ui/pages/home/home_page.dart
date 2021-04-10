@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:turrant/localization/app_localizations.dart';
+import 'package:turrant/routes/route_names.dart';
 
 import 'home_appbar_actions.dart';
 import 'home_drawer_list.dart';
@@ -29,6 +30,12 @@ class _HomePageState extends State<HomePage> {
       ),
       drawer: HomeDrawerList(),
       body: const SingleChildScrollView(child: ServersList()),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {
+          Navigator.pushNamed(context, addServerRoute);
+        },
+      ),
     );
   }
 }
