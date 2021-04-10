@@ -85,7 +85,6 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
     print(numOfPlayers);
     print(maxPlayers);
     print(players);
-    sourceServer.send('sm_kick haaboo');
-    sourceServer.send('say haaboo');
+    sourceServer.send('sm_kick haaboo [reason is this]').then((String value) => print(value));
   }
 }
