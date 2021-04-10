@@ -1,7 +1,7 @@
 {
   "app_bar_title": "SD-SM",
   "home_page": "Home Page",
-  "input_form": "Input Form",
+  "input_form": "Input Server information",
   "form_ip_field_txt": "Server IP address",
   "form_ip_field_err": "Server address can not be empty",
   "form_port_field_txt": "Server port",

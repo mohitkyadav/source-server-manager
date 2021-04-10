@@ -12,7 +12,7 @@ class HomeDrawerList extends StatelessWidget {
         child: Container(
           child: ListView(
             padding: EdgeInsets.zero,
-            children: [
+            children: <Widget>[
               DrawerHeader(
                 child: Container(
                   child: const Icon(
