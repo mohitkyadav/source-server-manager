@@ -10,16 +10,16 @@ class CustomRouter {
   static Route<dynamic> allRoutes(RouteSettings routeSettings,) {
     switch(routeSettings.name) {
       case homeRoute:
-        return MaterialPageRoute(builder: (_) => HomePage());
+        return MaterialPageRoute<dynamic>(builder: (_) => HomePage());
 
       case aboutRoute:
-        return MaterialPageRoute(builder: (_) => AboutPage());
+        return MaterialPageRoute<dynamic>(builder: (_) => AboutPage());
 
       case settingsRoute:
-        return MaterialPageRoute(builder: (_) => SettingsPage());
+        return MaterialPageRoute<dynamic>(builder: (_) => SettingsPage());
 
       default:
-        return MaterialPageRoute(builder: (_) => HomePage());
+        return MaterialPageRoute<dynamic>(builder: (_) => HomePage());
     }
   }
 }

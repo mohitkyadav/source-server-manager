@@ -15,12 +15,14 @@ class AppLocalizations {
 
   Map<String, String> _localizationValues;
 
-  Future load() async {
-    final jsonStringValues = await rootBundle
+  Future<dynamic> load() async {
+    final String jsonStringValues = await rootBundle
       .loadString('lib/lang/${locale.languageCode}.json');
 
-    Map<String, dynamic> mappedJson = json.decode(jsonStringValues);
-    _localizationValues = mappedJson.map((key, value) => MapEntry(key, value));
+    final Map<String, dynamic> mappedJson = jsonDecode(jsonStringValues) as Map<String, dynamic>;
+    _localizationValues = mappedJson.map(
+            (String key, dynamic value) =>
+                MapEntry<String, String>(key, value.toString()));
   }
 
   String getTranslatedValue(String key) => _localizationValues[key];
