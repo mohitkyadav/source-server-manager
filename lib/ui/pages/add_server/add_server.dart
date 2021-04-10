@@ -27,7 +27,7 @@ class _AddServerPageState extends State<AddServerPage> {
   @override
   Widget build(BuildContext context) {
     final String _title = AppLocalizations.of(context)
-        .getTranslatedValue('about_page_app_bar_title');
+        .getTranslatedValue('add_server_page_title');
 
     return Scaffold(
       appBar: AppBar(

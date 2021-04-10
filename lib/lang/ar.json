@@ -1,7 +1,7 @@
 {
   "app_bar_title": "SD-SM",
   "home_page": "الصفحة الرئيسية",
-  "input_form": "نموذج الإدخال",
+  "input_form": "معلومات الخادم",
   "form_ip_field_txt": "عنوان IP للخادم مع المنفذ",
   "form_ip_field_err": "لا يمكن أن يكون عنوان الخادم فارغًا",
   "form_port_field_txt": "Port",
@@ -14,6 +14,6 @@
   "setting_page_app_bar_title": "إعدادات",
   "setting_page_theme_toggle_txt": "تبديل الموضوع",
   "about_page_app_bar_title": "حول",
-  "added_servers": "Added Servers",
-  "add_server_page_title": "Add a Servers"
+  "added_servers": "الخوادم المضافة",
+  "add_server_page_title": "أضف الخادم"
 }

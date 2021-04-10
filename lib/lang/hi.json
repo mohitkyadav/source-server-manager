@@ -1,7 +1,7 @@
 {
   "app_bar_title": "SD-SM",
   "home_page": "मुख पृष्ठ",
-  "input_form": "इनपुट फॉर्म",
+  "input_form": "Server की जानकारी भरें ",
   "form_ip_field_txt": "सर्वर IP",
   "form_ip_field_err": "सर्वर का पता खाली नहीं हो सकता",
   "form_port_field_txt": "Port",
@@ -14,6 +14,6 @@
   "setting_page_app_bar_title": "सेटिंग",
   "setting_page_theme_toggle_txt": "थीम को टॉगल करें",
   "about_page_app_bar_title": "अबाउट",
-  "added_servers": "Added Servers",
-  "add_server_page_title": "Add a Servers"
+  "added_servers": "संयोजित Servers",
+  "add_server_page_title": "Server संयोजित करें"
 }
