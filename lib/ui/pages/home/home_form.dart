@@ -1,5 +1,13 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:source_server/source_server.dart';
+
 import 'package:turrant/localization/app_localizations.dart';
+import 'package:turrant/models/server.dart';
 
 class HomeForm extends StatefulWidget {
 
@@ -10,6 +18,11 @@ class HomeForm extends StatefulWidget {
 class _HomeFormState extends State<HomeForm> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
 
+  // state
+  String ip;
+  int port;
+  String password;
+
   @override
   Widget build(BuildContext context) {
 
@@ -18,52 +31,59 @@ class _HomeFormState extends State<HomeForm> {
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
-          children: [
+          children: <Widget>[
             Container(child: Text(AppLocalizations.of(context)
                 .getTranslatedValue('input_form'))),
             const SizedBox(height: 20,),
             TextFormField(
-              validator: (val)  => val.isEmpty ? AppLocalizations.of(context)
-                  .getTranslatedValue('form_name_field_err') : null,
+              validator: (String val)  => val.isEmpty ? AppLocalizations.of(context)
+                  .getTranslatedValue('form_ip_field_err') : null,
+              onSaved: (String val) => setState(() => ip = val),
               decoration: InputDecoration(
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
                 labelText: AppLocalizations.of(context)
-                    .getTranslatedValue('form_name_field_txt'),
+                    .getTranslatedValue('form_ip_field_txt'),
                 hintText: AppLocalizations.of(context)
-                    .getTranslatedValue('form_name_field_txt'),
+                    .getTranslatedValue('form_ip_field_txt'),
               ),
             ),
             const SizedBox(height: 20,),
             TextFormField(
-              validator: (val)  => val.isEmpty ? AppLocalizations.of(context)
-                  .getTranslatedValue('form_dob_field_err') : null,
-              onTap: () async {
-                FocusScope.of(context).requestFocus(FocusNode());
-                final pickedDate = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(DateTime.now().year - 20),
-                  lastDate: DateTime.now(),
-                );
-                print(pickedDate);
-              },
+              validator: (String val)  => val.isEmpty ? AppLocalizations.of(context)
+                  .getTranslatedValue('form_port_field_err') : null,
+              onSaved: (String val) => setState(() => port = int.parse(val)),
+              keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
                 labelText: AppLocalizations.of(context)
-                    .getTranslatedValue('form_dob_field_txt'),
+                    .getTranslatedValue('form_port_field_txt'),
                 hintText: AppLocalizations.of(context)
-                    .getTranslatedValue('form_dob_field_txt'),
+                    .getTranslatedValue('form_port_field_txt'),
+              ),
+            ),
+            const SizedBox(height: 20,),
+            TextFormField(
+              validator: (String val)  => val.isEmpty ? AppLocalizations.of(context)
+                  .getTranslatedValue('form_pass_field_err') : null,
+              onSaved: (String val) => setState(() => password = val),
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(),
+                labelText: AppLocalizations.of(context)
+                    .getTranslatedValue('form_pass_field_txt'),
+                hintText: AppLocalizations.of(context)
+                    .getTranslatedValue('form_pass_field_txt'),
               ),
             ),
             const SizedBox(height: 20,),
             MaterialButton(
               onPressed: () {
                 if (_key.currentState.validate()) {
-                  print('successfully validated form');
+                  _key.currentState.save();
+                  _connectToServer();
                 }
               },
               height: 60,
-              shape: StadiumBorder(),
+              shape: const StadiumBorder(),
               color: Theme.of(context).accentColor,
               child: Text(AppLocalizations.of(context)
                   .getTranslatedValue('form_submit_btn_txt')),
@@ -72,5 +92,33 @@ class _HomeFormState extends State<HomeForm> {
         ),
       ),
     );
+  }
+
+  Future<void> _connectToServer () async {
+    final SourceServer server = SourceServer(InternetAddress(ip), port, password);
+    await server.connect();
+
+    final Map<String, dynamic> serverInfo = await server.getInfo();
+
+    final Server localServer = Server(serverInfo['name'].toString(), ip,
+        port.toString(), password, serverInfo['game'].toString());
+
+    SharedPreferences.getInstance().then((SharedPreferences prefs) {
+      final List<String> currentAddedServers = prefs
+          .getStringList('addedServers') ?? <String>[];
+
+      final String jsonLocalServer = jsonEncode(localServer.toJson());
+      print(currentAddedServers.indexOf(jsonLocalServer));
+      if (currentAddedServers.contains(jsonLocalServer)) {
+        print(localServer);
+        print('pass this to a new page with details');
+      } else {
+        prefs.setStringList('addedServers', <String>[...currentAddedServers,
+          jsonLocalServer]);
+        print(localServer);
+        print('pass this to a new page with details');
+      }
+    });
+    server.close();
   }
 }

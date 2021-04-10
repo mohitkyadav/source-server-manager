@@ -19,5 +19,5 @@ class Language {
   ];
 
   static List<Locale> supportedLocales() => supportedLanguages
-    .map((lang) => Locale(lang.languageCode, lang.countryCode)).toList();
+    .map((Language lang) => Locale(lang.languageCode, lang.countryCode)).toList();
 }
