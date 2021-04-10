@@ -9,7 +9,7 @@ import 'localization/app_localizations.dart';
 import 'models/language.dart';
 
 class AppBootstrap extends StatefulWidget {
-  AppBootstrap(this.selectedLocale, {Key key,}) : super(key: key);
+  const AppBootstrap(this.selectedLocale, {Key key,}) : super(key: key);
 
   final Locale selectedLocale;
 
@@ -17,7 +17,7 @@ class AppBootstrap extends StatefulWidget {
   _AppBootstrapState createState() => _AppBootstrapState();
 
   static void setLocale(BuildContext context, Locale locale) {
-    _AppBootstrapState state = context
+    final _AppBootstrapState state = context
         .findAncestorStateOfType<_AppBootstrapState>();
     state.setLocale(locale);
   }
@@ -40,14 +40,15 @@ class _AppBootstrapState extends State<AppBootstrap> {
 
   @override
   Widget build(BuildContext context) {
-    final themeNotifier = Provider.of<ThemeNotifier>(context);
+    final ThemeNotifier themeNotifier = Provider.of<ThemeNotifier>(context);
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: themeNotifier.getAppTheme.themeData,
       onGenerateRoute: CustomRouter.allRoutes,
       initialRoute: homeRoute,
-      localizationsDelegates: [
+      // ignore: prefer_const_literals_to_create_immutables
+      localizationsDelegates:  [
         // ... app-specific localization delegate[s] here
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -56,12 +57,13 @@ class _AppBootstrapState extends State<AppBootstrap> {
       ],
       locale: _selectedLocale,
       supportedLocales: Language.supportedLocales(),
-      localeResolutionCallback: (deviceLocale, supportedLocales) {
+      localeResolutionCallback: (Locale deviceLocale,
+          Iterable<Locale> supportedLocales) {
         if (_selectedLocale != null) {
           return _selectedLocale;
         }
         // set device locale as selected locale
-        for (var locale in supportedLocales) {
+        for (final Locale locale in supportedLocales) {
           if (locale.languageCode == deviceLocale.languageCode
               && locale.countryCode == deviceLocale.countryCode) {
             return deviceLocale;

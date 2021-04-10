@@ -18,15 +18,15 @@ class _HomeFormState extends State<HomeForm> {
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
-          children: [
+          children: <Widget>[
             Container(child: Text(AppLocalizations.of(context)
                 .getTranslatedValue('input_form'))),
             const SizedBox(height: 20,),
             TextFormField(
-              validator: (val)  => val.isEmpty ? AppLocalizations.of(context)
+              validator: (String val)  => val.isEmpty ? AppLocalizations.of(context)
                   .getTranslatedValue('form_name_field_err') : null,
               decoration: InputDecoration(
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
                 labelText: AppLocalizations.of(context)
                     .getTranslatedValue('form_name_field_txt'),
                 hintText: AppLocalizations.of(context)
@@ -35,20 +35,10 @@ class _HomeFormState extends State<HomeForm> {
             ),
             const SizedBox(height: 20,),
             TextFormField(
-              validator: (val)  => val.isEmpty ? AppLocalizations.of(context)
+              validator: (String val)  => val.isEmpty ? AppLocalizations.of(context)
                   .getTranslatedValue('form_dob_field_err') : null,
-              onTap: () async {
-                FocusScope.of(context).requestFocus(FocusNode());
-                final pickedDate = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(DateTime.now().year - 20),
-                  lastDate: DateTime.now(),
-                );
-                print(pickedDate);
-              },
               decoration: InputDecoration(
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
                 labelText: AppLocalizations.of(context)
                     .getTranslatedValue('form_dob_field_txt'),
                 hintText: AppLocalizations.of(context)
@@ -63,7 +53,7 @@ class _HomeFormState extends State<HomeForm> {
                 }
               },
               height: 60,
-              shape: StadiumBorder(),
+              shape: const StadiumBorder(),
               color: Theme.of(context).accentColor,
               child: Text(AppLocalizations.of(context)
                   .getTranslatedValue('form_submit_btn_txt')),

@@ -10,7 +10,7 @@ import 'package:turrant/app_bootstrap.dart';
 void main () {
   WidgetsFlutterBinding.ensureInitialized();
   // get selected settings for theme and locale
-  SharedPreferences.getInstance().then((prefs) {
+  SharedPreferences.getInstance().then((SharedPreferences prefs) {
     final bool darkModeOn = prefs.getBool('darkMode') ?? true;
     final String selectedLocaleCode = prefs.getString('selectedLocale');
     Locale selectedLocale;

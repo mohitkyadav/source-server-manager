@@ -8,7 +8,7 @@ import 'package:turrant/themes/app_themes.dart';
 import 'package:turrant/themes/theme_notifier.dart';
 
 class SettingsPage extends StatefulWidget {
-  SettingsPage({Key key,}) : super(key: key);
+  const SettingsPage({Key key,}) : super(key: key);
 
   @override
   _SettingsPageState createState() => _SettingsPageState();
@@ -25,7 +25,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final _title = AppLocalizations.of(context)
+    final String _title = AppLocalizations.of(context)
         .getTranslatedValue('setting_page_app_bar_title');
 
     return Scaffold(
@@ -35,14 +35,14 @@ class _SettingsPageState extends State<SettingsPage> {
       body: Center(
         child: ListView(
           padding: EdgeInsets.zero,
-          children: [
+          children: <Widget> [
             ListTile(
               leading: Icon(isDarkModeOn ? Icons.lightbulb_outline : Icons.lightbulb),
               title: Text(AppLocalizations.of(context)
                   .getTranslatedValue('setting_page_theme_toggle_txt')),
               onTap: () =>_toggleTheme(context),
             ),
-            Divider(),
+            const Divider(),
           ],
         ),
       ),
@@ -59,8 +59,8 @@ class _SettingsPageState extends State<SettingsPage> {
 
   void _toggleTheme(BuildContext context) {
     SharedPreferences.getInstance().then((prefs) {
-      var darkModeOn = prefs.getBool('darkMode') ?? true;
-      final themeNotifier = Provider.of<ThemeNotifier>(context, listen: false);
+      final bool darkModeOn = prefs.getBool('darkMode') ?? true;
+      final ThemeNotifier themeNotifier = Provider.of<ThemeNotifier>(context, listen: false);
 
       if (darkModeOn) {
         themeNotifier.setTheme(lightTheme);

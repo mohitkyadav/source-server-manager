@@ -36,11 +36,11 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
 
   @override
   bool isSupported(Locale locale) => Language
-    .supportedLanguages.any((lang) => lang.languageCode == locale.languageCode);
+    .supportedLanguages.any((Language lang) => lang.languageCode == locale.languageCode);
 
   @override
   Future<AppLocalizations> load(Locale locale) async {
-    AppLocalizations localization = new AppLocalizations(locale);
+    final AppLocalizations localization = AppLocalizations(locale);
     await localization.load();
     return localization;
   }

@@ -17,13 +17,13 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final _title = AppLocalizations.of(context)
+    final String _title = AppLocalizations.of(context)
         .getTranslatedValue('app_bar_title');
 
     return Scaffold(
       appBar: AppBar(
         title: Text(_title),
-        actions: [
+        actions: <Widget>[
           HomeAppbarActions(),
         ],
       ),
