@@ -50,7 +50,7 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   void _checkDarkMode() {
-    SharedPreferences.getInstance().then((prefs) {
+    SharedPreferences.getInstance().then((SharedPreferences prefs) {
       setState(() {
         isDarkModeOn = prefs.getBool('darkMode') ?? false;
       });
@@ -58,7 +58,7 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   void _toggleTheme(BuildContext context) {
-    SharedPreferences.getInstance().then((prefs) {
+    SharedPreferences.getInstance().then((SharedPreferences prefs) {
       final bool darkModeOn = prefs.getBool('darkMode') ?? true;
       final ThemeNotifier themeNotifier = Provider.of<ThemeNotifier>(context, listen: false);
 

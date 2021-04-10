@@ -1,10 +1,13 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:source_server/source_server.dart';
 
 import 'package:turrant/localization/app_localizations.dart';
+import 'package:turrant/models/server.dart';
 
 class HomeForm extends StatefulWidget {
 
@@ -74,10 +77,8 @@ class _HomeFormState extends State<HomeForm> {
             const SizedBox(height: 20,),
             MaterialButton(
               onPressed: () {
-                _connectToServer();
                 if (_key.currentState.validate()) {
                   _key.currentState.save();
-                  print('successfully validated form');
                   _connectToServer();
                 }
               },
@@ -94,10 +95,24 @@ class _HomeFormState extends State<HomeForm> {
   }
 
   Future<void> _connectToServer () async {
+
     final SourceServer server = SourceServer(InternetAddress(ip), port, password);
     await server.connect();
+    final Map<String, dynamic> serverInfo = await server.getInfo();
 
-    print(await server.getStatus());
+    final Server localServer = Server(serverInfo['name'].toString(), ip,
+        port.toString(), password, serverInfo['game'].toString());
+
+    // await server.send('say sab nub apan gawd!');
+    SharedPreferences.getInstance().then((SharedPreferences prefs) {
+      final List<String> currentAddedServers = prefs
+          .getStringList('addedServers') ?? <String>[];
+      print(currentAddedServers);
+      final String jsonLocalServer = jsonEncode(localServer.toJson());
+      // print(Server.fromJson(json.decode(jsonLocalServer) as Map<String, String>));
+      // prefs.setStringList('addedServers', <String>[...currentAddedServers,
+      //   localServer.toJson().toString()]);
+    });
     server.close();
   }
 }
