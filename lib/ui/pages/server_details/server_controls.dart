@@ -43,17 +43,6 @@ class ServerControls extends StatelessWidget {
               onPressed: () => refreshInfo(),
             ),
             const SizedBox(width: 20,),
-            DropdownButton<String>(
-              underline: const SizedBox(),
-              onChanged: (String map) => sendCommandToSv('map $map'),
-              icon: const Icon(Icons.map),
-              iconEnabledColor: AppStyles.white,
-              items: activeDutyMaps.map(
-                      (String map) => DropdownMenuItem<String>(
-                        value: map, child: Text(map),),
-              ).toList(),
-            ),
-            const SizedBox(width: 20,),
             IconButton(
               icon: const Icon(Icons.people_rounded),
               color: AppStyles.white,
@@ -70,6 +59,20 @@ class ServerControls extends StatelessWidget {
               onPressed: () {
                 _displayTextInputDialog(context);
               },
+            ),
+            const SizedBox(width: 20,),
+            DropdownButton<String>(
+              hint: Text(AppLocalizations
+                  .of(context).getTranslatedValue('change_map_tooltip')),
+              underline: const SizedBox(),
+              value: map,
+              onChanged: (String map) => sendCommandToSv('map $map'),
+              icon: const Icon(Icons.map),
+              iconEnabledColor: AppStyles.white,
+              items: activeDutyMaps.map(
+                    (String map) => DropdownMenuItem<String>(
+                  value: map, child: Text(map),),
+              ).toList(),
             ),
           ],
         ),
