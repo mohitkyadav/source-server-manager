@@ -35,6 +35,10 @@ class ServerDetailsHeader extends StatelessWidget {
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
                   decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                          width: 4, color: Theme.of(context).accentColor),
+                    ),
                     gradient: LinearGradient(
                       begin: const Alignment(-1, 0.1),
                       end: const Alignment(1, 4),
@@ -52,7 +56,7 @@ class ServerDetailsHeader extends StatelessWidget {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      const Icon(Icons.dns, color: AppStyles.blue,),
+                      const Icon(Icons.dns, color: AppStyles.lightPurple,),
                       const SizedBox(width: 10,),
                       Text('${server.serverIp}:${server.serverPort}',
                           style: AppStyles.serverDetailsHeaderTitle),
@@ -61,7 +65,7 @@ class ServerDetailsHeader extends StatelessWidget {
                   const SizedBox(height: 60,),
                   Row(
                     children: <Widget>[
-                      const Icon(Icons.map_rounded, color: AppStyles.blue,),
+                      const Icon(Icons.map_rounded, color: AppStyles.lightPurple,),
                       const SizedBox(width: 10,),
                       Text(map, style: AppStyles.serverDetailsHeaderSubTitle),
                     ],
@@ -69,7 +73,7 @@ class ServerDetailsHeader extends StatelessWidget {
                   const SizedBox(height: 5,),
                   Row(
                     children: <Widget>[
-                      const Icon(Icons.people, color: AppStyles.blue,),
+                      const Icon(Icons.people, color: AppStyles.lightPurple,),
                       const SizedBox(width: 10,),
                       Text('$numOfPlayers / $maxPlayers',
                           style: AppStyles.serverDetailsHeaderSubTitle),

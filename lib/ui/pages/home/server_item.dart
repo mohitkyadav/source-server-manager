@@ -27,8 +27,10 @@ class ServerItem extends StatelessWidget {
               end: Alignment(1, 0.1),
               colors: <Color>[AppStyles.blue, AppStyles.charcoalGrey],
             ),
-            border: Border(left: BorderSide(
-                width: 5, color: Theme.of(context).accentColor),)
+            border: Border(
+              bottom: BorderSide(
+                  width: 4, color: Theme.of(context).accentColor),
+            ),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,6 +40,8 @@ class ServerItem extends StatelessWidget {
               Text('${server.serverIp} ${server.serverPort}',
                 style: AppStyles.serverItemSubTitle,
               ),
+              const SizedBox(height: 8,),
+              Text(server.serverGame, style: AppStyles.serverItemSubTitle),
             ],
           ),
         ),
