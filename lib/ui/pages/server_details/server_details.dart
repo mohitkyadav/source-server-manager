@@ -61,7 +61,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
         onRefresh: () => _connectToServer(),
         child: !isLoading ? ListView(
           children: <Widget>[
-            ServerDetailsHeader(widget.server, 'de_vertigo', numOfPlayers, maxPlayers),
+            ServerDetailsHeader(widget.server, map, numOfPlayers, maxPlayers),
           ],
         ) :  const Center(child: CircularProgressIndicator()),
       ),

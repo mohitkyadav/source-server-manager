@@ -21,20 +21,27 @@ class ServerDetailsHeader extends StatelessWidget {
       child: Container(
         child: Stack(
           children: <Widget>[
-            Container(
-              // height: 120,
-              // child: Align(
-              //   alignment: Alignment.center,
-              //   // widthFactor: 1,
-              //   // heightFactor: 0.2,
+            SizedBox(
+              height: 150,
+              width: MediaQuery.of(context).size.width,
+              child: FittedBox(
+                fit: BoxFit.cover,
                 child: Image.asset('assets/img/$map.jpg', fit: BoxFit.fitWidth,),
-              // ),
+              ),
             ),
             Positioned.fill(
               child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2,),
-                child: Container(
-                  color: AppStyles.blackShadowOp20,
+                filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1,),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: const Alignment(-1, 0.1),
+                      end: const Alignment(1, 4),
+                      colors: <Color>[AppStyles.charcoalGrey.withOpacity(0.8),
+                        AppStyles.blue.withOpacity(0.1)],
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -43,11 +50,18 @@ class ServerDetailsHeader extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text('IP: ${server.serverIp}:${server.serverPort}',
-                      style: AppStyles.serverDetailsHeaderTitle),
                   Row(
                     children: <Widget>[
-                      const Icon(Icons.map, color: AppStyles.blue,),
+                      const Icon(Icons.dns, color: AppStyles.blue,),
+                      const SizedBox(width: 10,),
+                      Text('${server.serverIp}:${server.serverPort}',
+                          style: AppStyles.serverDetailsHeaderTitle),
+                    ],
+                  ),
+                  const SizedBox(height: 60,),
+                  Row(
+                    children: <Widget>[
+                      const Icon(Icons.map_rounded, color: AppStyles.blue,),
                       const SizedBox(width: 10,),
                       Text(map, style: AppStyles.serverDetailsHeaderSubTitle),
                     ],
