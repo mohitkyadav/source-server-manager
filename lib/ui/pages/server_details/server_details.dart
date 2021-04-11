@@ -5,6 +5,7 @@ import 'package:source_server/source_server.dart';
 import 'package:turrant/models/player.dart';
 
 import 'package:turrant/models/server.dart';
+import 'package:turrant/ui/pages/server_details/players_list.dart';
 import 'package:turrant/ui/pages/server_details/server_controls.dart';
 import 'package:turrant/ui/pages/server_details/server_details_header.dart';
 
@@ -65,6 +66,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
             ServerDetailsHeader(widget.server, map, numOfPlayers, maxPlayers),
             const SizedBox(height: 10,),
             ServerControls(widget.server, map, refreshInfo, sendCommandToSv),
+            PlayersList(players, sendCommandToSv),
           ],
         ) : const Center(child: CircularProgressIndicator()),
       ),

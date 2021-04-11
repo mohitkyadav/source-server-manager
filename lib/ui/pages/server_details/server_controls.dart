@@ -15,7 +15,7 @@ class ServerControls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const List<String> activeDutyMaps = [
+    const List<String> activeDutyMaps = <String>[
       'de_mirage',
       'de_inferno',
       'de_dust2',
@@ -57,7 +57,7 @@ class ServerControls extends StatelessWidget {
               tooltip: AppLocalizations.of(context)
                   .getTranslatedValue('restart_sv_tooltip'),
               onPressed: () {
-                _displayTextInputDialog(context);
+                print('restart sv');
               },
             ),
             const SizedBox(width: 20,),
@@ -77,39 +77,6 @@ class ServerControls extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  Future<void> _displayTextInputDialog(BuildContext context) async {
-    final TextEditingController _textFieldController = TextEditingController();
-
-    // todo reason to kick
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Reason for kick'),
-          content: TextField(
-            controller: _textFieldController,
-            decoration: const InputDecoration(hintText: 'Text Field in Dialog'),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: const Text('CANCEL'),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-            FlatButton(
-              child: const Text('OK'),
-              onPressed: () {
-                print(_textFieldController.text);
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        );
-      },
     );
   }
 }

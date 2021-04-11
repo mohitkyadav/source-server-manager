@@ -21,7 +21,7 @@ class HomeAppbarActions extends StatelessWidget {
             .map((Language lan) => DropdownMenuItem<Language>(
             value: lan,
             child: Row(
-              children: [
+              children: <Widget>[
                 Text(lan.flag),
                 const SizedBox(width: 10,),
                 Text(lan.name),
