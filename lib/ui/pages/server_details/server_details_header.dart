@@ -22,12 +22,13 @@ class ServerDetailsHeader extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             Container(
-              child: Align(
-                alignment: Alignment.center,
-                widthFactor: 1,
-                heightFactor: 0.2,
-                child: Image.asset('assets/img/$map.jpg',),
-              ),
+              // height: 120,
+              // child: Align(
+              //   alignment: Alignment.center,
+              //   // widthFactor: 1,
+              //   // heightFactor: 0.2,
+                child: Image.asset('assets/img/$map.jpg', fit: BoxFit.fitWidth,),
+              // ),
             ),
             Positioned.fill(
               child: BackdropFilter(
@@ -44,7 +45,6 @@ class ServerDetailsHeader extends StatelessWidget {
                 children: <Widget>[
                   Text('IP: ${server.serverIp}:${server.serverPort}',
                       style: AppStyles.serverDetailsHeaderTitle),
-                  const SizedBox(height: 48,),
                   Row(
                     children: <Widget>[
                       const Icon(Icons.map, color: AppStyles.blue,),

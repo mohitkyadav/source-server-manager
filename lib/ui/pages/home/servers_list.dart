@@ -29,12 +29,6 @@ class _ServersListState extends State<ServersList> {
 
     return Column(
       children: <Widget>[
-        Align(
-          alignment: Alignment.topLeft,
-          child: Text(AppLocalizations.of(context)
-              .getTranslatedValue('added_servers'), style: AppStyles.textH1,
-          ),
-        ),
         ListView.separated(
           shrinkWrap: true,
             padding: const EdgeInsets.all(8),
