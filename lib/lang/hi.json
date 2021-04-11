@@ -15,5 +15,9 @@
   "setting_page_theme_toggle_txt": "थीम को टॉगल करें",
   "about_page_app_bar_title": "अबाउट",
   "added_servers": "संयोजित Servers",
-  "add_server_page_title": "Server संयोजित करें"
+  "add_server_page_title": "Server संयोजित करें",
+  "refresh_sv_tooltip": "ताजा जानकारी पाए",
+  "change_map_tooltip": "Map बदले ",
+  "refresh_players_tooltip": "खिलाड़ियों की ताजा जानकारी पाए ",
+  "restart_sv_tooltip": "Server पुन: चालू करे "
 }

@@ -15,5 +15,9 @@
   "setting_page_theme_toggle_txt": "تبديل الموضوع",
   "about_page_app_bar_title": "حول",
   "added_servers": "الخوادم المضافة",
-  "add_server_page_title": "أضف الخادم"
+  "add_server_page_title": "أضف الخادم",
+  "refresh_sv_tooltip": "تحديث المعلومات",
+  "change_map_tooltip": "تغيير الخريطة",
+  "refresh_players_tooltip": "تحديث اللاعبين",
+  "restart_sv_tooltip": "إعادة تشغيل الخادم"
 }

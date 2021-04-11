@@ -15,5 +15,9 @@
   "setting_page_theme_toggle_txt": "Toggle Theme",
   "about_page_app_bar_title": "About",
   "added_servers": "Added Servers",
-  "add_server_page_title": "Add a Server"
+  "add_server_page_title": "Add a Server",
+  "refresh_sv_tooltip": "Refresh Info",
+  "change_map_tooltip": "Change Map",
+  "refresh_players_tooltip": "Refresh players",
+  "restart_sv_tooltip": "Restart Server"
 }

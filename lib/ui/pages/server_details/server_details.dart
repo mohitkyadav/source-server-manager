@@ -5,6 +5,7 @@ import 'package:source_server/source_server.dart';
 import 'package:turrant/models/player.dart';
 
 import 'package:turrant/models/server.dart';
+import 'package:turrant/ui/pages/server_details/server_controls.dart';
 import 'package:turrant/ui/pages/server_details/server_details_header.dart';
 
 class ServerDetailsPage extends StatefulWidget {
@@ -58,21 +59,44 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
       ),
       body: RefreshIndicator(
         key: const ValueKey<String> ('PullToRefreshServerDetails'),
-        onRefresh: () => _connectToServer(),
+        onRefresh: () => refreshInfo(),
         child: !isLoading ? ListView(
           children: <Widget>[
             ServerDetailsHeader(widget.server, map, numOfPlayers, maxPlayers),
+            const SizedBox(height: 10,),
+            ServerControls(widget.server, map, refreshInfo, sendCommandToSv),
           ],
         ) : const Center(child: CircularProgressIndicator()),
       ),
     );
   }
 
-  Future<void> _connectToServer () async {
+  Future<String> sendCommandToSv(String cmd) async {
+    await sourceServer.connect();
+    return sourceServer.send(cmd);
+  }
+
+  Future<void> refreshInfo() async {
     setState(() {
       isLoading = true;
     });
 
+    final Map<String, dynamic> serverInfo = await sourceServer.getInfo();
+    final Map<String, dynamic> playerInfo = await sourceServer.getPlayers();
+
+    setState(() {
+      players = playerInfo.values
+          .map((dynamic player) => Player
+          .fromJson(player as Map<String, dynamic>)).toList();
+
+      map = serverInfo['map'].toString();
+      numOfPlayers = serverInfo['players'].toString();
+      maxPlayers = serverInfo['maxplayers'].toString();
+      isLoading = false;
+    });
+  }
+
+  Future<void> _connectToServer() async {
     await sourceServer.connect();
 
     final Map<String, dynamic> serverInfo = await sourceServer.getInfo();
