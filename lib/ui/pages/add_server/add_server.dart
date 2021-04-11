@@ -8,6 +8,7 @@ import 'package:source_server/source_server.dart';
 
 import 'package:turrant/localization/app_localizations.dart';
 import 'package:turrant/models/server.dart';
+import 'package:turrant/routes/route_names.dart';
 
 class AddServerPage extends StatefulWidget {
   const AddServerPage({Key key,}) : super(key: key);
@@ -33,69 +34,71 @@ class _AddServerPageState extends State<AddServerPage> {
       appBar: AppBar(
         title: Text(_title),
       ),
-      body: Form(
-        key: _key,
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: <Widget>[
-              Container(child: Text(AppLocalizations.of(context)
-                  .getTranslatedValue('input_form'))),
-              const SizedBox(height: 20,),
-              TextFormField(
-                validator: (String val)  => val.isEmpty ? AppLocalizations.of(context)
-                    .getTranslatedValue('form_ip_field_err') : null,
-                onSaved: (String val) => setState(() => ip = val),
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  labelText: AppLocalizations.of(context)
-                      .getTranslatedValue('form_ip_field_txt'),
-                  hintText: AppLocalizations.of(context)
-                      .getTranslatedValue('form_ip_field_txt'),
+      body: SingleChildScrollView(
+        child: Form(
+          key: _key,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: <Widget>[
+                Container(child: Text(AppLocalizations.of(context)
+                    .getTranslatedValue('input_form'))),
+                const SizedBox(height: 20,),
+                TextFormField(
+                  validator: (String val)  => val.isEmpty ? AppLocalizations.of(context)
+                      .getTranslatedValue('form_ip_field_err') : null,
+                  onSaved: (String val) => setState(() => ip = val),
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelText: AppLocalizations.of(context)
+                        .getTranslatedValue('form_ip_field_txt'),
+                    hintText: AppLocalizations.of(context)
+                        .getTranslatedValue('form_ip_field_txt'),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20,),
-              TextFormField(
-                validator: (String val)  => val.isEmpty ? AppLocalizations.of(context)
-                    .getTranslatedValue('form_port_field_err') : null,
-                onSaved: (String val) => setState(() => port = int.parse(val)),
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  labelText: AppLocalizations.of(context)
-                      .getTranslatedValue('form_port_field_txt'),
-                  hintText: AppLocalizations.of(context)
-                      .getTranslatedValue('form_port_field_txt'),
+                const SizedBox(height: 20,),
+                TextFormField(
+                  validator: (String val)  => val.isEmpty ? AppLocalizations.of(context)
+                      .getTranslatedValue('form_port_field_err') : null,
+                  onSaved: (String val) => setState(() => port = int.parse(val)),
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelText: AppLocalizations.of(context)
+                        .getTranslatedValue('form_port_field_txt'),
+                    hintText: AppLocalizations.of(context)
+                        .getTranslatedValue('form_port_field_txt'),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20,),
-              TextFormField(
-                validator: (String val)  => val.isEmpty ? AppLocalizations.of(context)
-                    .getTranslatedValue('form_pass_field_err') : null,
-                onSaved: (String val) => setState(() => password = val),
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  labelText: AppLocalizations.of(context)
-                      .getTranslatedValue('form_pass_field_txt'),
-                  hintText: AppLocalizations.of(context)
-                      .getTranslatedValue('form_pass_field_txt'),
+                const SizedBox(height: 20,),
+                TextFormField(
+                  validator: (String val)  => val.isEmpty ? AppLocalizations.of(context)
+                      .getTranslatedValue('form_pass_field_err') : null,
+                  onSaved: (String val) => setState(() => password = val),
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelText: AppLocalizations.of(context)
+                        .getTranslatedValue('form_pass_field_txt'),
+                    hintText: AppLocalizations.of(context)
+                        .getTranslatedValue('form_pass_field_txt'),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20,),
-              MaterialButton(
-                onPressed: () {
-                  if (_key.currentState.validate()) {
-                    _key.currentState.save();
-                    _connectToServer();
-                  }
-                },
-                height: 60,
-                shape: const StadiumBorder(),
-                color: Theme.of(context).accentColor,
-                child: Text(AppLocalizations.of(context)
-                    .getTranslatedValue('form_submit_btn_txt')),
-              ),
-            ],
+                const SizedBox(height: 20,),
+                MaterialButton(
+                  onPressed: () {
+                    if (_key.currentState.validate()) {
+                      _key.currentState.save();
+                      _connectToServer();
+                    }
+                  },
+                  height: 60,
+                  shape: const StadiumBorder(),
+                  color: Theme.of(context).accentColor,
+                  child: Text(AppLocalizations.of(context)
+                      .getTranslatedValue('form_submit_btn_txt')),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -119,12 +122,14 @@ class _AddServerPageState extends State<AddServerPage> {
       print(currentAddedServers.indexOf(jsonLocalServer));
       if (currentAddedServers.contains(jsonLocalServer)) {
         print(localServer);
+        Navigator.pushNamed(context, serverDetailsRoute, arguments: localServer);
         print('pass this to a new page with details');
       } else {
         prefs.setStringList('addedServers', <String>[...currentAddedServers,
           jsonLocalServer]);
         print(localServer);
         print('pass this to a new page with details');
+        Navigator.pushNamed(context, serverDetailsRoute, arguments: localServer);
       }
     });
     server.close();

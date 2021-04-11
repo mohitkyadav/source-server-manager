@@ -55,6 +55,14 @@ flutter:
     - lib/lang/en.json
     - lib/lang/hi.json
     - lib/lang/ar.json
+    - assets/img/de_cache.jpg
+    - assets/img/de_dust2.jpg
+    - assets/img/de_inferno.jpg
+    - assets/img/de_mirage.jpg
+    - assets/img/de_nuke.jpg
+    - assets/img/de_overpass.jpg
+    - assets/img/de_train.jpg
+    - assets/img/de_vertigo.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

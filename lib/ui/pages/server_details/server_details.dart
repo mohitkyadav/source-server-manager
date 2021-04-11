@@ -21,6 +21,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
   int port;
   String rconPassword;
 
+  bool isLoading = true;
   SourceServer sourceServer;
   List<Player> players;
   String map;
@@ -58,16 +59,20 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
       body: RefreshIndicator(
         key: const ValueKey<String> ('PullToRefreshServerDetails'),
         onRefresh: () => _connectToServer(),
-        child: ListView(
+        child: !isLoading ? ListView(
           children: <Widget>[
             ServerDetailsHeader(widget.server, map, numOfPlayers, maxPlayers),
           ],
-        ),
+        ) :  const Center(child: CircularProgressIndicator()),
       ),
     );
   }
 
   Future<void> _connectToServer () async {
+    setState(() {
+      isLoading = true;
+    });
+
     await sourceServer.connect();
 
     final Map<String, dynamic> serverInfo = await sourceServer.getInfo();
@@ -81,6 +86,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
       map = serverInfo['map'].toString();
       numOfPlayers = serverInfo['players'].toString();
       maxPlayers = serverInfo['maxplayers'].toString();
+      isLoading = false;
     });
 
     // sourceServer.send('sm_kick haaboo [reason is this]').then((String value) => print(value));

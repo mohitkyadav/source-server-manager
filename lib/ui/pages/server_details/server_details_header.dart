@@ -14,14 +14,26 @@ class ServerDetailsHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
         children: <Widget>[
-          Text('${server.serverIp}:${server.serverPort}',
-              style: Theme.of(context).textTheme.headline6),
-          Text(map, style: Theme.of(context).textTheme.subtitle1),
-          Text('$numOfPlayers / $maxPlayers',
-              style: Theme.of(context).textTheme.subtitle1),
+          Container(
+            child: Align(
+              alignment: Alignment.center,
+              widthFactor: 1,
+              heightFactor: 0.2,
+              child: Image.asset('assets/img/de_mirage.jpg',),
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text('${server.serverIp}:${server.serverPort}',
+                  style: Theme.of(context).textTheme.headline6),
+              Text(map, style: Theme.of(context).textTheme.subtitle1),
+              Text('$numOfPlayers / $maxPlayers',
+                  style: Theme.of(context).textTheme.subtitle1),
+            ],
+          ),
         ],
       ),
     );
