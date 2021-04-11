@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:turrant/themes/theme_notifier.dart';
@@ -27,16 +28,15 @@ void main () {
 }
 
 class MyApp extends StatelessWidget {
-  MyApp(this._darkModeOn, this._selectedLocale,);
+  const MyApp(this._darkModeOn, this._selectedLocale,);
 
   final bool _darkModeOn;
   final Locale _selectedLocale;
 
   @override
   Widget build(BuildContext context) {
-
     return MultiProvider(
-      providers: [
+      providers: <SingleChildWidget>[
         ChangeNotifierProvider<ThemeNotifier>.value(
             value: ThemeNotifier(_darkModeOn ? darkTheme : lightTheme))
       ],

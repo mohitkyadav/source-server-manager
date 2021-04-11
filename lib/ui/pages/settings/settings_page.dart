@@ -37,7 +37,7 @@ class _SettingsPageState extends State<SettingsPage> {
           padding: EdgeInsets.zero,
           children: <Widget> [
             ListTile(
-              leading: Icon(isDarkModeOn ? Icons.lightbulb_outline : Icons.lightbulb),
+              leading: Icon(isDarkModeOn ? Icons.nights_stay : Icons.wb_sunny),
               title: Text(AppLocalizations.of(context)
                   .getTranslatedValue('setting_page_theme_toggle_txt')),
               onTap: () =>_toggleTheme(context),
