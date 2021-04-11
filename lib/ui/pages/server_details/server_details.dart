@@ -63,7 +63,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
           children: <Widget>[
             ServerDetailsHeader(widget.server, map, numOfPlayers, maxPlayers),
           ],
-        ) :  const Center(child: CircularProgressIndicator()),
+        ) : const Center(child: CircularProgressIndicator()),
       ),
     );
   }
