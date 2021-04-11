@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:turrant/models/app_theme.dart';
 
 import 'package:turrant/models/server.dart';
 import 'package:turrant/routes/route_names.dart';
+import 'package:turrant/themes/styling.dart';
 
 class ServerItem extends StatelessWidget {
   const ServerItem(this.server);
@@ -14,10 +16,30 @@ class ServerItem extends StatelessWidget {
       onTap: () {
         Navigator.pushNamed(context, serverDetailsRoute, arguments: server);
       },
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(
-          server.serverName
+      child: Material(
+        elevation: 12,
+        child: Container(
+          padding: const EdgeInsets.all(15),
+          decoration: BoxDecoration(
+            color: AppStyles.charcoalGrey,
+            gradient: const LinearGradient(
+              begin: Alignment(-4, 0.1),
+              end: Alignment(1, 0.1),
+              colors: <Color>[AppStyles.blue, AppStyles.charcoalGrey],
+            ),
+            border: Border(left: BorderSide(
+                width: 5, color: Theme.of(context).accentColor),)
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(server.serverName, style: AppStyles.serverItemTitle,),
+              const SizedBox(height: 8,),
+              Text('${server.serverIp} ${server.serverPort}',
+                style: AppStyles.serverItemSubTitle,
+              ),
+            ],
+          ),
         ),
       ),
     );

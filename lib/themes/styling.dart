@@ -32,6 +32,9 @@ class AppStyles {
   static const Color darkGray = Color.fromRGBO(44, 47, 51, 1);
   static const Color black = Color.fromRGBO(35, 39, 42, 1);
 
+  static const Color blue = Color.fromRGBO(95, 151, 250, 1);
+  static const Color charcoalGrey = Color.fromRGBO(50, 50, 59, 1);
+
   static const BoxShadow blockShadow = BoxShadow(
       color: blackShadowOp30,
       offset: Offset(0, 3),
@@ -52,6 +55,46 @@ class AppStyles {
 
   static const TextStyle textH2 = TextStyle(
     fontSize: 28,
+  );
+
+  static const TextStyle serverItemTitle = TextStyle(
+    color:  white,
+    fontWeight: FontWeight.w600,
+    fontStyle:  FontStyle.normal,
+    fontSize: 14.0
+  );
+
+  static const TextStyle serverItemSubTitle = TextStyle(
+    color:  white60,
+    fontWeight: FontWeight.w400,
+    fontStyle:  FontStyle.normal,
+    fontSize: 14.0
+  );
+
+  static const TextStyle serverDetailsHeaderTitle = TextStyle(
+    color:  white,
+    fontWeight: FontWeight.w600,
+    fontStyle:  FontStyle.normal,
+    fontSize: 24.0,
+    shadows: <Shadow>[
+      Shadow(
+        blurRadius: 10,
+        color: black,
+      ),
+    ],
+  );
+
+  static const TextStyle serverDetailsHeaderSubTitle = TextStyle(
+    color:  white,
+    fontWeight: FontWeight.w600,
+    fontStyle:  FontStyle.normal,
+    fontSize: 16.0,
+    shadows: <Shadow>[
+      Shadow(
+        blurRadius: 10,
+        color: black,
+      ),
+    ],
   );
 }
 
