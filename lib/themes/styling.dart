@@ -57,6 +57,13 @@ class AppStyles {
     fontSize: 28,
   );
 
+  static const TextStyle playerItemTitle = TextStyle(
+    color:  white,
+    fontWeight: FontWeight.w600,
+    fontStyle:  FontStyle.normal,
+    fontSize: 18.0
+  );
+
   static const TextStyle serverItemTitle = TextStyle(
     color:  white,
     fontWeight: FontWeight.w600,

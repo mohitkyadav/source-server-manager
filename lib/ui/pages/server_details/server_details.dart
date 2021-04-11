@@ -51,9 +51,6 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    // RefreshIndicator(
-    //     key: const ValueKey('PullToRefreshBlocks'),
-    //     onRefresh: () => _loadPractice(),
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.server.serverName),
@@ -66,7 +63,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
             ServerDetailsHeader(widget.server, map, numOfPlayers, maxPlayers),
             const SizedBox(height: 10,),
             ServerControls(widget.server, map, refreshInfo, sendCommandToSv),
-            PlayersList(players, sendCommandToSv),
+            PlayersList(players, refreshInfo, sendCommandToSv),
           ],
         ) : const Center(child: CircularProgressIndicator()),
       ),
