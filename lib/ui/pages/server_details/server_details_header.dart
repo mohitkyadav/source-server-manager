@@ -16,41 +16,56 @@ class ServerDetailsHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Stack(
-        children: <Widget>[
-          Container(
-            child: Align(
-              alignment: Alignment.center,
-              widthFactor: 1,
-              heightFactor: 0.2,
-              child: Image.asset('assets/img/$map.jpg',),
-            ),
-          ),
-          Positioned.fill(
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2,),
-              child: Container(
-                color: AppStyles.blackShadowOp20,
+    return Material(
+      elevation: 12,
+      child: Container(
+        child: Stack(
+          children: <Widget>[
+            Container(
+              child: Align(
+                alignment: Alignment.center,
+                widthFactor: 1,
+                heightFactor: 0.2,
+                child: Image.asset('assets/img/$map.jpg',),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text('IP: ${server.serverIp}:${server.serverPort}',
-                    style: AppStyles.serverDetailsHeaderTitle),
-                const SizedBox(height: 55,),
-                Text('Current Map: $map', style: AppStyles.serverDetailsHeaderSubTitle),
-                const SizedBox(height: 5,),
-                Text('Players: $numOfPlayers / $maxPlayers',
-                    style: AppStyles.serverDetailsHeaderSubTitle),
-              ],
+            Positioned.fill(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2,),
+                child: Container(
+                  color: AppStyles.blackShadowOp20,
+                ),
+              ),
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text('IP: ${server.serverIp}:${server.serverPort}',
+                      style: AppStyles.serverDetailsHeaderTitle),
+                  const SizedBox(height: 48,),
+                  Row(
+                    children: <Widget>[
+                      const Icon(Icons.map, color: AppStyles.blue,),
+                      const SizedBox(width: 10,),
+                      Text(map, style: AppStyles.serverDetailsHeaderSubTitle),
+                    ],
+                  ),
+                  const SizedBox(height: 5,),
+                  Row(
+                    children: <Widget>[
+                      const Icon(Icons.people, color: AppStyles.blue,),
+                      const SizedBox(width: 10,),
+                      Text('$numOfPlayers / $maxPlayers',
+                          style: AppStyles.serverDetailsHeaderSubTitle),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -75,7 +75,7 @@ class AppStyles {
     color:  white,
     fontWeight: FontWeight.w600,
     fontStyle:  FontStyle.normal,
-    fontSize: 24.0,
+    fontSize: 20.0,
     shadows: <Shadow>[
       Shadow(
         blurRadius: 10,
