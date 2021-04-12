@@ -4,11 +4,13 @@ import 'package:turrant/models/player.dart';
 import 'package:turrant/themes/styling.dart';
 
 class PlayersList extends StatelessWidget {
-  const PlayersList(this.players, this.refreshInfo, this.sendCommandToSv);
+  const PlayersList(this.players, this.refreshInfo,
+      this.sendCommandToSv, this.showToast);
 
   final List<Player> players;
   final Function refreshInfo;
   final Function sendCommandToSv;
+  final Function showToast;
 
   @override
   Widget build(BuildContext context) {

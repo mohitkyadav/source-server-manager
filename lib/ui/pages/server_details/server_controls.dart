@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:turrant/localization/app_localizations.dart';
 
@@ -6,12 +8,13 @@ import 'package:turrant/themes/styling.dart';
 
 class ServerControls extends StatelessWidget {
   const ServerControls(this.server, this.map, this.refreshInfo,
-      this.sendCommandToSv);
+      this.sendCommandToSv, this.showToast);
 
   final Server server;
   final String map;
   final Function refreshInfo;
   final Function sendCommandToSv;
+  final Function showToast;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +60,12 @@ class ServerControls extends StatelessWidget {
               tooltip: AppLocalizations.of(context)
                   .getTranslatedValue('restart_sv_tooltip'),
               onPressed: () {
-                print('restart sv');
+                showToast(context,
+                    'Restarting, server will not respond for a minute');
+                sendCommandToSv('_restart');
+                // ignore: always_specify_types
+                Future.delayed(const Duration(seconds: 2),
+                        () => Navigator.of(context).pop());
               },
             ),
             const SizedBox(width: 20,),

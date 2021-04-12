@@ -62,8 +62,8 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
           children: <Widget>[
             ServerDetailsHeader(widget.server, map, numOfPlayers, maxPlayers),
             const SizedBox(height: 10,),
-            ServerControls(widget.server, map, refreshInfo, sendCommandToSv),
-            PlayersList(players, refreshInfo, sendCommandToSv),
+            ServerControls(widget.server, map, refreshInfo, sendCommandToSv, showToast),
+            PlayersList(players, refreshInfo, sendCommandToSv, showToast),
           ],
         ) : const Center(child: CircularProgressIndicator()),
       ),
@@ -73,6 +73,15 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
   Future<String> sendCommandToSv(String cmd) async {
     await sourceServer.connect();
     return sourceServer.send(cmd);
+  }
+
+  void showToast(BuildContext context, String text) {
+    final ScaffoldState scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: Text(text),
+      ),
+    );
   }
 
   Future<void> refreshInfo() async {
