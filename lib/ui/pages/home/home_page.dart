@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:turrant/localization/app_localizations.dart';
+import 'package:turrant/models/server.dart';
 import 'package:turrant/themes/styling.dart';
-import 'file:///D:/git/turrant/lib/ui/pages/home/add_server.dart';
 
+import 'add_server.dart';
 import 'home_appbar_actions.dart';
 import 'home_drawer_list.dart';
 import 'servers_list.dart';
@@ -17,6 +21,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  List<Server> servers = <Server>[];
+
+  @override
+  void initState() {
+    super.initState();
+    _getServers();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +42,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       drawer: HomeDrawerList(),
-      body: const SingleChildScrollView(child: ServersList()),
+      body: SingleChildScrollView(child: ServersList(servers, _removeServer)),
       floatingActionButton: addSvFab(context),
     );
   }
@@ -44,10 +55,52 @@ class _HomePageState extends State<HomePage> {
             context: context,
             builder: (BuildContext context) => Container(
               color: AppStyles.charcoalGrey,
-              child: const AddServerForm(),
+              child: AddServerForm(refreshServers: _getServers,),
             ));
         // Navigator.pushNamed(context, addServerRoute);
       },
     );
+  }
+
+  Future<void> _getServers() {
+    return SharedPreferences.getInstance().then((SharedPreferences prefs) {
+      final List<String> currentAddedServers = prefs
+          .getStringList('addedServers') ?? <String>[];
+
+      final List<Server> currentServers = currentAddedServers.map((String server) => Server
+          .fromJson(jsonDecode(server) as Map<String, dynamic>)
+      ).toList();
+
+      setState(() {
+        servers = currentServers;
+      });
+    });
+  }
+
+  Future<void> _removeServer(Server serverToRemove) {
+    return SharedPreferences.getInstance().then((SharedPreferences prefs) {
+      final List<String> currentAddedServers = prefs
+          .getStringList('addedServers') ?? <String>[];
+
+      final List<String> filteredSv = <String>[];
+      final List<Server> filteredServerObjects = <Server>[];
+
+      currentAddedServers.forEach((String svString) {
+        final Server svObject = Server
+            .fromJson(jsonDecode(svString) as Map<String, dynamic>);
+
+        if (serverToRemove.serverIp != svObject.serverIp
+            || serverToRemove.serverRcon != svObject.serverRcon) {
+          filteredSv.add(svString);
+          filteredServerObjects.add(svObject);
+        }
+      });
+
+      setState(() {
+        servers = filteredServerObjects;
+      });
+
+      prefs.setStringList('addedServers', filteredSv);
+    });
   }
 }

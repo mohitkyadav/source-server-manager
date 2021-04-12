@@ -3,26 +3,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:turrant/localization/app_localizations.dart';
-import 'package:turrant/themes/styling.dart';
 import 'package:turrant/models/server.dart';
 import 'package:turrant/ui/pages/home/server_item.dart';
 
-class ServersList extends StatefulWidget {
-  const ServersList({Key key,}) : super(key: key);
+class ServersList extends StatelessWidget {
+  const ServersList(this.servers, this._removeServer);
 
-  @override
-  _ServersListState createState() => _ServersListState();
-}
-
-class _ServersListState extends State<ServersList> {
-  List<Server> servers = <Server>[];
-
-  @override
-  void initState() {
-    super.initState();
-    _getServers();
-  }
+  final List<Server> servers;
+  final Function _removeServer;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +22,7 @@ class _ServersListState extends State<ServersList> {
             padding: const EdgeInsets.all(8),
             itemCount: servers.length,
             itemBuilder: (BuildContext context, int index) {
-              return ServerItem(servers[index]);
+              return ServerItem(servers[index], _removeServer);
             },
             separatorBuilder: (BuildContext context, int index) {
               return const Divider();
@@ -42,20 +30,5 @@ class _ServersListState extends State<ServersList> {
         ),
       ],
     );
-  }
-
-  Future<void> _getServers() {
-    return SharedPreferences.getInstance().then((SharedPreferences prefs) {
-      final List<String> currentAddedServers = prefs
-          .getStringList('addedServers') ?? <String>[];
-
-      final List<Server> currentServers = currentAddedServers.map((String server) => Server
-          .fromJson(jsonDecode(server) as Map<String, dynamic>)
-      ).toList();
-
-      setState(() {
-        servers = currentServers;
-      });
-    });
   }
 }

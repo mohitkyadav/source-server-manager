@@ -7,9 +7,10 @@ import 'package:turrant/routes/route_names.dart';
 import 'package:turrant/themes/styling.dart';
 
 class ServerItem extends StatelessWidget {
-  const ServerItem(this.server);
+  const ServerItem(this.server, this._removeServer);
 
   final Server server;
+  final Function _removeServer;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +53,7 @@ class ServerItem extends StatelessWidget {
               ),
             ),
             onDismissed: (DismissDirection dir) {
-              print('remove');
+              _removeServer(server);
             },
             child: Padding(
               padding: const EdgeInsets.all(15.0),

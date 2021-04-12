@@ -10,7 +10,8 @@ import 'package:turrant/localization/app_localizations.dart';
 import 'package:turrant/models/server.dart';
 
 class AddServerForm extends StatefulWidget {
-  const AddServerForm({Key key,}) : super(key: key);
+  const AddServerForm({Key key, @required this.refreshServers}) : super(key: key);
+  final Function refreshServers;
 
   @override
   _AddServerFormState createState() => _AddServerFormState();
@@ -113,12 +114,15 @@ class _AddServerFormState extends State<AddServerForm> {
           .getStringList('addedServers') ?? <String>[];
 
       final String jsonLocalServer = jsonEncode(localServer.toJson());
-      print(currentAddedServers.indexOf(jsonLocalServer));
+
       if (!currentAddedServers.contains(jsonLocalServer)) {
         prefs.setStringList('addedServers', <String>[...currentAddedServers,
           jsonLocalServer]);
-        Navigator.of(context).pop();
       }
+      print('hree');
+
+      widget.refreshServers();
+      Navigator.of(context).pop();
     });
     server.close();
   }
