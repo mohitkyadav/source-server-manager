@@ -53,6 +53,7 @@ class _HomePageState extends State<HomePage> {
       onPressed: () {
         showModalBottomSheet<Widget>(
             context: context,
+            isScrollControlled: true,
             builder: (BuildContext context) => Container(
               color: AppStyles.charcoalGrey,
               child: AddServerForm(refreshServers: _getServers,),

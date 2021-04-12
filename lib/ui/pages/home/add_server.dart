@@ -27,73 +27,74 @@ class _AddServerFormState extends State<AddServerForm> {
 
   @override
   Widget build(BuildContext context) {
-    final String _title = AppLocalizations.of(context)
-        .getTranslatedValue('add_server_page_title');
-
     return SingleChildScrollView(
       child: Form(
         key: _key,
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: <Widget>[
-              Container(child: Text(AppLocalizations.of(context)
-                  .getTranslatedValue('input_form'))),
-              const SizedBox(height: 20,),
-              TextFormField(
-                validator: (String val)  => val.isEmpty ? AppLocalizations.of(context)
-                    .getTranslatedValue('form_ip_field_err') : null,
-                onSaved: (String val) => setState(() => ip = val),
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  labelText: AppLocalizations.of(context)
-                      .getTranslatedValue('form_ip_field_txt'),
-                  hintText: AppLocalizations.of(context)
-                      .getTranslatedValue('form_ip_field_txt'),
+          padding: MediaQuery.of(context).viewInsets,
+          child: Container(
+            padding: const EdgeInsets.all(15.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Container(child: Text(AppLocalizations.of(context)
+                    .getTranslatedValue('input_form'))),
+                const SizedBox(height: 20,),
+                TextFormField(
+                  validator: (String val)  => val.isEmpty ? AppLocalizations.of(context)
+                      .getTranslatedValue('form_ip_field_err') : null,
+                  onSaved: (String val) => setState(() => ip = val),
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelText: AppLocalizations.of(context)
+                        .getTranslatedValue('form_ip_field_txt'),
+                    hintText: AppLocalizations.of(context)
+                        .getTranslatedValue('form_ip_field_txt'),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20,),
-              TextFormField(
-                validator: (String val)  => val.isEmpty ? AppLocalizations.of(context)
-                    .getTranslatedValue('form_port_field_err') : null,
-                onSaved: (String val) => setState(() => port = int.parse(val)),
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  labelText: AppLocalizations.of(context)
-                      .getTranslatedValue('form_port_field_txt'),
-                  hintText: AppLocalizations.of(context)
-                      .getTranslatedValue('form_port_field_txt'),
+                const SizedBox(height: 20,),
+                TextFormField(
+                  validator: (String val)  => val.isEmpty ? AppLocalizations.of(context)
+                      .getTranslatedValue('form_port_field_err') : null,
+                  onSaved: (String val) => setState(() => port = int.parse(val)),
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelText: AppLocalizations.of(context)
+                        .getTranslatedValue('form_port_field_txt'),
+                    hintText: AppLocalizations.of(context)
+                        .getTranslatedValue('form_port_field_txt'),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20,),
-              TextFormField(
-                validator: (String val)  => val.isEmpty ? AppLocalizations.of(context)
-                    .getTranslatedValue('form_pass_field_err') : null,
-                onSaved: (String val) => setState(() => password = val),
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  labelText: AppLocalizations.of(context)
-                      .getTranslatedValue('form_pass_field_txt'),
-                  hintText: AppLocalizations.of(context)
-                      .getTranslatedValue('form_pass_field_txt'),
+                const SizedBox(height: 20,),
+                TextFormField(
+                  validator: (String val)  => val.isEmpty ? AppLocalizations.of(context)
+                      .getTranslatedValue('form_pass_field_err') : null,
+                  onSaved: (String val) => setState(() => password = val),
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelText: AppLocalizations.of(context)
+                        .getTranslatedValue('form_pass_field_txt'),
+                    hintText: AppLocalizations.of(context)
+                        .getTranslatedValue('form_pass_field_txt'),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20,),
-              MaterialButton(
-                onPressed: () {
-                  if (_key.currentState.validate()) {
-                    _key.currentState.save();
-                    _connectToServer();
-                  }
-                },
-                height: 60,
-                shape: const StadiumBorder(),
-                color: Theme.of(context).accentColor,
-                child: Text(AppLocalizations.of(context)
-                    .getTranslatedValue('form_submit_btn_txt')),
-              ),
-            ],
+                const SizedBox(height: 20,),
+                MaterialButton(
+                  onPressed: () {
+                    if (_key.currentState.validate()) {
+                      _key.currentState.save();
+                      _connectToServer();
+                    }
+                  },
+                  height: 60,
+                  shape: const StadiumBorder(),
+                  color: Theme.of(context).accentColor,
+                  child: Text(AppLocalizations.of(context)
+                      .getTranslatedValue('form_submit_btn_txt')),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -119,7 +120,6 @@ class _AddServerFormState extends State<AddServerForm> {
         prefs.setStringList('addedServers', <String>[...currentAddedServers,
           jsonLocalServer]);
       }
-      print('hree');
 
       widget.refreshServers();
       Navigator.of(context).pop();

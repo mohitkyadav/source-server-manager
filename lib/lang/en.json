@@ -8,7 +8,7 @@
   "form_port_field_err": "Server port can not be empty",
   "form_pass_field_txt": "RCON Password",
   "form_pass_field_err": "RCON Password can not be empty",
-  "form_submit_btn_txt": "Submit",
+  "form_submit_btn_txt": "Add server",
   "drawer_settings_btn_txt": "Go to Settings Page",
   "drawer_about_btn_txt": "Go to About Page",
   "setting_page_app_bar_title": "Settings",

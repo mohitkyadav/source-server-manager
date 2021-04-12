@@ -8,7 +8,7 @@
   "form_port_field_err": "لا يمكن أن يكون Port فارغًا ",
   "form_pass_field_txt": "RCON Password",
   "form_pass_field_err": "لا يمكن أن يكون Password RCON فارغًا",
-  "form_submit_btn_txt": "إرسال بيانات النموذج",
+  "form_submit_btn_txt": "أضف معلومات Server ",
   "drawer_settings_btn_txt": "انتقل إلى صفحة الإعدادات",
   "drawer_about_btn_txt": "انتقل إلى حول الصفحة",
   "setting_page_app_bar_title": "إعدادات",
