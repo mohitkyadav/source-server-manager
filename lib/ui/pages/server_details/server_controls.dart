@@ -74,7 +74,11 @@ class ServerControls extends StatelessWidget {
                   .of(context).getTranslatedValue('change_map_tooltip')),
               underline: const SizedBox(),
               value: map,
-              onChanged: (String map) => sendCommandToSv('map $map'),
+              onChanged: (String map) {
+                showToast(context,
+                    'Changing map to $map, refresh in a bit');
+                sendCommandToSv('map $map');
+              },
               icon: const Icon(Icons.map),
               iconEnabledColor: AppStyles.white,
               items: activeDutyMaps.map(
