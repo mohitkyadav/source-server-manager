@@ -8,6 +8,7 @@ import 'package:source_server/source_server.dart';
 
 import 'package:turrant/localization/app_localizations.dart';
 import 'package:turrant/models/server.dart';
+import 'package:turrant/themes/styling.dart';
 
 class AddServerForm extends StatefulWidget {
   const AddServerForm({Key key, @required this.refreshServers}) : super(key: key);
@@ -38,13 +39,14 @@ class _AddServerFormState extends State<AddServerForm> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Container(child: Text(AppLocalizations.of(context)
-                    .getTranslatedValue('input_form'))),
+                    .getTranslatedValue('input_form'), style: AppStyles.addServerHeader),),
                 const SizedBox(height: 20,),
                 TextFormField(
                   validator: (String val)  => val.isEmpty ? AppLocalizations.of(context)
                       .getTranslatedValue('form_ip_field_err') : null,
                   onSaved: (String val) => setState(() => ip = val),
                   decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.all(10.0),
                     border: const OutlineInputBorder(),
                     labelText: AppLocalizations.of(context)
                         .getTranslatedValue('form_ip_field_txt'),
@@ -59,6 +61,7 @@ class _AddServerFormState extends State<AddServerForm> {
                   onSaved: (String val) => setState(() => port = int.parse(val)),
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.all(10.0),
                     border: const OutlineInputBorder(),
                     labelText: AppLocalizations.of(context)
                         .getTranslatedValue('form_port_field_txt'),
@@ -72,6 +75,7 @@ class _AddServerFormState extends State<AddServerForm> {
                       .getTranslatedValue('form_pass_field_err') : null,
                   onSaved: (String val) => setState(() => password = val),
                   decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.all(10.0),
                     border: const OutlineInputBorder(),
                     labelText: AppLocalizations.of(context)
                         .getTranslatedValue('form_pass_field_txt'),
@@ -87,7 +91,7 @@ class _AddServerFormState extends State<AddServerForm> {
                       _connectToServer();
                     }
                   },
-                  height: 60,
+                  height: 45,
                   shape: const StadiumBorder(),
                   color: Theme.of(context).accentColor,
                   child: Text(AppLocalizations.of(context)

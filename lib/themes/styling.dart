@@ -58,6 +58,12 @@ class AppStyles {
     fontSize: 28,
   );
 
+  static const TextStyle addServerHeader = TextStyle(
+    fontSize: 18,
+    letterSpacing: 2,
+    fontWeight: FontWeight.w600,
+  );
+
   static const TextStyle playerItemTitle = TextStyle(
     color:  white,
     fontWeight: FontWeight.w600,
