@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:source_server/source_server.dart';
-import 'package:turrant/models/player.dart';
 
+import 'package:turrant/models/player.dart';
 import 'package:turrant/models/server.dart';
 import 'package:turrant/ui/pages/server_details/players_list.dart';
 import 'package:turrant/ui/pages/server_details/server_controls.dart';
@@ -29,6 +29,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
   String map;
   String numOfPlayers;
   String maxPlayers;
+  String svName = '';
 
   @override
   void initState() {
@@ -53,7 +54,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.server.serverName),
+        title: Text(svName),
       ),
       body: RefreshIndicator(
         key: const ValueKey<String> ('PullToRefreshServerDetails'),
@@ -90,14 +91,12 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
     });
 
     final Map<String, dynamic> serverInfo = await sourceServer.getInfo();
-    final Map<String, dynamic> playerInfo = await sourceServer.getPlayers();
+    final String statusRes = await sourceServer.send('status');
 
     setState(() {
-      players = playerInfo.values
-          .map((dynamic player) => Player
-          .fromJson(player as Map<String, dynamic>)).toList();
-
+      players = _parseStatus(statusRes);
       map = serverInfo['map'].toString();
+      svName = serverInfo['name'].toString();
       numOfPlayers = serverInfo['players'].toString();
       maxPlayers = serverInfo['maxplayers'].toString();
       isLoading = false;
@@ -108,19 +107,45 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
     await sourceServer.connect();
 
     final Map<String, dynamic> serverInfo = await sourceServer.getInfo();
-    final Map<String, dynamic> playerInfo = await sourceServer.getPlayers();
+    final String statusRes = await sourceServer.send('status');
 
     setState(() {
-      players = playerInfo.values
-          .map((dynamic player) => Player
-          .fromJson(player as Map<String, dynamic>)).toList();
-
+      players = _parseStatus(statusRes);
       map = serverInfo['map'].toString();
+      svName = serverInfo['name'].toString();
       numOfPlayers = serverInfo['players'].toString();
       maxPlayers = serverInfo['maxplayers'].toString();
       isLoading = false;
     });
+  }
 
-    // sourceServer.send('sm_kick haaboo [reason is this]').then((String value) => print(value));
+  List<Player> _parseStatus(String statusRes) {
+    final String status = statusRes.trim();
+    final List<String> lines = status.split('\n');
+    final int index = lines.indexWhere((String line) => line.startsWith('#'));
+
+    return _parseUsers(lines.sublist(index + 1, lines.length - 1));
+  }
+
+  List<Player> _parseUsers(List<String> playerStrings) {
+    // 4 1 "haaboo" STEAM_1:0:217416156 00:59 50 0 active 128000 49.36.240.49:27005
+    final List<Player> playersOnSv = <Player>[];
+
+    for (final String line in playerStrings) {
+      if (line.startsWith('#end')) {
+        break;
+      }
+
+      final String name = line.substring(line.indexOf('"') + 1, line.lastIndexOf('"'));
+      final List<String> split = line.split(' ');
+      final String steamId = split[5];
+      final String time = split[6];
+      final String ping = split[7];
+      final String score = split[8];
+
+      playersOnSv.add(Player(name, score, time, ping, steamId));
+    }
+
+    return playersOnSv;
   }
 }

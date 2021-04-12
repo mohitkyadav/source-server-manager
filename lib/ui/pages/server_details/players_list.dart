@@ -25,9 +25,6 @@ class PlayersList extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       itemCount: players.length,
       itemBuilder: (BuildContext context, int index) {
-        final String duration = Duration(
-            seconds: int.parse(
-                _durationHelper(players[index].duration))).inMinutes.toString();
 
         return Material(
           elevation: 12,
@@ -60,7 +57,7 @@ class PlayersList extends StatelessWidget {
                    ],
                  ),
                 const SizedBox(height: 8,),
-                Text('Score: ${players[index].score}, Duration: $duration mins',
+                Text('Ping: ${players[index].ping}, Score: ${players[index].score}, Duration: ${players[index].duration}',
                   style: AppStyles.serverItemSubTitle,
                 ),
               ],
