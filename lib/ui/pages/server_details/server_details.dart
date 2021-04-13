@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:source_server/source_server.dart';
+import 'package:turrant/models/cmd.dart';
 
 import 'package:turrant/models/player.dart';
 import 'package:turrant/models/server.dart';
+import 'package:turrant/ui/pages/server_details/console.dart';
 import 'package:turrant/ui/pages/server_details/players_list.dart';
 import 'package:turrant/ui/pages/server_details/server_controls.dart';
 import 'package:turrant/ui/pages/server_details/server_details_header.dart';
@@ -26,6 +28,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
   bool isLoading = true;
   SourceServer sourceServer;
   List<Player> players;
+  List<Command> commands = <Command>[];
   String map;
   String numOfPlayers;
   String maxPlayers;
@@ -52,28 +55,58 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(svName),
-      ),
-      body: RefreshIndicator(
-        key: const ValueKey<String> ('PullToRefreshServerDetails'),
-        onRefresh: () => refreshInfo(),
-        child: !isLoading ? ListView(
-          children: <Widget>[
-            ServerDetailsHeader(widget.server, map, numOfPlayers, maxPlayers),
-            const SizedBox(height: 10,),
-            ServerControls(widget.server, map, refreshInfo, sendCommandToSv, showToast),
-            PlayersList(players, refreshInfo, sendCommandToSv, showToast),
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(svName),
+          bottom: const TabBar(
+            tabs: <Widget>[
+              Tab(icon: Icon(Icons.dns)),
+              Tab(icon: Icon(Icons.branding_watermark)),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          children: [
+            _buildDetails(context),
+            _buildTerminal(context),
           ],
-        ) : const Center(child: CircularProgressIndicator()),
+        ),
       ),
     );
   }
 
-  Future<String> sendCommandToSv(String cmd) async {
+  Widget _buildDetails(BuildContext context) {
+    return RefreshIndicator(
+      key: const ValueKey<String> ('PullToRefreshServerDetails'),
+      onRefresh: () => refreshInfo(),
+      child: !isLoading ? ListView(
+        children: <Widget>[
+          ServerDetailsHeader(widget.server, map, numOfPlayers, maxPlayers),
+          const SizedBox(height: 10,),
+          ServerControls(widget.server, map, refreshInfo, sendCommandToSv, showToast),
+          PlayersList(players, refreshInfo, sendCommandToSv, showToast),
+        ],
+      ) : const Center(child: CircularProgressIndicator()),
+    );
+  }
+
+  Widget _buildTerminal(BuildContext context) {
+    return Console(sendCommandToSv, commands);
+  }
+
+  Future<void> sendCommandToSv(String cmd) async {
     await sourceServer.connect();
-    return sourceServer.send(cmd);
+    sourceServer.send(cmd);
+    //     .then((res) {
+    //   print(res);
+    // });
+
+    // setState(() {
+    //   commands.add(Command(cmd, false));
+    //   // commands.add(Command(res, true));
+    // });
   }
 
   void showToast(BuildContext context, String text) {
