@@ -41,16 +41,8 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
     ip = widget.server.serverIp;
     port = int.parse(widget.server.serverPort);
     rconPassword = widget.server.serverRcon;
-    sourceServer = SourceServer(InternetAddress(ip), port, rconPassword);
 
-    _connectToServer();
-  }
-
-  @override
-  void dispose() {
-    sourceServer.close();
-
-    super.dispose();
+    refreshInfo();
   }
 
   @override
@@ -97,13 +89,17 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
   }
 
   Future<String> sendCommandToSv(String cmd) async {
-    await sourceServer.connect();
-    final String res = await sourceServer.send(cmd);
+    final SourceServer sv = SourceServer(InternetAddress(ip), port, rconPassword);
+
+    await sv.connect();
+    final String res = await sv.send(cmd);
 
     setState(() {
       commands.add(Command(cmd, false));
       commands.add(Command(res, true));
     });
+
+    sv.close();
   }
 
   void showToast(BuildContext context, String text) {
@@ -116,6 +112,10 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
   }
 
   Future<void> refreshInfo() async {
+    final SourceServer sourceServer = SourceServer(
+        InternetAddress(ip), port, rconPassword);
+    await sourceServer.connect();
+
     setState(() {
       isLoading = true;
     });
@@ -131,22 +131,8 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
       maxPlayers = serverInfo['maxplayers'].toString();
       isLoading = false;
     });
-  }
 
-  Future<void> _connectToServer() async {
-    await sourceServer.connect();
-
-    final Map<String, dynamic> serverInfo = await sourceServer.getInfo();
-    final String statusRes = await sourceServer.send('status');
-
-    setState(() {
-      players = _parseStatus(statusRes);
-      map = serverInfo['map'].toString();
-      svName = serverInfo['name'].toString();
-      numOfPlayers = serverInfo['players'].toString();
-      maxPlayers = serverInfo['maxplayers'].toString();
-      isLoading = false;
-    });
+    sourceServer.close();
   }
 
   List<Player> _parseStatus(String statusRes) {
@@ -158,7 +144,6 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
   }
 
   List<Player> _parseUsers(List<String> playerStrings) {
-    // 4 1 "haaboo" STEAM_1:0:217416156 00:59 50 0 active 128000 49.36.240.49:27005
     final List<Player> playersOnSv = <Player>[];
 
     for (final String line in playerStrings) {
