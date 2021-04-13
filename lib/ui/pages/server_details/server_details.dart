@@ -10,6 +10,7 @@ import 'package:turrant/ui/pages/server_details/console.dart';
 import 'package:turrant/ui/pages/server_details/players_list.dart';
 import 'package:turrant/ui/pages/server_details/server_controls.dart';
 import 'package:turrant/ui/pages/server_details/server_details_header.dart';
+import 'package:turrant/utils/utils.dart';
 
 class ServerDetailsPage extends StatefulWidget {
   const ServerDetailsPage(this.server);
@@ -124,7 +125,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
     final String statusRes = await sourceServer.send('status');
 
     setState(() {
-      players = _parseStatus(statusRes);
+      players = Utils.parseStatus(statusRes);
       map = serverInfo['map'].toString();
       svName = serverInfo['name'].toString();
       numOfPlayers = serverInfo['players'].toString();
@@ -133,39 +134,5 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
     });
 
     sourceServer.close();
-  }
-
-  List<Player> _parseStatus(String statusRes) {
-    final String status = statusRes.trim();
-    final List<String> lines = status.split('\n');
-    final int index = lines.indexWhere((String line) => line.startsWith('#'));
-
-    return _parseUsers(lines.sublist(index + 1, lines.length - 1));
-  }
-
-  List<Player> _parseUsers(List<String> playerStrings) {
-    final List<Player> playersOnSv = <Player>[];
-
-    for (final String line in playerStrings) {
-      if (line.startsWith('#end')) {
-        break;
-      }
-
-      final String name = line.substring(line.indexOf('"') + 1, line.lastIndexOf('"'));
-      final List<String> split = line.split(' ');
-      final String steamId = _parseSteam64Id(split[5]);
-      final String time = split[6];
-      final String ping = split[7];
-      final String score = split[8];
-
-      playersOnSv.add(Player(name, score, time, ping, steamId));
-    }
-
-    return playersOnSv;
-  }
-
-   String _parseSteam64Id(String steamId) {
-    return ((int.parse(steamId.split(':')[2]) * 2) + 76561197960265728)
-        .toString();
   }
 }
