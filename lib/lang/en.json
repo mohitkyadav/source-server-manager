@@ -2,6 +2,8 @@
   "app_bar_title": "Added Servers",
   "home_page": "Home Page",
   "input_form": "Input Server information",
+  "form_name_field_txt": "Server Name",
+  "form_name_field_err": "Server name can not be empty",
   "form_ip_field_txt": "Server IP address",
   "form_ip_field_err": "Server address can not be empty",
   "form_port_field_txt": "Server port",

@@ -2,6 +2,8 @@
   "app_bar_title": "Added Servers",
   "home_page": "मुख पृष्ठ",
   "input_form": "Server की जानकारी भरें ",
+  "form_name_field_txt": "सर्वर का नाम ",
+  "form_name_field_err": "सर्वर का नाम खाली नहीं हो सकता",
   "form_ip_field_txt": "सर्वर IP",
   "form_ip_field_err": "सर्वर का पता खाली नहीं हो सकता",
   "form_port_field_txt": "Port",

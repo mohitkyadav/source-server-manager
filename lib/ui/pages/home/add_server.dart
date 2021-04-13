@@ -8,11 +8,12 @@ import 'package:source_server/source_server.dart';
 
 import 'package:turrant/localization/app_localizations.dart';
 import 'package:turrant/models/server.dart';
-import 'package:turrant/themes/styling.dart';
 
 class AddServerForm extends StatefulWidget {
-  const AddServerForm({Key key, @required this.refreshServers}) : super(key: key);
+  const AddServerForm(
+      {Key key, @required this.refreshServers, this.sv}) : super(key: key);
   final Function refreshServers;
+  final Server sv;
 
   @override
   _AddServerFormState createState() => _AddServerFormState();
@@ -23,8 +24,22 @@ class _AddServerFormState extends State<AddServerForm> {
 
   // state
   String ip;
+  String name;
   int port;
   String password;
+  bool isEditing = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.sv != null) {
+      name = widget.sv.serverName;
+      ip = widget.sv.serverIp;
+      port = int.parse(widget.sv.serverPort);
+      password = widget.sv.serverRcon;
+      isEditing = true;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,13 +53,25 @@ class _AddServerFormState extends State<AddServerForm> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Container(child: Text(AppLocalizations.of(context)
-                    .getTranslatedValue('input_form'), style: AppStyles.addServerHeader),),
+                const SizedBox(height: 10,),
+                TextFormField(
+                  onSaved: (String val) => setState(() => name = val),
+                  initialValue: name,
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.all(10.0),
+                    border: const OutlineInputBorder(),
+                    labelText: AppLocalizations.of(context)
+                        .getTranslatedValue('form_name_field_txt'),
+                    hintText: AppLocalizations.of(context)
+                        .getTranslatedValue('form_name_field_txt'),
+                  ),
+                ),
                 const SizedBox(height: 20,),
                 TextFormField(
                   validator: (String val)  => val.isEmpty ? AppLocalizations.of(context)
                       .getTranslatedValue('form_ip_field_err') : null,
                   onSaved: (String val) => setState(() => ip = val),
+                  initialValue: ip,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.all(10.0),
                     border: const OutlineInputBorder(),
@@ -59,6 +86,7 @@ class _AddServerFormState extends State<AddServerForm> {
                   validator: (String val)  => val.isEmpty ? AppLocalizations.of(context)
                       .getTranslatedValue('form_port_field_err') : null,
                   onSaved: (String val) => setState(() => port = int.parse(val)),
+                  initialValue: port != null ? port.toString() : '',
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.all(10.0),
@@ -74,6 +102,7 @@ class _AddServerFormState extends State<AddServerForm> {
                   validator: (String val)  => val.isEmpty ? AppLocalizations.of(context)
                       .getTranslatedValue('form_pass_field_err') : null,
                   onSaved: (String val) => setState(() => password = val),
+                  initialValue: password,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.all(10.0),
                     border: const OutlineInputBorder(),
@@ -111,8 +140,9 @@ class _AddServerFormState extends State<AddServerForm> {
 
     final Map<String, dynamic> serverInfo = await server.getInfo();
 
-    final Server localServer = Server(serverInfo['name'].toString(), ip,
-        port.toString(), password, serverInfo['game'].toString());
+    final Server localServer = Server((name != null
+        && name.trim().length > 1) ? name : serverInfo['name'].toString(),
+        ip, port.toString(), password, serverInfo['game'].toString());
 
     SharedPreferences.getInstance().then((SharedPreferences prefs) {
       final List<String> currentAddedServers = prefs
@@ -120,7 +150,15 @@ class _AddServerFormState extends State<AddServerForm> {
 
       final String jsonLocalServer = jsonEncode(localServer.toJson());
 
-      if (!currentAddedServers.contains(jsonLocalServer)) {
+      if (isEditing) {
+        final int indexOfCurrentSv = currentAddedServers
+            .indexOf(jsonEncode(widget.sv.toJson()));
+        currentAddedServers.replaceRange(
+            indexOfCurrentSv, indexOfCurrentSv + 1, <String>[jsonLocalServer]);
+        currentAddedServers.join(', ');
+
+        prefs.setStringList('addedServers', currentAddedServers);
+      } else {
         prefs.setStringList('addedServers', <String>[...currentAddedServers,
           jsonLocalServer]);
       }

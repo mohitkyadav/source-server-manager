@@ -2,6 +2,8 @@
   "app_bar_title": "Added Servers",
   "home_page": "الصفحة الرئيسية",
   "input_form": "معلومات الخادم",
+  "form_name_field_txt": "اسم Server",
+  "form_name_field_err": "لا يمكن أن يكون اسم  Server فارغًا",
   "form_ip_field_txt": "عنوان IP للخادم مع المنفذ",
   "form_ip_field_err": "لا يمكن أن يكون عنوان الخادم فارغًا",
   "form_port_field_txt": "Port",

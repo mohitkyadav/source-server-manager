@@ -35,7 +35,6 @@ dependencies:
   provider: ^4.3.2+2
   shared_preferences: ^0.5.12+4
   source_server: ^1.1.0
-  flutter_slidable: ^0.5.7
   flutter_launcher_icons: "^0.8.0"
 
 dev_dependencies:

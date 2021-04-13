@@ -42,7 +42,8 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       drawer: HomeDrawerList(),
-      body: SingleChildScrollView(child: ServersList(servers, _removeServer)),
+      body: SingleChildScrollView(
+          child: ServersList(servers, _removeServer, handleSvLongPress)),
       floatingActionButton: addSvFab(context),
     );
   }
@@ -60,6 +61,17 @@ class _HomePageState extends State<HomePage> {
             ));
         // Navigator.pushNamed(context, addServerRoute);
       },
+    );
+  }
+
+  void handleSvLongPress(Server sv) {
+    showModalBottomSheet<Widget>(
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext context) => Container(
+        color: AppStyles.charcoalGrey,
+        child: AddServerForm(refreshServers: _getServers, sv: sv,),
+      )
     );
   }
 
@@ -91,7 +103,8 @@ class _HomePageState extends State<HomePage> {
             .fromJson(jsonDecode(svString) as Map<String, dynamic>);
 
         if (serverToRemove.serverIp != svObject.serverIp
-            || serverToRemove.serverRcon != svObject.serverRcon) {
+            || serverToRemove.serverRcon != svObject.serverRcon
+            || serverToRemove.serverName != svObject.serverName) {
           filteredSv.add(svString);
           filteredServerObjects.add(svObject);
         }

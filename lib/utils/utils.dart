@@ -6,10 +6,10 @@ class Utils {
     final List<String> lines = status.split('\n');
     final int index = lines.indexWhere((String line) => line.startsWith('#'));
 
-    return _parseUsers(lines.sublist(index + 1, lines.length - 1));
+    return parseUsers(lines.sublist(index + 1, lines.length - 1));
   }
 
-  static List<Player> _parseUsers(List<String> playerStrings) {
+  static List<Player> parseUsers(List<String> playerStrings) {
     final List<Player> playersOnSv = <Player>[];
 
     for (final String line in playerStrings) {
@@ -19,7 +19,7 @@ class Utils {
 
       final String name = line.substring(line.indexOf('"') + 1, line.lastIndexOf('"'));
       final List<String> split = line.split(' ');
-      final String steamId = _parseSteam64Id(split[5]);
+      final String steamId = parseSteam64Id(split[5]);
       final String time = split[6];
       final String ping = split[7];
       final String score = split[8];
@@ -30,7 +30,7 @@ class Utils {
     return playersOnSv;
   }
 
-  static String _parseSteam64Id(String steamId) {
+  static String parseSteam64Id(String steamId) {
     return ((int.parse(steamId.split(':')[2]) * 2) + 76561197960265728)
         .toString();
   }

@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_slidable/flutter_slidable.dart';
-
 import 'package:turrant/models/server.dart';
 import 'package:turrant/routes/route_names.dart';
 import 'package:turrant/themes/styling.dart';
 
 class ServerItem extends StatelessWidget {
-  const ServerItem(this.server, this._removeServer);
+  const ServerItem(this.server, this._removeServer, this.handleSvLongPress);
 
   final Server server;
   final Function _removeServer;
+  final Function handleSvLongPress;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         Navigator.pushNamed(context, serverDetailsRoute, arguments: server);
+      },
+      onLongPress: () {
+        handleSvLongPress(server);
       },
       child: Material(
         elevation: 12,

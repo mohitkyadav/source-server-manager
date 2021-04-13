@@ -33,7 +33,6 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
   String map;
   String numOfPlayers;
   String maxPlayers;
-  String svName = '';
 
   @override
   void initState() {
@@ -52,7 +51,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(svName),
+          title: Text(widget.server.serverName),
           bottom: const TabBar(
             tabs: <Widget>[
               Tab(icon: Icon(Icons.dns)),
@@ -127,7 +126,6 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
     setState(() {
       players = Utils.parseStatus(statusRes);
       map = serverInfo['map'].toString();
-      svName = serverInfo['name'].toString();
       numOfPlayers = serverInfo['players'].toString();
       maxPlayers = serverInfo['maxplayers'].toString();
       isLoading = false;
