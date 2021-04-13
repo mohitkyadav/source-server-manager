@@ -18,11 +18,13 @@ class Utils {
       }
 
       final String name = line.substring(line.indexOf('"') + 1, line.lastIndexOf('"'));
-      final List<String> split = line.split(' ');
-      final String steamId = parseSteam64Id(split[5]);
-      final String time = split[6];
-      final String ping = split[7];
-      final String score = split[8];
+      final List<String> split = line.split('"')[2]
+          .trim().replaceAll('  ', ' ').split(' ');
+
+      final String steamId = parseSteam64Id(split[0]);
+      final String time = split[1];
+      final String ping = split[2];
+      final String score = split[3];
 
       playersOnSv.add(Player(name, score, time, ping, steamId));
     }
@@ -31,6 +33,10 @@ class Utils {
   }
 
   static String parseSteam64Id(String steamId) {
+    if(!steamId.startsWith('STEAM_')) {
+      return '';
+    }
+
     return ((int.parse(steamId.split(':')[2]) * 2) + 76561197960265728)
         .toString();
   }
