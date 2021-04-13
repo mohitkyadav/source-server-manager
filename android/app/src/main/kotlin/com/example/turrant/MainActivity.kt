@@ -1,4 +1,4 @@
-package com.example.turrant
+package come.csgo.server.manager
 
 import io.flutter.embedding.android.FlutterActivity
 
