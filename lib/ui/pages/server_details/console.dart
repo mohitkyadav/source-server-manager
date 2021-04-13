@@ -26,8 +26,11 @@ class Console extends StatelessWidget {
                   padding: const EdgeInsets.all(8),
                   itemCount: commands.length,
                   itemBuilder: (BuildContext context, int index) {
+                    final Command cmd = commands[index];
 
-                    return Text(commands[index].cmdText);
+                    return Text('${!cmd.isResponse ? '> ' : ''}${cmd.cmdText}',
+                      style: cmd.isResponse
+                          ? AppStyles.consoleRes : AppStyles.consoleReq,);
                   },
                   separatorBuilder: (BuildContext context, int index) {
                     return const SizedBox(height: 5,);

@@ -96,18 +96,14 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
     return Console(sendCommandToSv, commands);
   }
 
-  Future<void> sendCommandToSv(String cmd) async {
+  Future<String> sendCommandToSv(String cmd) async {
     await sourceServer.connect();
-    // final String res = await sourceServer.send(cmd);
-    sourceServer.send(cmd);
+    final String res = await sourceServer.send(cmd);
 
-    // Future.delayed(const Duration(seconds: 2), () {
-      setState(() {
-        commands.add(Command(cmd, false));
-        // commands.add(Command(res, true));
-      });
-    // });
-
+    setState(() {
+      commands.add(Command(cmd, false));
+      commands.add(Command(res, true));
+    });
   }
 
   void showToast(BuildContext context, String text) {

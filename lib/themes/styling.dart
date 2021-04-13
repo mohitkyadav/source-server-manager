@@ -110,5 +110,21 @@ class AppStyles {
       ),
     ],
   );
+
+  static const TextStyle consoleReq = TextStyle(
+      color:  green,
+      fontWeight: FontWeight.w600,
+      fontStyle:  FontStyle.normal,
+      letterSpacing: 2,
+      fontSize: 14.0
+  );
+
+  static const TextStyle consoleRes = TextStyle(
+      color:  white60,
+      fontWeight: FontWeight.w400,
+      fontStyle:  FontStyle.normal,
+      letterSpacing: 1,
+      fontSize: 12.0
+  );
 }
 
