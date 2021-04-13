@@ -30,7 +30,7 @@ class Console extends StatelessWidget {
                     return Text(commands[index].cmdText);
                   },
                   separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(height: 10,);
+                    return const SizedBox(height: 5,);
                   },
                 ),
               )
