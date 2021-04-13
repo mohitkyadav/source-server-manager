@@ -138,7 +138,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
 
       final String name = line.substring(line.indexOf('"') + 1, line.lastIndexOf('"'));
       final List<String> split = line.split(' ');
-      final String steamId = split[5];
+      final String steamId = _parseSteam64Id(split[5]);
       final String time = split[6];
       final String ping = split[7];
       final String score = split[8];
@@ -147,5 +147,10 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
     }
 
     return playersOnSv;
+  }
+
+   String _parseSteam64Id(String steamId) {
+    return ((int.parse(steamId.split(':')[2]) * 2) + 76561197960265728)
+        .toString();
   }
 }

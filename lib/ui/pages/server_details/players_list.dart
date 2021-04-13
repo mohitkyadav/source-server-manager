@@ -71,8 +71,6 @@ class PlayersList extends StatelessWidget {
     );
   }
 
-  String _durationHelper(String dur) =>  dur.split('.')[0];
-
   Future<void> _displayTextInputDialog(BuildContext context, String cmd,
       String player) async {
     final TextEditingController _textFieldController = TextEditingController();
