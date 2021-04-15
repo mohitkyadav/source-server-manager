@@ -40,4 +40,11 @@ class Utils {
     return ((int.parse(steamId.split(':')[2]) * 2) + 76561197960265728)
         .toString();
   }
+
+  static List<String> parseMaps(String maps) {
+    final List<String> mapsList = <String>[];
+    print(maps.replaceAll(RegExp('[ ][ ]'), '').split('\n'));
+
+    return mapsList;
+  }
 }

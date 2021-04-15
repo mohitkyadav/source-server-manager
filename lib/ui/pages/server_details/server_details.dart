@@ -29,6 +29,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
   bool isLoading = true;
   SourceServer sourceServer;
   List<Player> players;
+  List<String> maps;
   List<Command> commands = <Command>[];
   String map;
   String numOfPlayers;
@@ -43,6 +44,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
     rconPassword = widget.server.serverRcon;
 
     refreshInfo();
+    _setMaps();
   }
 
   @override
@@ -109,6 +111,14 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
         content: Text(text),
       ),
     );
+  }
+
+  Future<void> _setMaps() async {
+    final SourceServer sv = SourceServer(InternetAddress(ip), port, rconPassword);
+
+    await sv.connect();
+    final String res = await sv.send('maps *');
+    Utils.parseMaps(res);
   }
 
   Future<void> refreshInfo() async {
