@@ -78,7 +78,6 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
       child: !isLoading ? ListView(
         children: <Widget>[
           ServerDetailsHeader(widget.server, map, numOfPlayers, maxPlayers),
-          const SizedBox(height: 10,),
           ServerControls(widget.server, map, refreshInfo,
               sendCommandToSv, showToast, maps),
           PlayersList(players, refreshInfo, sendCommandToSv, showToast),
