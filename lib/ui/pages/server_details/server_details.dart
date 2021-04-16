@@ -79,7 +79,8 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
         children: <Widget>[
           ServerDetailsHeader(widget.server, map, numOfPlayers, maxPlayers),
           const SizedBox(height: 10,),
-          ServerControls(widget.server, map, refreshInfo, sendCommandToSv, showToast),
+          ServerControls(widget.server, map, refreshInfo,
+              sendCommandToSv, showToast, maps),
           PlayersList(players, refreshInfo, sendCommandToSv, showToast),
         ],
       ) : const Center(child: CircularProgressIndicator()),
@@ -118,7 +119,9 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
 
     await sv.connect();
     final String res = await sv.send('maps *');
-    Utils.parseMaps(res);
+    setState(() {
+      maps = Utils.parseMaps(res);
+    });
   }
 
   Future<void> refreshInfo() async {

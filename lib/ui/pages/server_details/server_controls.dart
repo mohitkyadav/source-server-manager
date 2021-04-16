@@ -8,29 +8,22 @@ import 'package:turrant/themes/styling.dart';
 
 class ServerControls extends StatelessWidget {
   const ServerControls(this.server, this.map, this.refreshInfo,
-      this.sendCommandToSv, this.showToast);
+      this.sendCommandToSv, this.showToast, this.maps);
 
   final Server server;
   final String map;
   final Function refreshInfo;
   final Function sendCommandToSv;
   final Function showToast;
+  final List<String> maps;
 
   @override
   Widget build(BuildContext context) {
-    const List<String> activeDutyMaps = <String>[
-      'de_mirage',
-      'de_inferno',
-      'de_dust2',
-      'de_overpass',
-      'de_nuke',
-      'de_vertigo',
-    ];
 
     return Material(
       elevation: 12,
       child: Container(
-        padding: const EdgeInsets.all(15),
+        padding: const EdgeInsets.only(top: 15, bottom: 15),
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           color: AppStyles.lightPurple.withOpacity(0.3),
@@ -45,7 +38,6 @@ class ServerControls extends StatelessWidget {
                   .getTranslatedValue('refresh_sv_tooltip'),
               onPressed: () => refreshInfo(),
             ),
-            const SizedBox(width: 20,),
             IconButton(
               icon: const Icon(Icons.people_rounded),
               color: AppStyles.white,
@@ -53,7 +45,6 @@ class ServerControls extends StatelessWidget {
                   .getTranslatedValue('refresh_players_tooltip'),
               onPressed: () => refreshInfo(),
             ),
-            const SizedBox(width: 20,),
             IconButton(
               icon: const Icon(Icons.autorenew),
               color: AppStyles.white,
@@ -68,8 +59,8 @@ class ServerControls extends StatelessWidget {
                         () => Navigator.of(context).pop());
               },
             ),
-            const SizedBox(width: 20,),
             DropdownButton<String>(
+              isExpanded: false,
               hint: Text(AppLocalizations
                   .of(context).getTranslatedValue('change_map_tooltip')),
               underline: const SizedBox(),
@@ -81,9 +72,11 @@ class ServerControls extends StatelessWidget {
               },
               icon: const Icon(Icons.map),
               iconEnabledColor: AppStyles.white,
-              items: activeDutyMaps.map(
+              items: maps.map(
                     (String map) => DropdownMenuItem<String>(
-                  value: map, child: Text(map),),
+                  value: map, child: SizedBox(
+                        width: 130,
+                        child: Text(map)),),
               ).toList(),
             ),
           ],

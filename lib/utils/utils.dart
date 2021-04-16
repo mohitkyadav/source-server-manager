@@ -42,9 +42,16 @@ class Utils {
   }
 
   static List<String> parseMaps(String maps) {
-    final List<String> mapsList = <String>[];
-    print(maps.replaceAll(RegExp('[ ][ ]'), '').split('\n'));
+    final List<String> mapStrings = maps.replaceAll(
+        RegExp('[ ][ ]'), '').split('\n');
 
-    return mapsList;
+    final List<String> mapsResponse = <String>[];
+    for (final String mapString in mapStrings) {
+      if (mapString.contains('.bsp') && !mapString.contains('workshop')) {
+        mapsResponse.add(mapString.split('.bsp')[0].split(' ')[2]);
+      }
+    }
+
+    return mapsResponse;
   }
 }
