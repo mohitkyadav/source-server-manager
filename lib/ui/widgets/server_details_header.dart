@@ -19,16 +19,14 @@ class ServerDetailsHeader extends StatelessWidget {
     return Material(
       elevation: 12,
       child: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/img/$map.jpg',),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Stack(
           children: <Widget>[
-            SizedBox(
-              height: 150,
-              width: MediaQuery.of(context).size.width,
-              child: FittedBox(
-                fit: BoxFit.cover,
-                child: Image.asset('assets/img/$map.jpg', fit: BoxFit.fitWidth,),
-              ),
-            ),
             Positioned.fill(
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1,),

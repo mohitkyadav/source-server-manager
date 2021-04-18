@@ -38,8 +38,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       drawer: HomeDrawerList(),
-      body: SingleChildScrollView(
-          child: ServersList(servers, _removeServer, handleSvLongPress)),
+      body: ServersList(servers, _removeServer, handleSvLongPress),
       floatingActionButton: addSvFab(context),
     );
   }
