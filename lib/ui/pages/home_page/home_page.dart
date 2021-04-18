@@ -36,7 +36,16 @@ class _HomePageState extends State<HomePage> {
         slivers: <Widget>[
           SliverAppBar(
             title: Text(_title),
-            actions: [
+            centerTitle: false,
+            expandedHeight: 120,
+            flexibleSpace: FlexibleSpaceBar(
+              // centerTitle: true,
+              title: Text('${servers.length} Servers'),
+              titlePadding: const EdgeInsets.all(15),
+            ),
+            collapsedHeight: 80,
+            floating: true,
+            actions: <Widget>[
               CircleButton(const Icon(Icons.settings), () {
                 Navigator.of(context).pushNamed(settingsRoute);
               }),
