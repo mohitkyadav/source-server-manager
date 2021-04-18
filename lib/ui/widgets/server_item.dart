@@ -42,17 +42,17 @@ class ServerItem extends StatelessWidget {
           elevation: 12,
           child: Container(
             width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: AppStyles.charcoalGrey,
-              gradient: const LinearGradient(
+              gradient: LinearGradient(
                 begin: Alignment(-4, 0.1),
                 end: Alignment(1, 0.1),
                 colors: <Color>[AppStyles.blue, AppStyles.charcoalGrey],
               ),
-              border: Border(
-                bottom: BorderSide(
-                    width: 4, color: Theme.of(context).accentColor),
-              ),
+              // border: Border(
+              //   bottom: BorderSide(
+              //       width: 4, color: Theme.of(context).accentColor),
+              // ),
             ),
             child: Padding(
               padding: const EdgeInsets.all(15.0),

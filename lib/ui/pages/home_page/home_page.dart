@@ -33,9 +33,6 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(_title),
-        actions: <Widget>[
-          HomeAppbarActions(),
-        ],
       ),
       drawer: HomeDrawerList(),
       body: ServersList(servers, _removeServer, handleSvLongPress),
