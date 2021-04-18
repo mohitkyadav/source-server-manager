@@ -21,5 +21,8 @@
   "refresh_sv_tooltip": "تحديث المعلومات",
   "change_map_tooltip": "تغيير الخريطة",
   "refresh_players_tooltip": "تحديث اللاعبين",
-  "restart_sv_tooltip": "إعادة تشغيل الخادم"
+  "restart_sv_tooltip": "إعادة تشغيل الخادم",
+  "details_tab_label": "Server تفاصيل",
+  "console_tab_label": "Server Console",
+  "empty_sv_msg": "Server فارغ"
 }

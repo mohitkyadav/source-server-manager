@@ -21,5 +21,8 @@
   "refresh_sv_tooltip": "ताजा जानकारी पाए",
   "change_map_tooltip": "Map बदले ",
   "refresh_players_tooltip": "खिलाड़ियों की ताजा जानकारी पाए ",
-  "restart_sv_tooltip": "Server पुन: चालू करे "
+  "restart_sv_tooltip": "Server पुन: चालू करे ",
+  "details_tab_label": "Server की जानकारी",
+  "console_tab_label": "Server Console",
+  "empty_sv_msg": "यह server खाली है। "
 }

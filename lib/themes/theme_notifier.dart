@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:turrant/models/app_theme.dart';
+import 'package:turrant/models/models.dart';
 
 class ThemeNotifier with ChangeNotifier {
   ThemeNotifier(this._appTheme);
@@ -9,7 +9,7 @@ class ThemeNotifier with ChangeNotifier {
 
   AppTheme get getAppTheme => _appTheme;
 
-  void setTheme(AppTheme appTheme) async {
+  Future<void> setTheme(AppTheme appTheme) async {
     _appTheme = appTheme;
 
     notifyListeners();

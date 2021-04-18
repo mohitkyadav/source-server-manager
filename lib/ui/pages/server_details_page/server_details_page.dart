@@ -2,14 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:source_server/source_server.dart';
-import 'package:turrant/models/cmd.dart';
 
-import 'package:turrant/models/player.dart';
-import 'package:turrant/models/server.dart';
-import 'package:turrant/ui/pages/server_details/console.dart';
-import 'package:turrant/ui/pages/server_details/players_list.dart';
-import 'package:turrant/ui/pages/server_details/server_controls.dart';
-import 'package:turrant/ui/pages/server_details/server_details_header.dart';
+import 'package:turrant/localization/app_localizations.dart';
+import 'package:turrant/models/models.dart';
+import 'package:turrant/ui/widgets/widgets.dart';
 import 'package:turrant/utils/utils.dart';
 
 class ServerDetailsPage extends StatefulWidget {
@@ -54,15 +50,19 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(widget.server.serverName),
-          bottom: const TabBar(
+          bottom: TabBar(
             tabs: <Widget>[
-              Tab(icon: Icon(Icons.dns)),
-              Tab(icon: Icon(Icons.branding_watermark)),
+              Tab(icon: const Icon(Icons.dns),
+                text: AppLocalizations.of(context)
+                    .getTranslatedValue('details_tab_label'),),
+              Tab(icon: const Icon(Icons.branding_watermark),
+                text: AppLocalizations.of(context)
+                  .getTranslatedValue('console_tab_label'),),
             ],
           ),
         ),
         body: TabBarView(
-          children: [
+          children: <Widget>[
             _buildDetails(context),
             _buildTerminal(context),
           ],
@@ -81,6 +81,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
           ServerControls(widget.server, map, refreshInfo,
               sendCommandToSv, showToast, maps),
           PlayersList(players, refreshInfo, sendCommandToSv, showToast),
+          if (players.isEmpty) EmptyServerState(),
         ],
       ) : const Center(child: CircularProgressIndicator()),
     );
@@ -104,13 +105,11 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
     sv.close();
   }
 
-  void showToast(BuildContext context, String text) {
-    final ScaffoldState scaffold = Scaffold.of(context);
-    scaffold.showSnackBar(
-      SnackBar(
-        content: Text(text),
-      ),
-    );
+  void showToast(BuildContext context, String text, {int durationSec = 1}) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(text),
+      duration: Duration(seconds: durationSec),
+    ));
   }
 
   Future<void> _setMaps() async {

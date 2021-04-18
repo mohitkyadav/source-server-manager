@@ -12,7 +12,7 @@ class Language {
   @override
   String toString () =>  name;
 
-  static List<Language> supportedLanguages = [
+  static List<Language> supportedLanguages = <Language>[
     Language(0, '🇺🇸', 'English', 'en', 'US'),
     Language(1, '🇮🇳', 'हिंदी', 'hi', 'IN'),
     Language(0, '🇸🇦', 'عربى', 'ar', 'SA'),

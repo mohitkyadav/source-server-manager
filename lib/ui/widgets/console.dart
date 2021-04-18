@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:turrant/models/cmd.dart';
 
+import 'package:turrant/models/models.dart';
 import 'package:turrant/themes/styling.dart';
 
 class Console extends StatelessWidget {

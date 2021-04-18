@@ -21,5 +21,8 @@
   "refresh_sv_tooltip": "Refresh Info",
   "change_map_tooltip": "Change Map",
   "refresh_players_tooltip": "Refresh players",
-  "restart_sv_tooltip": "Restart Server"
+  "restart_sv_tooltip": "Restart Server",
+  "details_tab_label": "Server Details",
+  "console_tab_label": "Server Console",
+  "empty_sv_msg": "No players on this server"
 }

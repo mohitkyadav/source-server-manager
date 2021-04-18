@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:turrant/models/player.dart';
+import 'package:turrant/models/models.dart';
 import 'package:turrant/themes/styling.dart';
 
 class PlayersList extends StatelessWidget {

@@ -4,13 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:turrant/localization/app_localizations.dart';
-import 'package:turrant/models/server.dart';
+import 'package:turrant/models/models.dart';
+import 'package:turrant/routes/route_names.dart';
 import 'package:turrant/themes/styling.dart';
-
-import 'add_server.dart';
-import 'home_appbar_actions.dart';
-import 'home_drawer_list.dart';
-import 'servers_list.dart';
+import 'package:turrant/ui/widgets/widgets.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key,}) : super(key: key);
@@ -35,15 +32,28 @@ class _HomePageState extends State<HomePage> {
         .getTranslatedValue('app_bar_title');
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_title),
-        actions: <Widget>[
-          HomeAppbarActions(),
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            title: Text(_title),
+            centerTitle: false,
+            expandedHeight: 120,
+            flexibleSpace: FlexibleSpaceBar(
+              // centerTitle: true,
+              title: Text('${servers.length} Servers'),
+              titlePadding: const EdgeInsets.all(15),
+            ),
+            collapsedHeight: 80,
+            floating: true,
+            actions: <Widget>[
+              CircleButton(const Icon(Icons.settings), () {
+                Navigator.of(context).pushNamed(settingsRoute);
+              }),
+            ],
+          ),
+          ServersList(servers, _removeServer, handleSvLongPress),
         ],
       ),
-      drawer: HomeDrawerList(),
-      body: SingleChildScrollView(
-          child: ServersList(servers, _removeServer, handleSvLongPress)),
       floatingActionButton: addSvFab(context),
     );
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:turrant/models/app_theme.dart';
+import 'package:turrant/models/models.dart';
 import 'package:turrant/themes/styling.dart';
 
 final AppTheme darkTheme = AppTheme('darkTheme', 'Dark', ThemeData(
