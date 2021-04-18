@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:turrant/localization/app_localizations.dart';
 import 'package:turrant/models/models.dart';
+import 'package:turrant/routes/route_names.dart';
 import 'package:turrant/themes/styling.dart';
 import 'package:turrant/ui/widgets/widgets.dart';
 
@@ -31,13 +32,17 @@ class _HomePageState extends State<HomePage> {
         .getTranslatedValue('app_bar_title');
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_title),
-      ),
-      drawer: HomeDrawerList(),
       body: CustomScrollView(
         slivers: <Widget>[
-          ServersList(servers, _removeServer, handleSvLongPress)
+          SliverAppBar(
+            title: Text(_title),
+            actions: [
+              CircleButton(const Icon(Icons.settings), () {
+                Navigator.of(context).pushNamed(settingsRoute);
+              }),
+            ],
+          ),
+          ServersList(servers, _removeServer, handleSvLongPress),
         ],
       ),
       floatingActionButton: addSvFab(context),

@@ -11,9 +11,6 @@ class CustomRouter {
       case homeRoute:
         return MaterialPageRoute<dynamic>(builder: (_) => const HomePage());
 
-      case aboutRoute:
-        return MaterialPageRoute<dynamic>(builder: (_) => const AboutPage());
-
       case settingsRoute:
         return MaterialPageRoute<dynamic>(builder: (_) => const SettingsPage());
 
