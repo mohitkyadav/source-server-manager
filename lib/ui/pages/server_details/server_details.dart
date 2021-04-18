@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:source_server/source_server.dart';
 import 'package:turrant/models/cmd.dart';
 
-import 'package:turrant/models/player.dart';
-import 'package:turrant/models/server.dart';
+import 'package:turrant/models/models.dart';
 import 'package:turrant/ui/pages/server_details/console.dart';
 import 'package:turrant/ui/pages/server_details/players_list.dart';
 import 'package:turrant/ui/pages/server_details/server_controls.dart';

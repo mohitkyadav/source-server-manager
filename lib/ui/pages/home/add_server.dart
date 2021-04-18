@@ -3,11 +3,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:source_server/source_server.dart';
 
 import 'package:turrant/localization/app_localizations.dart';
-import 'package:turrant/models/server.dart';
+import 'package:turrant/models/models.dart';
 
 class AddServerForm extends StatefulWidget {
   const AddServerForm(

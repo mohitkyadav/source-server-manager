@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:turrant/localization/app_localizations.dart';
-import 'package:turrant/models/server.dart';
+import 'package:turrant/models/models.dart';
 import 'package:turrant/themes/styling.dart';
 
 import 'add_server.dart';

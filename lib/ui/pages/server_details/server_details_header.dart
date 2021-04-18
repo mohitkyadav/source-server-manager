@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import 'package:turrant/models/server.dart';
+import 'package:turrant/models/models.dart';
 import 'package:turrant/themes/styling.dart';
 
 class ServerDetailsHeader extends StatelessWidget {

@@ -1,9 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:turrant/models/server.dart';
+import 'package:turrant/models/models.dart';
 import 'package:turrant/ui/pages/home/server_item.dart';
 
 class ServersList extends StatelessWidget {
