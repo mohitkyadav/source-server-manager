@@ -35,7 +35,11 @@ class _HomePageState extends State<HomePage> {
         title: Text(_title),
       ),
       drawer: HomeDrawerList(),
-      body: ServersList(servers, _removeServer, handleSvLongPress),
+      body: CustomScrollView(
+        slivers: <Widget>[
+          ServersList(servers, _removeServer, handleSvLongPress)
+        ],
+      ),
       floatingActionButton: addSvFab(context),
     );
   }

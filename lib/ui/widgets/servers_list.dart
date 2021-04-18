@@ -14,17 +14,17 @@ class ServersList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return ListView.separated(
-      shrinkWrap: true,
-      padding: const EdgeInsets.all(8),
-      itemCount: servers.length,
-      itemBuilder: (BuildContext context, int index) {
-        return ServerItem(
-            servers[index], _removeServer, handleSvLongPress);
-      },
-      separatorBuilder: (BuildContext context, int index) {
-        return const SizedBox(height: 10);
-      },
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: ServerItem(
+              servers[index], _removeServer, handleSvLongPress),
+          );
+        },
+        childCount: servers.length,
+      ),
     );
   }
 }
