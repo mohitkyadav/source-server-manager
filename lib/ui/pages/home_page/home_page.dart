@@ -6,11 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:turrant/localization/app_localizations.dart';
 import 'package:turrant/models/models.dart';
 import 'package:turrant/themes/styling.dart';
-
-import 'add_server.dart';
-import 'home_appbar_actions.dart';
-import 'home_drawer_list.dart';
-import 'servers_list.dart';
+import 'package:turrant/ui/widgets/widgets.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key,}) : super(key: key);
