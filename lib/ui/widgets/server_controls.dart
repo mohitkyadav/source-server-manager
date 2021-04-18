@@ -66,9 +66,12 @@ class ServerControls extends StatelessWidget {
               underline: const SizedBox(),
               value: map,
               onChanged: (String map) {
-                showToast(context,
-                    'Changing map to $map, refresh in a bit');
                 sendCommandToSv('map $map');
+                showToast(context, 'Changing map to $map', durationSec: 4);
+
+                // ignore: always_specify_types
+                Future<void>.delayed(const Duration(seconds: 4),
+                        () => refreshInfo());
               },
               icon: const Icon(Icons.map),
               iconEnabledColor: AppStyles.white,
