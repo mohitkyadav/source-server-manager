@@ -59,7 +59,7 @@ class ServerControls extends StatelessWidget {
                         () => Navigator.of(context).pop());
               },
             ),
-            DropdownButton<String>(
+            if(maps != null) DropdownButton<String>(
               isExpanded: false,
               hint: Text(AppLocalizations
                   .of(context).getTranslatedValue('change_map_tooltip')),
