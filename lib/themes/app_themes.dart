@@ -8,8 +8,8 @@ final AppTheme darkTheme = AppTheme('darkTheme', 'Dark', ThemeData(
     primaryColor: AppStyles.darkBg,
     scaffoldBackgroundColor: AppStyles.darkBg,
     brightness: Brightness.dark,
-    backgroundColor: AppStyles.lightGray,
-    accentColor: AppStyles.lightPurple,
+    backgroundColor: AppStyles.darkBg,
+    accentColor: AppStyles.blue2,
     accentIconTheme: const IconThemeData(color: AppStyles.white),
     dividerColor: AppStyles.lightGray,
     floatingActionButtonTheme: const FloatingActionButtonThemeData(

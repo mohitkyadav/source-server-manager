@@ -7,6 +7,7 @@ import 'package:source_server/source_server.dart';
 
 import 'package:turrant/localization/app_localizations.dart';
 import 'package:turrant/models/models.dart';
+import 'package:turrant/themes/styling.dart';
 
 class AddServerForm extends StatefulWidget {
   const AddServerForm(
@@ -118,8 +119,9 @@ class _AddServerFormState extends State<AddServerForm> {
                   }
                 },
                 height: 45,
-                shape: const StadiumBorder(),
-                color: Theme.of(context).accentColor,
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                color: AppStyles.blue2,
                 child: Text(AppLocalizations.of(context)
                     .getTranslatedValue('form_submit_btn_txt')),
               ),

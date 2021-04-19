@@ -7,6 +7,7 @@ import 'package:turrant/app_bootstrap.dart';
 import 'package:turrant/localization/app_localizations.dart';
 import 'package:turrant/models/models.dart';
 import 'package:turrant/themes/app_themes.dart';
+import 'package:turrant/themes/styling.dart';
 import 'package:turrant/themes/theme_notifier.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -56,8 +57,10 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Widget buildLanguageButton(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(left: 15, right: 25),
+      padding: const EdgeInsets.only(left: 25, right: 25),
       child: DropdownButton<Language>(
+        isExpanded: true,
+        dropdownColor: AppStyles.charcoalGrey,
         value: currentLanguage,
         underline: const SizedBox(),
         onChanged: (Language language) {
