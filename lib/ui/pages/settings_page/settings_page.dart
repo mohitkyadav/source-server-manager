@@ -39,13 +39,13 @@ class _SettingsPageState extends State<SettingsPage> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget> [
-            ListTile(
-              leading: Icon(isDarkModeOn ? Icons.nights_stay : Icons.wb_sunny),
-              title: Text(AppLocalizations.of(context)
-                  .getTranslatedValue('setting_page_theme_toggle_txt')),
-              onTap: () =>_toggleTheme(context),
-            ),
-            const Divider(),
+            // ListTile(
+            //   leading: Icon(isDarkModeOn ? Icons.nights_stay : Icons.wb_sunny),
+            //   title: Text(AppLocalizations.of(context)
+            //       .getTranslatedValue('setting_page_theme_toggle_txt')),
+            //   onTap: () =>_toggleTheme(context),
+            // ),
+            // const Divider(),
             buildLanguageButton(context),
             const Divider(),
           ],

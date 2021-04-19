@@ -66,7 +66,6 @@ class _HomePageState extends State<HomePage> {
             context: context,
             isScrollControlled: true,
             builder: (BuildContext context) => Container(
-              color: AppStyles.charcoalGrey,
               child: AddServerForm(refreshServers: _getServers,),
             ));
         // Navigator.pushNamed(context, addServerRoute);
@@ -79,7 +78,6 @@ class _HomePageState extends State<HomePage> {
       context: context,
       isScrollControlled: true,
       builder: (BuildContext context) => Container(
-        color: AppStyles.charcoalGrey,
         child: AddServerForm(refreshServers: _getServers, sv: sv,),
       )
     );
