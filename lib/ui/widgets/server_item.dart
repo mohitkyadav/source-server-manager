@@ -55,7 +55,18 @@ class ServerItem extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(server.serverName, style: AppStyles.serverItemTitle,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Flexible(
+                        child: Text(server.serverName,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppStyles.serverItemTitle,),
+                      ),
+                      if(server.serverRcon != null) const Icon(
+                        Icons.lock_open_rounded, size: 16,),
+                    ],
+                  ),
                   const SizedBox(height: 8,),
                   Text(server.serverGame, style: AppStyles.serverItemSubTitle),
                 ],
