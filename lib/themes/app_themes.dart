@@ -5,7 +5,8 @@ import 'package:turrant/themes/styling.dart';
 
 final AppTheme darkTheme = AppTheme('darkTheme', 'Dark', ThemeData(
     fontFamily: 'DMSans',
-    primaryColor: AppStyles.black,
+    primaryColor: AppStyles.darkBg,
+    scaffoldBackgroundColor: AppStyles.darkBg,
     brightness: Brightness.dark,
     backgroundColor: AppStyles.lightGray,
     accentColor: AppStyles.lightPurple,

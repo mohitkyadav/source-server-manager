@@ -42,6 +42,7 @@ class _HomePageState extends State<HomePage> {
               // centerTitle: true,
               title: Text('${servers.length} Servers'),
               titlePadding: const EdgeInsets.all(15),
+              // background: Expanded(child: Container(color: AppStyles.darkBg,),),
             ),
             collapsedHeight: 80,
             floating: true,
