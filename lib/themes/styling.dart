@@ -35,6 +35,7 @@ class AppStyles {
   static const Color darkBg = Color.fromRGBO(50, 50, 50, 1);
 
   static const Color blue = Color.fromRGBO(95, 151, 250, 1);
+  static const Color blue2 = Color.fromRGBO(115, 165, 223, 1);
   static const Color charcoalGrey = Color.fromRGBO(50, 50, 59, 1);
 
   static const BoxShadow blockShadow = BoxShadow(

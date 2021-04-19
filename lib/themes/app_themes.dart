@@ -4,15 +4,16 @@ import 'package:turrant/models/models.dart';
 import 'package:turrant/themes/styling.dart';
 
 final AppTheme darkTheme = AppTheme('darkTheme', 'Dark', ThemeData(
+    fontFamily: 'DMSans',
     primaryColor: AppStyles.black,
     brightness: Brightness.dark,
     backgroundColor: AppStyles.lightGray,
     accentColor: AppStyles.lightPurple,
-    accentIconTheme: const IconThemeData(color: AppStyles.black),
+    accentIconTheme: const IconThemeData(color: AppStyles.white),
     dividerColor: AppStyles.lightGray,
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        foregroundColor: AppStyles.black,
-        backgroundColor: AppStyles.lightPurple,
+        foregroundColor: AppStyles.white,
+        backgroundColor: AppStyles.blue2,
     ),
     colorScheme: const ColorScheme.dark(
         primary: AppStyles.lightPurple,
