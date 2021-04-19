@@ -35,19 +35,17 @@ class _HomePageState extends State<HomePage> {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
-            title: Text(_title),
+            title: Text(_title, style: AppStyles.appBarTitle,),
             centerTitle: false,
             expandedHeight: 120,
             flexibleSpace: FlexibleSpaceBar(
-              // centerTitle: true,
               title: Text('${servers.length} Servers'),
               titlePadding: const EdgeInsets.all(15),
-              // background: Expanded(child: Container(color: AppStyles.darkBg,),),
             ),
             collapsedHeight: 80,
             floating: true,
             actions: <Widget>[
-              CircleButton(const Icon(Icons.settings), () {
+              CircleButton(const Icon(Icons.settings, size: 18,), () {
                 Navigator.of(context).pushNamed(settingsRoute);
               }),
             ],
