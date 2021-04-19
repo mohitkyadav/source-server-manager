@@ -75,9 +75,10 @@ class AppStyles {
 
   static const TextStyle serverItemTitle = TextStyle(
     color:  white,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w500,
     fontStyle:  FontStyle.normal,
-    fontSize: 16.0
+    fontSize: 16.0,
+    letterSpacing: 0.32,
   );
 
   static const TextStyle serverItemSubTitle = TextStyle(

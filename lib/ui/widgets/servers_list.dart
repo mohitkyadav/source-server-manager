@@ -17,12 +17,10 @@ class ServersList extends StatelessWidget {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
-          return Column(
-            children: <Widget>[
-              ServerItem(
-                servers[index], _removeServer, handleSvLongPress),
-              const SizedBox(height: 10,),
-            ],
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            child: ServerItem(
+                  servers[index], _removeServer, handleSvLongPress),
           );
         },
         childCount: servers.length,

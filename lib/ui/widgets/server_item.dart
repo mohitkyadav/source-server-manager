@@ -16,8 +16,11 @@ class ServerItem extends StatelessWidget {
     return Dismissible(
       key: ObjectKey(server.serverIp),
       background: Container(
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(5)),
+          color: AppStyles.red.withOpacity(0.8),
+        ),
         padding: const EdgeInsets.only(left: 35, right: 35),
-        color: AppStyles.red.withOpacity(0.8),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -39,31 +42,20 @@ class ServerItem extends StatelessWidget {
           handleSvLongPress(server);
         },
         child: Material(
-          elevation: 12,
+          elevation: 8,
+          shadowColor: AppStyles.blue2.withOpacity(0.1),
           child: Container(
             width: MediaQuery.of(context).size.width,
-            decoration: const BoxDecoration(
-              color: AppStyles.charcoalGrey,
-              gradient: LinearGradient(
-                begin: Alignment(-4, 0.1),
-                end: Alignment(1, 0.1),
-                colors: <Color>[AppStyles.blue, AppStyles.charcoalGrey],
-              ),
-              // border: Border(
-              //   bottom: BorderSide(
-              //       width: 4, color: Theme.of(context).accentColor),
-              // ),
+            decoration: BoxDecoration(
+              color: AppStyles.blue2.withOpacity(0.2),
+              borderRadius: const BorderRadius.all(Radius.circular(5)),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(server.serverName, style: AppStyles.serverItemTitle,),
-                  const SizedBox(height: 8,),
-                  Text('${server.serverIp} ${server.serverPort}',
-                    style: AppStyles.serverItemSubTitle,
-                  ),
                   const SizedBox(height: 8,),
                   Text(server.serverGame, style: AppStyles.serverItemSubTitle),
                 ],
