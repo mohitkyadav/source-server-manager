@@ -39,7 +39,8 @@ class _HomePageState extends State<HomePage> {
             centerTitle: false,
             expandedHeight: 120,
             flexibleSpace: FlexibleSpaceBar(
-              title: Text('${servers.length} Servers'),
+              title: Text('${servers.length} Servers',
+                style: AppStyles.appBarSubTitle,),
               titlePadding: const EdgeInsets.all(15),
             ),
             collapsedHeight: 80,

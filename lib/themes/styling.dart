@@ -68,6 +68,14 @@ class AppStyles {
     letterSpacing: 0.32,
   );
 
+  static const TextStyle appBarSubTitle = TextStyle(
+    color:  white,
+    fontWeight: FontWeight.w500,
+    fontStyle:  FontStyle.normal,
+    fontSize: 14.0,
+    letterSpacing: 0.28,
+  );
+
   static const TextStyle addServerHeader = TextStyle(
     fontSize: 18,
     letterSpacing: 2,
