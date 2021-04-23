@@ -40,7 +40,8 @@ class Console extends StatelessWidget {
           ),
           Container(
             color: AppStyles.blackShadowOp50,
-            padding: const EdgeInsets.only(top: 5, right: 5, left: 10, bottom: 5),
+            padding: const EdgeInsets.only(top: 5, right: 5, left: 10,
+                bottom: 35),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[

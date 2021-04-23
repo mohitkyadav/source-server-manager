@@ -35,13 +35,16 @@ class _HomePageState extends State<HomePage> {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
-            title: Text(_title, style: AppStyles.appBarTitle,),
+            title: Padding(
+              padding: const EdgeInsets.only(left: 3),
+              child: Text(_title, style: AppStyles.appBarTitle,),
+            ),
             centerTitle: false,
             expandedHeight: 120,
             flexibleSpace: FlexibleSpaceBar(
               title: Text('${servers.length} Servers',
                 style: AppStyles.appBarSubTitle,),
-              titlePadding: const EdgeInsets.all(15),
+              titlePadding: const EdgeInsets.all(20),
             ),
             collapsedHeight: 80,
             floating: true,
