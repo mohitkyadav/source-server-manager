@@ -48,6 +48,7 @@ class _HomePageState extends State<HomePage> {
             ),
             collapsedHeight: 80,
             floating: true,
+            pinned: true,
             actions: <Widget>[
               CircleButton(const Icon(Icons.settings, size: 18,), () {
                 Navigator.of(context).pushNamed(settingsRoute);
