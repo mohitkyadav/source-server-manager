@@ -16,6 +16,7 @@ class ServerItem extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Slidable(
+      key: Key('${server.serverIp}:${server.serverName}'),
       actionPane: const SlidableDrawerActionPane(),
       actionExtentRatio: 0.25,
       child: InkWell(
