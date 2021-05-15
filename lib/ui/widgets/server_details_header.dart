@@ -16,12 +16,18 @@ class ServerDetailsHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const List<String> availableMaps = [
+      'de_cache', 'de_dust2', 'de_inferno', 'de_mirage', 'de_nuke',
+      'de_ancient', 'de_overpass', 'de_train', 'de_vertigo', '',
+    ];
+
     return Material(
       elevation: 12,
       child: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/img/$map.jpg',),
+            image: AssetImage('assets/img/${
+                availableMaps.contains(map) ? map : 'fallbackmap'}.jpg',),
             fit: BoxFit.cover,
           ),
         ),
@@ -32,18 +38,7 @@ class ServerDetailsHeader extends StatelessWidget {
                 filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1,),
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                          width: 4, color: Theme.of(context).accentColor),
-                    ),
-                    gradient: LinearGradient(
-                      begin: const Alignment(-1, 0.1),
-                      end: const Alignment(1, 4),
-                      colors: <Color>[AppStyles.charcoalGrey.withOpacity(0.8),
-                        AppStyles.blue.withOpacity(0.1)],
-                    ),
-                  ),
+                  color: AppStyles.blackShadowOp60,
                 ),
               ),
             ),

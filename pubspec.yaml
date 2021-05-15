@@ -66,6 +66,7 @@ flutter:
     - assets/img/de_overpass.jpg
     - assets/img/de_train.jpg
     - assets/img/de_vertigo.jpg
+    - assets/img/fallbackmap.jpg
     - assets/icn/ic_launcher.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
