@@ -52,19 +52,27 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(widget.server.serverName),
-          bottom: TabBar(
-            labelStyle: AppStyles.tabItem,
-            labelColor: AppStyles.blue2,
-            unselectedLabelColor: AppStyles.white70,//For Selected tab
-            unselectedLabelStyle: AppStyles.tabItem,
-            tabs: <Widget>[
-              Tab(icon: const Icon(Icons.dns),
-                text: AppLocalizations.of(context)
-                    .getTranslatedValue('details_tab_label'),),
-              Tab(icon: const Icon(Icons.branding_watermark),
-                text: AppLocalizations.of(context)
-                  .getTranslatedValue('console_tab_label'),),
-            ],
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(75),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: TabBar(
+                isScrollable: true,
+                labelStyle: AppStyles.tabItem,
+                labelColor: AppStyles.blue2,
+                unselectedLabelColor: AppStyles.white70,
+                unselectedLabelStyle: AppStyles.tabItem,
+                indicatorPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+                tabs: <Widget>[
+                  Tab(icon: const Icon(Icons.dns),
+                    text: AppLocalizations.of(context)
+                        .getTranslatedValue('details_tab_label'),),
+                  Tab(icon: const Icon(Icons.keyboard),
+                    text: AppLocalizations.of(context)
+                      .getTranslatedValue('console_tab_label'),),
+                ],
+              ),
+            ),
           ),
         ),
         body: TabBarView(
