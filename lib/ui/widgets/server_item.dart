@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
+import 'package:turrant/localization/app_localizations.dart';
 import 'package:turrant/models/models.dart';
 import 'package:turrant/routes/route_names.dart';
 import 'package:turrant/themes/styling.dart';
@@ -61,19 +62,53 @@ class ServerItem extends StatelessWidget {
         ),
       ),
       actions: <Widget>[
-        IconSlideAction(
-          caption: 'Edit',
-          color: Colors.blue,
-          icon: Icons.edit,
-          onTap: () => handleSvLongPress(server),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 5.0),
+          child: SlideAction(
+              decoration: const BoxDecoration(
+                color: AppStyles.red,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(5.0),
+                ),
+              ),
+              child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      const Icon(Icons.clear),
+                      Text(AppLocalizations.of(context)
+                          .getTranslatedValue('delete_sv_msg'),
+                        style: AppStyles.serverItemTitle,)
+                    ],
+                  )
+              ),
+              onTap: () => _removeServer(server)
+          ),
         ),
       ],
       secondaryActions: <Widget>[
-        IconSlideAction(
-          caption: 'Delete',
-          color: AppStyles.red,
-          icon: Icons.delete,
-          onTap: () => _removeServer(server),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 5.0),
+          child: SlideAction(
+              decoration: const BoxDecoration(
+                color: AppStyles.lightPurple,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(5.0),
+                ),
+              ),
+              child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      const Icon(Icons.edit),
+                      Text(AppLocalizations.of(context)
+                          .getTranslatedValue('edit_sv_msg'),
+                          style: AppStyles.serverItemTitle)
+                    ],
+                  )
+              ),
+              onTap: () => handleSvLongPress(server)
+          ),
         ),
       ],
     );

@@ -24,5 +24,7 @@
   "restart_sv_tooltip": "إعادة تشغيل الخادم",
   "details_tab_label": "Server تفاصيل",
   "console_tab_label": "Server Console",
-  "empty_sv_msg": "Server فارغ"
+  "empty_sv_msg": "Server فارغ",
+  "delete_sv_msg": "إزالة",
+  "edit_sv_msg": "تعديل"
 }
