@@ -97,6 +97,14 @@ class AppStyles {
     letterSpacing: 0.32,
   );
 
+  static const TextStyle serverItemActionText = TextStyle(
+    color:  white,
+    fontWeight: FontWeight.w500,
+    fontStyle:  FontStyle.normal,
+    fontSize: 14.0,
+    letterSpacing: 0.32,
+  );
+
   static const TextStyle serverItemSubTitle = TextStyle(
     color:  Colors.white70,
     fontWeight: FontWeight.w400,

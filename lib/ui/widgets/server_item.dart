@@ -18,7 +18,7 @@ class ServerItem extends StatelessWidget {
 
     return Slidable(
       key: Key('${server.serverIp}:${server.serverName}'),
-      actionPane: const SlidableDrawerActionPane(),
+      actionPane: const SlidableBehindActionPane(),
       actionExtentRatio: 0.25,
       child: InkWell(
         onTap: () {
@@ -62,53 +62,51 @@ class ServerItem extends StatelessWidget {
         ),
       ),
       actions: <Widget>[
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 5.0),
-          child: SlideAction(
-              decoration: const BoxDecoration(
-                color: AppStyles.red,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(5.0),
+        SlideAction(
+            child: Container(
+                width: 105,
+                margin: const EdgeInsets.only(right: 5),
+                decoration: const BoxDecoration(
+                  color: AppStyles.red,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(5.0),
+                  ),
                 ),
-              ),
-              child: Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      const Icon(Icons.clear),
-                      Text(AppLocalizations.of(context)
-                          .getTranslatedValue('delete_sv_msg'),
-                        style: AppStyles.serverItemTitle,)
-                    ],
-                  )
-              ),
-              onTap: () => _removeServer(server)
-          ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const Icon(Icons.clear),
+                    Text(AppLocalizations.of(context)
+                        .getTranslatedValue('delete_sv_msg'),
+                      style: AppStyles.serverItemActionText,)
+                  ],
+                )
+            ),
+            onTap: () => _removeServer(server)
         ),
       ],
       secondaryActions: <Widget>[
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 5.0),
-          child: SlideAction(
-              decoration: const BoxDecoration(
-                color: AppStyles.lightPurple,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(5.0),
+        SlideAction(
+            child: Container(
+                width: 105,
+                margin: const EdgeInsets.only(left: 5),
+                decoration: const BoxDecoration(
+                  color: AppStyles.lightPurple,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(5.0),
+                  ),
                 ),
-              ),
-              child: Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      const Icon(Icons.edit),
-                      Text(AppLocalizations.of(context)
-                          .getTranslatedValue('edit_sv_msg'),
-                          style: AppStyles.serverItemTitle)
-                    ],
-                  )
-              ),
-              onTap: () => handleSvLongPress(server)
-          ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const Icon(Icons.edit),
+                    Text(AppLocalizations.of(context)
+                        .getTranslatedValue('edit_sv_msg'),
+                        style: AppStyles.serverItemActionText)
+                  ],
+                )
+            ),
+            onTap: () => handleSvLongPress(server)
         ),
       ],
     );
