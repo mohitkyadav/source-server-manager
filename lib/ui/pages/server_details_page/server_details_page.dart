@@ -1,10 +1,12 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:source_server/source_server.dart';
 
 import 'package:turrant/localization/app_localizations.dart';
 import 'package:turrant/models/models.dart';
+import 'package:turrant/themes/styling.dart';
 import 'package:turrant/ui/widgets/widgets.dart';
 import 'package:turrant/utils/utils.dart';
 
@@ -51,6 +53,10 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
         appBar: AppBar(
           title: Text(widget.server.serverName),
           bottom: TabBar(
+            labelStyle: AppStyles.tabItem,
+            labelColor: AppStyles.blue2,
+            unselectedLabelColor: AppStyles.white70,//For Selected tab
+            unselectedLabelStyle: AppStyles.tabItem,
             tabs: <Widget>[
               Tab(icon: const Icon(Icons.dns),
                 text: AppLocalizations.of(context)

@@ -7,6 +7,7 @@ class AppStyles {
 
   static const Color white = Color.fromRGBO(250, 250, 250, 1);
   static const Color white60 = Color.fromRGBO(250, 250, 250, 0.6);
+  static const Color white70 = Color.fromRGBO(250, 250, 250, 0.7);
   static const Color white20 = Color.fromRGBO(250, 250, 250, 0.2);
   static const Color white40 = Color.fromRGBO(250, 250, 250, 0.4);
   static const Color white80 = Color.fromRGBO(250, 250, 250, 0.8);
@@ -152,6 +153,14 @@ class AppStyles {
       fontStyle:  FontStyle.normal,
       letterSpacing: 1,
       fontSize: 12.0
+  );
+
+  static const TextStyle tabItem = TextStyle(
+    color:  blue2,
+    fontWeight: FontWeight.w500,
+    fontStyle:  FontStyle.normal,
+    fontSize: 14.0,
+    letterSpacing: 0.28,
   );
 }
 
