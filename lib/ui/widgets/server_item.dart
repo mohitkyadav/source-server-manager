@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 import 'package:turrant/models/models.dart';
 import 'package:turrant/routes/route_names.dart';
@@ -13,27 +14,10 @@ class ServerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dismissible(
-      key: ObjectKey(server.serverIp),
-      background: Container(
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(5)),
-          color: AppStyles.red.withOpacity(0.8),
-        ),
-        padding: const EdgeInsets.only(left: 35, right: 35),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Icon(
-              Icons.delete,
-              color: AppStyles.white.withOpacity(0.9),
-            ),
-          ],
-        ),
-      ),
-      onDismissed: (DismissDirection dir) {
-        _removeServer(server);
-      },
+
+    return Slidable(
+      actionPane: const SlidableDrawerActionPane(),
+      actionExtentRatio: 0.25,
       child: InkWell(
         onTap: () {
           Navigator.pushNamed(context, serverDetailsRoute, arguments: server);
@@ -75,6 +59,22 @@ class ServerItem extends StatelessWidget {
           ),
         ),
       ),
+      actions: <Widget>[
+        IconSlideAction(
+          caption: 'Edit',
+          color: Colors.blue,
+          icon: Icons.edit,
+          onTap: () => handleSvLongPress(server),
+        ),
+      ],
+      secondaryActions: <Widget>[
+        IconSlideAction(
+          caption: 'Delete',
+          color: AppStyles.red,
+          icon: Icons.delete,
+          onTap: () => _removeServer(server),
+        ),
+      ],
     );
   }
 }
