@@ -54,8 +54,13 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
           title: Text(widget.server.serverName),
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(75),
-            child: Align(
+            child: Container(
               alignment: Alignment.centerLeft,
+              decoration: const BoxDecoration(
+                border: Border(
+                  top: BorderSide(color: AppStyles.white20, width: 1.0,),
+                )
+              ),
               child: TabBar(
                 isScrollable: true,
                 labelStyle: AppStyles.tabItem,
