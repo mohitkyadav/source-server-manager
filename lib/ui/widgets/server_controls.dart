@@ -45,20 +45,6 @@ class ServerControls extends StatelessWidget {
                   .getTranslatedValue('refresh_players_tooltip'),
               onPressed: () => refreshInfo(),
             ),
-            IconButton(
-              icon: const Icon(Icons.autorenew),
-              color: AppStyles.white,
-              tooltip: AppLocalizations.of(context)
-                  .getTranslatedValue('restart_sv_tooltip'),
-              onPressed: () {
-                showToast(context,
-                    'Restarting, server will not respond for a minute');
-                sendCommandToSv('_restart');
-                // ignore: always_specify_types
-                Future.delayed(const Duration(seconds: 2),
-                        () => Navigator.of(context).pop());
-              },
-            ),
             if(maps != null) DropdownButton<String>(
               isExpanded: false,
               hint: Text(AppLocalizations

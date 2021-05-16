@@ -19,6 +19,15 @@ class ServerDetailsPage extends StatefulWidget {
   _ServerDetailsPageState createState() => _ServerDetailsPageState();
 }
 
+
+class Choice {
+  Choice({this.title, this.icon, this.onSelect});
+
+  final String title;
+  final IconData icon;
+  final Function onSelect;
+}
+
 class _ServerDetailsPageState extends State<ServerDetailsPage> {
   String ip;
   int port;
@@ -33,6 +42,8 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
   String numOfPlayers;
   String maxPlayers;
 
+  List<Choice> choices = <Choice>[];
+
   @override
   void initState() {
     super.initState();
@@ -43,6 +54,25 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
 
     refreshInfo();
     _setMaps();
+    choices = <Choice>[
+      Choice(title: 'Restart server', icon: Icons.refresh_sharp,
+          onSelect: _restartSv),
+    ];
+  }
+
+  void _selectChoice(Choice choice) {
+    if (choice.onSelect != null) {
+      choice.onSelect(context);
+    }
+  }
+
+  void _restartSv (BuildContext context) {
+    showToast(context,
+        'Restarting, server will not respond for a minute');
+    sendCommandToSv('_restart');
+    // ignore: always_specify_types
+    Future.delayed(const Duration(seconds: 2),
+            () => Navigator.of(context).pop());
   }
 
   @override
@@ -52,6 +82,26 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(widget.server.serverName),
+          actions: <Widget>[
+            // overflow menu
+            PopupMenuButton<Choice>(
+              onSelected: _selectChoice,
+              itemBuilder: (BuildContext context) {
+                return choices.map((Choice choice) {
+                  return PopupMenuItem<Choice>(
+                    value: choice,
+                    child: Row(
+                      children: <Widget>[
+                        Icon(choice.icon),
+                        const SizedBox(width: 10,),
+                        Text(choice.title),
+                      ],
+                    ),
+                  );
+                }).toList();
+              },
+            ),
+          ],
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(75),
             child: Container(
