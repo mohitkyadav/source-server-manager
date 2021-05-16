@@ -8,7 +8,8 @@ import 'package:turrant/themes/styling.dart';
 
 class ServerControls extends StatelessWidget {
   const ServerControls(this.server, this.map, this.refreshInfo,
-      this.sendCommandToSv, this.showToast, this.maps);
+      this.sendCommandToSv, this.showToast, this.maps,  this.numOfPlayers,
+      this.maxPlayers);
 
   final Server server;
   final String map;
@@ -16,6 +17,8 @@ class ServerControls extends StatelessWidget {
   final Function sendCommandToSv;
   final Function showToast;
   final List<String> maps;
+  final String numOfPlayers;
+  final String maxPlayers;
 
   @override
   Widget build(BuildContext context) {
@@ -23,51 +26,75 @@ class ServerControls extends StatelessWidget {
     return Material(
       elevation: 12,
       child: Container(
-        padding: const EdgeInsets.only(top: 15, bottom: 15),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-          color: AppStyles.lightPurple.withOpacity(0.3),
+          color: AppStyles.blue2.withOpacity(0.1),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        child: Column(
           children: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.refresh),
-              color: AppStyles.white,
-              tooltip: AppLocalizations.of(context)
-                  .getTranslatedValue('refresh_sv_tooltip'),
-              onPressed: () => refreshInfo(),
-            ),
-            IconButton(
-              icon: const Icon(Icons.people_rounded),
-              color: AppStyles.white,
-              tooltip: AppLocalizations.of(context)
-                  .getTranslatedValue('refresh_players_tooltip'),
-              onPressed: () => refreshInfo(),
-            ),
-            if(maps != null) DropdownButton<String>(
-              isExpanded: false,
-              hint: Text(AppLocalizations
-                  .of(context).getTranslatedValue('change_map_tooltip')),
-              underline: const SizedBox(),
-              value: map,
-              onChanged: (String map) {
-                sendCommandToSv('map $map');
-                showToast(context, 'Changing map to $map', durationSec: 4);
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                if(maps != null) DropdownButton<String>(
+                  isExpanded: false,
+                  hint: Text(AppLocalizations
+                      .of(context).getTranslatedValue('change_map_tooltip')),
+                  underline: const SizedBox(),
+                  value: map,
+                  onChanged: (String map) {
+                    sendCommandToSv('map $map');
+                    showToast(context, 'Changing map to $map', durationSec: 4);
 
-                // ignore: always_specify_types
-                Future<void>.delayed(const Duration(seconds: 4),
-                        () => refreshInfo());
-              },
-              icon: const Icon(Icons.map),
-              iconEnabledColor: AppStyles.white,
-              items: maps.map(
-                    (String map) => DropdownMenuItem<String>(
-                  value: map, child: SizedBox(
-                        width: 130,
-                        child: Text(map)),),
-              ).toList(),
+                    // ignore: always_specify_types
+                    Future<void>.delayed(const Duration(seconds: 4),
+                            () => refreshInfo());
+                  },
+                  icon: const Icon(Icons.map),
+                  iconEnabledColor: AppStyles.white,
+                  items: maps.map(
+                        (String map) => DropdownMenuItem<String>(
+                      value: map, child: SizedBox(
+                            width: 130,
+                            child: Text(map)),),
+                  ).toList(),
+                ),
+              ],
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: <Widget>[
+                      const Icon(Icons.people_rounded),
+                      const SizedBox(width: 10,),
+                      Text('Active Players ($numOfPlayers/$maxPlayers)',
+                        style: AppStyles.serverDetailsHeaderSubTitle
+                            .copyWith(color: AppStyles.white),),
+                    ],
+                  ),
+                ),
+                InkWell(
+                  onTap: () => refreshInfo(),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: <Widget>[
+                        const Icon(Icons.refresh_sharp, color: AppStyles.blue2,),
+                        const SizedBox(width: 10,),
+                        Text(
+                          AppLocalizations.of(context)
+                              .getTranslatedValue('refresh_players_tooltip'),
+                          style: AppStyles.underlineButton,
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            )
           ],
         ),
       ),

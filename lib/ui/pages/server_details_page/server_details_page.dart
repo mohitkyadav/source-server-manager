@@ -151,10 +151,9 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
       onRefresh: () => refreshInfo(),
       child: !isLoading ? ListView(
         children: <Widget>[
-          ServerDetailsHeader(widget.server, map, numOfPlayers, maxPlayers,
-              defaultMaps),
+          ServerDetailsHeader(widget.server, map, defaultMaps),
           ServerControls(widget.server, map, refreshInfo,
-              sendCommandToSv, showToast, maps),
+              sendCommandToSv, showToast, maps, numOfPlayers, maxPlayers,),
           PlayersList(players, refreshInfo, sendCommandToSv, showToast),
           if (players.isEmpty) EmptyServerState(),
         ],

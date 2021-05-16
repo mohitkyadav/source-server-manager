@@ -6,13 +6,10 @@ import 'package:turrant/models/models.dart';
 import 'package:turrant/themes/styling.dart';
 
 class ServerDetailsHeader extends StatelessWidget {
-  const ServerDetailsHeader(this.server, this.map, this.numOfPlayers,
-      this.maxPlayers, this.availableMaps);
+  const ServerDetailsHeader(this.server, this.map, this.availableMaps);
 
   final Server server;
   final String map;
-  final String numOfPlayers;
-  final String maxPlayers;
   final List<String> availableMaps;
 
   @override
@@ -39,35 +36,29 @@ class ServerDetailsHeader extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(22.5),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      const Icon(Icons.dns, color: AppStyles.lightPurple,),
+                      const Icon(Icons.map_rounded, color: AppStyles.blue2,),
                       const SizedBox(width: 10,),
-                      Text('${server.serverIp}:${server.serverPort}',
-                          style: AppStyles.serverDetailsHeaderTitle),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(map, overflow: TextOverflow.ellipsis,
+                                style: AppStyles.serverDetailsHeaderTitle),
+                            Text('${server.serverIp}:${server.serverPort}',
+                                style: AppStyles.serverDetailsHeaderSubTitle),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
-                  const SizedBox(height: 60,),
-                  Row(
-                    children: <Widget>[
-                      const Icon(Icons.map_rounded, color: AppStyles.lightPurple,),
-                      const SizedBox(width: 10,),
-                      Text(map, style: AppStyles.serverDetailsHeaderSubTitle),
-                    ],
-                  ),
-                  const SizedBox(height: 5,),
-                  Row(
-                    children: <Widget>[
-                      const Icon(Icons.people, color: AppStyles.lightPurple,),
-                      const SizedBox(width: 10,),
-                      Text('$numOfPlayers / $maxPlayers',
-                          style: AppStyles.serverDetailsHeaderSubTitle),
-                    ],
-                  ),
+                  const SizedBox(height: 50,),
                 ],
               ),
             ),

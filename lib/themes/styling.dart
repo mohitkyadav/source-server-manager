@@ -117,28 +117,18 @@ class AppStyles {
 
   static const TextStyle serverDetailsHeaderTitle = TextStyle(
     color:  white,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w500,
     fontStyle:  FontStyle.normal,
-    fontSize: 20.0,
-    shadows: <Shadow>[
-      Shadow(
-        blurRadius: 10,
-        color: black,
-      ),
-    ],
+    fontSize: 16.0,
+    letterSpacing: 0.32,
   );
 
   static const TextStyle serverDetailsHeaderSubTitle = TextStyle(
-    color:  white,
+    color:  white70,
     fontWeight: FontWeight.w600,
     fontStyle:  FontStyle.normal,
-    fontSize: 18.0,
-    shadows: <Shadow>[
-      Shadow(
-        blurRadius: 10,
-        color: black,
-      ),
-    ],
+    fontSize: 14.0,
+    letterSpacing: 0.28,
   );
 
   static const TextStyle consoleReq = TextStyle(
@@ -163,6 +153,15 @@ class AppStyles {
     fontStyle:  FontStyle.normal,
     fontSize: 14.0,
     letterSpacing: 0.28,
+  );
+
+  static const TextStyle underlineButton = TextStyle(
+    color:  blue2,
+    fontWeight: FontWeight.w500,
+    fontStyle:  FontStyle.normal,
+    fontSize: 14.0,
+    letterSpacing: 0.28,
+    decoration: TextDecoration.underline,
   );
 }
 
