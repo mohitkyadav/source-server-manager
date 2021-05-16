@@ -7,20 +7,16 @@ import 'package:turrant/themes/styling.dart';
 
 class ServerDetailsHeader extends StatelessWidget {
   const ServerDetailsHeader(this.server, this.map, this.numOfPlayers,
-      this.maxPlayers);
+      this.maxPlayers, this.availableMaps);
 
   final Server server;
   final String map;
   final String numOfPlayers;
   final String maxPlayers;
+  final List<String> availableMaps;
 
   @override
   Widget build(BuildContext context) {
-    const List<String> availableMaps = [
-      'de_cache', 'de_dust2', 'de_inferno', 'de_mirage', 'de_nuke',
-      'de_ancient', 'de_overpass', 'de_train', 'de_vertigo', '',
-    ];
-
     return Material(
       elevation: 12,
       child: Container(

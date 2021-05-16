@@ -28,6 +28,11 @@ class Choice {
   final Function onSelect;
 }
 
+const List<String> defaultMaps = <String>[
+  'de_cache', 'de_dust2', 'de_inferno', 'de_mirage', 'de_nuke',
+  'de_ancient', 'de_overpass', 'de_train', 'de_vertigo', '',
+];
+
 class _ServerDetailsPageState extends State<ServerDetailsPage> {
   String ip;
   int port;
@@ -36,7 +41,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
   bool isLoading = true;
   SourceServer sourceServer;
   List<Player> players;
-  List<String> maps;
+  List<String> maps = defaultMaps;
   List<Command> commands = <Command>[];
   String map;
   String numOfPlayers;
@@ -146,7 +151,8 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
       onRefresh: () => refreshInfo(),
       child: !isLoading ? ListView(
         children: <Widget>[
-          ServerDetailsHeader(widget.server, map, numOfPlayers, maxPlayers),
+          ServerDetailsHeader(widget.server, map, numOfPlayers, maxPlayers,
+              defaultMaps),
           ServerControls(widget.server, map, refreshInfo,
               sendCommandToSv, showToast, maps),
           PlayersList(players, refreshInfo, sendCommandToSv, showToast),
