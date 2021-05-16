@@ -26,7 +26,7 @@ class ServerControls extends StatelessWidget {
     return Material(
       elevation: 12,
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 18),
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           color: AppStyles.blue2.withOpacity(0.1),
@@ -36,13 +36,21 @@ class ServerControls extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                if(maps != null) DropdownButton<String>(
-                  isExpanded: false,
-                  hint: Text(AppLocalizations
-                      .of(context).getTranslatedValue('change_map_tooltip')),
-                  underline: const SizedBox(),
-                  value: map,
-                  onChanged: (String map) {
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Row(
+                    children: <Widget>[
+                      Text('Players ($numOfPlayers/$maxPlayers)',
+                        style: AppStyles.serverDetailsHeaderSubTitle
+                            .copyWith(color: AppStyles.white),),
+                    ],
+                  ),
+                ),
+                PopupMenuButton<String>(
+                  // icon: const Icon(Icons.map),
+                  child: const Text('Change map',
+                    style: AppStyles.underlineButton,),
+                  onSelected: (String map) {
                     sendCommandToSv('map $map');
                     showToast(context, 'Changing map to $map', durationSec: 4);
 
@@ -50,40 +58,25 @@ class ServerControls extends StatelessWidget {
                     Future<void>.delayed(const Duration(seconds: 4),
                             () => refreshInfo());
                   },
-                  icon: const Icon(Icons.map),
-                  iconEnabledColor: AppStyles.white,
-                  items: maps.map(
-                        (String map) => DropdownMenuItem<String>(
-                      value: map, child: SizedBox(
-                            width: 130,
-                            child: Text(map)),),
-                  ).toList(),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: <Widget>[
-                      const Icon(Icons.people_rounded),
-                      const SizedBox(width: 10,),
-                      Text('Active Players ($numOfPlayers/$maxPlayers)',
-                        style: AppStyles.serverDetailsHeaderSubTitle
-                            .copyWith(color: AppStyles.white),),
-                    ],
-                  ),
+                  itemBuilder: (BuildContext context) {
+                    return maps.map((String map) {
+                      return PopupMenuItem<String>(
+                        value: map,
+                        child: Row(
+                          children: <Widget>[
+                            Text(map),
+                          ],
+                        ),
+                      );
+                    }).toList();
+                  },
                 ),
                 InkWell(
                   onTap: () => refreshInfo(),
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(5.0),
                     child: Row(
                       children: <Widget>[
-                        const Icon(Icons.refresh_sharp, color: AppStyles.blue2,),
-                        const SizedBox(width: 10,),
                         Text(
                           AppLocalizations.of(context)
                               .getTranslatedValue('refresh_players_tooltip'),
@@ -92,9 +85,9 @@ class ServerControls extends StatelessWidget {
                       ],
                     ),
                   ),
-                )
+                ),
               ],
-            )
+            ),
           ],
         ),
       ),
