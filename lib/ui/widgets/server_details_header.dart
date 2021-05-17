@@ -14,30 +14,24 @@ class ServerDetailsHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      elevation: 12,
-      child: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/img/${
-                availableMaps.contains(map) ? map : 'fallbackmap'}.jpg',),
-            fit: BoxFit.cover,
-          ),
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/img/${
+              availableMaps.contains(map) ? map : 'fallbackmap'}.jpg',),
+          fit: BoxFit.cover,
         ),
-        child: Stack(
-          children: <Widget>[
-            Positioned.fill(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1,),
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  color: AppStyles.blackShadowOp60,
-                ),
-              ),
+      ),
+      child: Stack(
+        children: <Widget>[
+          Positioned.fill(
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              color: AppStyles.blackShadowOp30,
             ),
-           const SizedBox(height: 140,)
-          ],
-        ),
+          ),
+         const SizedBox(height: 130,)
+        ],
       ),
     );
   }
