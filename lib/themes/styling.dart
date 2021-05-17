@@ -121,6 +121,7 @@ class AppStyles {
     fontStyle:  FontStyle.normal,
     fontSize: 16.0,
     letterSpacing: 0.32,
+    height: 1.2,
   );
 
   static const TextStyle serverDetailsHeaderSubTitle = TextStyle(

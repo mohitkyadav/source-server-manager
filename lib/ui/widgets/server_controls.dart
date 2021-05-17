@@ -33,31 +33,30 @@ class ServerControls extends StatelessWidget {
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              // Column(
-              //   crossAxisAlignment: CrossAxisAlignment.start,
-              //   children: <Widget>[
-              //     Row(
-              //       crossAxisAlignment: CrossAxisAlignment.start,
-              //       children: <Widget>[
-              //         const Icon(Icons.map_rounded, color: AppStyles.blue2,),
-              //         const SizedBox(width: 10,),
-              //         Expanded(
-              //           child: Column(
-              //             // crossAxisAlignment: CrossAxisAlignment.start,
-              //             children: <Widget>[
-              //               Text(map, overflow: TextOverflow.ellipsis,
-              //                   style: AppStyles.serverDetailsHeaderTitle),
-              //               Text('${server.serverIp}:${server.serverPort}',
-              //                   style: AppStyles.serverDetailsHeaderSubTitle),
-              //             ],
-              //           ),
-              //         ),
-              //       ],
-              //     ),
-              //     const SizedBox(height: 50,),
-              //   ],
-              // ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      const Icon(Icons.map_rounded, color: AppStyles.blue2,),
+                      const SizedBox(width: 10,),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(map, overflow: TextOverflow.ellipsis,
+                              style: AppStyles.serverDetailsHeaderTitle),
+                          const SizedBox(height: 2,),
+                          Text('${server.serverIp}:${server.serverPort}',
+                              style: AppStyles.serverDetailsHeaderSubTitle),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
               PopupMenuButton<String>(
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
