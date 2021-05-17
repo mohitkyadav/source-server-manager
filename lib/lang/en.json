@@ -20,7 +20,7 @@
   "add_server_page_title": "Add a Server",
   "refresh_sv_tooltip": "Refresh Info",
   "change_map_tooltip": "Change Map",
-  "refresh_players_tooltip": "Refresh players",
+  "refresh_players_tooltip": "Refresh players List",
   "restart_sv_tooltip": "Restart Server",
   "details_tab_label": "Server Details",
   "console_tab_label": "Server Console",

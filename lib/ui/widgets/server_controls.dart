@@ -23,74 +23,100 @@ class ServerControls extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return Material(
-      elevation: 12,
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 18),
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          color: AppStyles.blue2.withOpacity(0.1),
-        ),
-        child: Column(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Row(
-                    children: <Widget>[
-                      Text('Players ($numOfPlayers/$maxPlayers)',
-                        style: AppStyles.serverDetailsHeaderSubTitle
-                            .copyWith(color: AppStyles.white),),
-                    ],
+    return Column(
+      children: <Widget>[
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            color: AppStyles.blue2.withOpacity(0.44),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              // Column(
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: <Widget>[
+              //     Row(
+              //       crossAxisAlignment: CrossAxisAlignment.start,
+              //       children: <Widget>[
+              //         const Icon(Icons.map_rounded, color: AppStyles.blue2,),
+              //         const SizedBox(width: 10,),
+              //         Expanded(
+              //           child: Column(
+              //             // crossAxisAlignment: CrossAxisAlignment.start,
+              //             children: <Widget>[
+              //               Text(map, overflow: TextOverflow.ellipsis,
+              //                   style: AppStyles.serverDetailsHeaderTitle),
+              //               Text('${server.serverIp}:${server.serverPort}',
+              //                   style: AppStyles.serverDetailsHeaderSubTitle),
+              //             ],
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //     const SizedBox(height: 50,),
+              //   ],
+              // ),
+              PopupMenuButton<String>(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  decoration: const BoxDecoration(
+                      color: AppStyles.blue2,
+                      borderRadius: BorderRadius.all(Radius.circular(5))
                   ),
+                  child: const Text('CHANGE MAP',
+                    style: AppStyles.mapBtn,),
                 ),
-                PopupMenuButton<String>(
-                  // icon: const Icon(Icons.map),
-                  child: const Text('Change map',
-                    style: AppStyles.underlineButton,),
-                  onSelected: (String map) {
-                    sendCommandToSv('map $map');
-                    showToast(context, 'Changing map to $map', durationSec: 4);
+                onSelected: (String map) {
+                  sendCommandToSv('map $map');
+                  showToast(context, 'Changing map to $map', durationSec: 4);
 
-                    // ignore: always_specify_types
-                    Future<void>.delayed(const Duration(seconds: 4),
-                            () => refreshInfo());
-                  },
-                  itemBuilder: (BuildContext context) {
-                    return maps.map((String map) {
-                      return PopupMenuItem<String>(
-                        value: map,
-                        child: Row(
-                          children: <Widget>[
-                            Text(map),
-                          ],
-                        ),
-                      );
-                    }).toList();
-                  },
-                ),
-                InkWell(
-                  onTap: () => refreshInfo(),
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Row(
-                      children: <Widget>[
-                        Text(
-                          AppLocalizations.of(context)
-                              .getTranslatedValue('refresh_players_tooltip'),
-                          style: AppStyles.underlineButton,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
+                  // ignore: always_specify_types
+                  Future<void>.delayed(const Duration(seconds: 4),
+                          () => refreshInfo());
+                },
+                itemBuilder: (BuildContext context) {
+                  return maps.map((String map) {
+                    return PopupMenuItem<String>(
+                      value: map,
+                      child: Row(
+                        children: <Widget>[
+                          Text(map),
+                        ],
+                      ),
+                    );
+                  }).toList();
+                },
+              ),
+            ],
+          ),
         ),
-      ),
+        const SizedBox(height: 10,),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text('Active Players ($numOfPlayers/$maxPlayers)',
+                style: AppStyles.serverDetailsHeaderSubTitle
+                    .copyWith(color: AppStyles.white),),
+              InkWell(
+                onTap: () => refreshInfo(),
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      AppLocalizations.of(context)
+                          .getTranslatedValue('refresh_players_tooltip'),
+                      style: AppStyles.underlineButton,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        )
+      ],
     );
   }
 }

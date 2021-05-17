@@ -163,5 +163,13 @@ class AppStyles {
     letterSpacing: 0.28,
     decoration: TextDecoration.underline,
   );
+
+  static const TextStyle mapBtn = TextStyle(
+    color:  white,
+    fontWeight: FontWeight.bold,
+    fontStyle:  FontStyle.normal,
+    fontSize: 14.0,
+    letterSpacing: 0.96,
+  );
 }
 
