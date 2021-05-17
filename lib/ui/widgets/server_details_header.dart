@@ -35,33 +35,7 @@ class ServerDetailsHeader extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(22.5),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      const Icon(Icons.map_rounded, color: AppStyles.blue2,),
-                      const SizedBox(width: 10,),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(map, overflow: TextOverflow.ellipsis,
-                                style: AppStyles.serverDetailsHeaderTitle),
-                            Text('${server.serverIp}:${server.serverPort}',
-                                style: AppStyles.serverDetailsHeaderSubTitle),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 50,),
-                ],
-              ),
-            ),
+           const SizedBox(height: 140,)
           ],
         ),
       ),

@@ -26,5 +26,7 @@
   "console_tab_label": "Server Console",
   "empty_sv_msg": "Server فارغ",
   "delete_sv_msg": "إزالة",
-  "edit_sv_msg": "تعديل"
+  "edit_sv_msg": "تعديل",
+  "player_count": "اللاعبون النشطون",
+  "change_map": "تغيير الخريطة"
 }

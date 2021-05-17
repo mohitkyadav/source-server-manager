@@ -26,5 +26,7 @@
   "console_tab_label": "Server Console",
   "empty_sv_msg": "No players on this server",
   "delete_sv_msg": "Remove",
-  "edit_sv_msg": "Edit"
+  "edit_sv_msg": "Edit",
+  "player_count": "Active Players",
+  "change_map": "CHANGE MAP"
 }

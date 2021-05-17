@@ -64,7 +64,8 @@ class ServerControls extends StatelessWidget {
                       color: AppStyles.blue2,
                       borderRadius: BorderRadius.all(Radius.circular(5))
                   ),
-                  child: const Text('CHANGE MAP',
+                  child: Text(AppLocalizations.of(context)
+                      .getTranslatedValue('change_map'),
                     style: AppStyles.mapBtn,),
                 ),
                 onSelected: (String map) {
@@ -97,7 +98,8 @@ class ServerControls extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text('Active Players ($numOfPlayers/$maxPlayers)',
+              Text('${AppLocalizations.of(context)
+                  .getTranslatedValue('player_count')} ($numOfPlayers/$maxPlayers)',
                 style: AppStyles.serverDetailsHeaderSubTitle
                     .copyWith(color: AppStyles.white),),
               InkWell(
