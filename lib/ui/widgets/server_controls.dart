@@ -80,10 +80,9 @@ class ServerControls extends StatelessWidget {
                   return maps.map((String map) {
                     return PopupMenuItem<String>(
                       value: map,
-                      child: Row(
-                        children: <Widget>[
-                          Text(map),
-                        ],
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: Text(map)
                       ),
                     );
                   }).toList();
