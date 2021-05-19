@@ -108,7 +108,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
             ),
           ],
           bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(75),
+            preferredSize: const Size.fromHeight(55),
             child: Container(
               alignment: Alignment.centerLeft,
               decoration: const BoxDecoration(
@@ -124,12 +124,26 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
                 unselectedLabelStyle: AppStyles.tabItem,
                 indicatorPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 15),
                 tabs: <Widget>[
-                  Tab(icon: const Icon(Icons.dns),
-                    text: AppLocalizations.of(context)
-                        .getTranslatedValue('details_tab_label'),),
-                  Tab(icon: const Icon(Icons.keyboard),
-                    text: AppLocalizations.of(context)
-                      .getTranslatedValue('console_tab_label'),),
+                  Tab(
+                    child: Row(
+                      children: <Widget>[
+                        const Icon(Icons.dns_rounded),
+                        const SizedBox(width: 10,),
+                        Text(AppLocalizations.of(context)
+                            .getTranslatedValue('details_tab_label'))
+                      ],
+                    ),
+                  ),
+                  Tab(
+                    child: Row(
+                      children: <Widget>[
+                        const Icon(Icons.keyboard_alt_outlined),
+                        const SizedBox(width: 10,),
+                        Text(AppLocalizations.of(context)
+                            .getTranslatedValue('console_tab_label'))
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
