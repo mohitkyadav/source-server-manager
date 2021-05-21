@@ -47,7 +47,12 @@ class _AddServerFormState extends State<AddServerForm> {
       child: Form(
         key: _key,
         child: Container(
-          padding: const EdgeInsets.all(15.0),
+          padding: EdgeInsets.only(
+            top: 15,
+            right: 15,
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+            left: 15,
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
