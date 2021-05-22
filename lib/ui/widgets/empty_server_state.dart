@@ -8,9 +8,17 @@ class EmptyServerState extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        color: AppStyles.darkGray,
-        child: Text(AppLocalizations.of(context)
-            .getTranslatedValue('empty_sv_msg'), style: AppStyles.textH2,),
+        child: Column(
+          children: <Widget>[
+            const SizedBox(height: 20,),
+            Image.asset('assets/img/turrant-no-players.png',
+              width: 200,
+            ),
+            const SizedBox(height: 20,),
+            Text(AppLocalizations.of(context)
+                .getTranslatedValue('empty_sv_msg'), style: AppStyles.emptySvMsg,),
+          ],
+        ),
       ),
     );
   }

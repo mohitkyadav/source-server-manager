@@ -172,5 +172,13 @@ class AppStyles {
     fontSize: 14.0,
     letterSpacing: 0.96,
   );
+
+  static const TextStyle emptySvMsg = TextStyle(
+    color:  white,
+    fontWeight: FontWeight.bold,
+    fontStyle:  FontStyle.normal,
+    fontSize: 24.0,
+    letterSpacing: 0.96,
+  );
 }
 
