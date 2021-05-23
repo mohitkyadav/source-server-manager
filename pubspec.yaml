@@ -67,7 +67,7 @@ flutter:
     - assets/img/de_train.jpg
     - assets/img/de_vertigo.jpg
     - assets/img/fallbackmap.jpg
-    - assets/icn/ic_launcher.png
+    - assets/icn/launcher.png
     - assets/img/turrant-no-players.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
