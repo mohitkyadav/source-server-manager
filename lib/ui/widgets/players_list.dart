@@ -27,14 +27,13 @@ class PlayersList extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
 
         return Material(
-          elevation: 12,
+          elevation: 4,
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 300),
-            padding: const EdgeInsets.only(top: 0, right: 15, bottom: 15, left: 15),
+            padding: const EdgeInsets.only(top: 0, right: 15, bottom: 12, left: 10),
             decoration: BoxDecoration(
-              color: AppStyles.charcoalGrey,
               borderRadius: const BorderRadius.all(Radius.circular(5)),
-              border: Border.all(width: 2, color: AppStyles.blue.withOpacity(0.5)),
+              border: Border.all(width: 2, color: AppStyles.blue2.withOpacity(0.5)),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,7 +46,7 @@ class PlayersList extends StatelessWidget {
                        underline: const SizedBox(),
                        onChanged: (String action) => _displayTextInputDialog(
                            context, action, players[index].name),
-                       icon: const Icon(Icons.more_vert),
+                       icon: const Icon(Icons.more_horiz),
                        iconEnabledColor: AppStyles.white,
                        items: playerActions.map(
                              (String action) => DropdownMenuItem<String>(
@@ -56,9 +55,20 @@ class PlayersList extends StatelessWidget {
                      ),
                    ],
                  ),
-                const SizedBox(height: 8,),
-                Text('Ping: ${players[index].ping}, Score: ${players[index].score}, Duration: ${players[index].duration}',
-                  style: AppStyles.serverItemSubTitle,
+                Row(
+                  children: <Widget>[
+                    Text('Ping: ${players[index].ping}ms',
+                      style: AppStyles.serverItemSubTitle,
+                    ),
+                    const SizedBox(width: 15,),
+                    Text('Score: ${players[index].score}',
+                      style: AppStyles.serverItemSubTitle,
+                    ),
+                    const SizedBox(width: 15,),
+                    Text('Duration: ${players[index].duration} Minutes',
+                      style: AppStyles.serverItemSubTitle,
+                    ),
+                  ],
                 ),
               ],
             ),
