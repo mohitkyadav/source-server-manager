@@ -35,12 +35,13 @@ dependencies:
   provider: ^5.0.0
   shared_preferences: ^2.0.5
   source_server: ^1.1.0
-  flutter_launcher_icons: ^0.9.0
   flutter_slidable: ^0.6.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  flutter_launcher_icons: ^0.9.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
