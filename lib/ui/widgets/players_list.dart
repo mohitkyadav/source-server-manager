@@ -84,7 +84,7 @@ class PlayersList extends StatelessWidget {
       color: AppStyles.darkBg,
       height: 300,
       child: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 15),
         children: <Widget>[
           ListTile(
             selectedTileColor: AppStyles.blue2,
@@ -109,6 +109,7 @@ class PlayersList extends StatelessWidget {
                 style: AppStyles.playerActionText),
             onTap: () => _displayKickDialog(context, 'sm_kick', player),
           ),
+          const Divider(height: 5, color: AppStyles.white60),
           ListTile(
             leading: const FaIcon(FontAwesomeIcons.copy, size: 18,),
             title: const Text('Copy Steam id',
