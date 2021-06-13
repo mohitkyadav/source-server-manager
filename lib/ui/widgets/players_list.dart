@@ -107,7 +107,10 @@ class PlayersList extends StatelessWidget {
             leading: const FaIcon(FontAwesomeIcons.userSlash, size: 18,),
             title: Text('Kick ${player.name} From The Server',
                 style: AppStyles.playerActionText),
-            onTap: () => _displayKickDialog(context, 'sm_kick', player),
+            onTap: () {
+              Navigator.pop(context);
+              _displayKickDialog(context, 'sm_kick', player);
+            },
           ),
           const Divider(height: 5, color: AppStyles.white60),
           ListTile(
@@ -138,26 +141,28 @@ class PlayersList extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Reason for Kicking ${player.name}'),
+          title: Text('Kick Player ${player.name}'),
+          backgroundColor: AppStyles.darkBg,
           content: TextField(
             controller: _textFieldController,
             decoration: const InputDecoration(hintText: 'Reason (optional)'),
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('CANCEL'),
+              child: const Text('Cancel', style: AppStyles.playerActionBtn,),
               onPressed: () {
                 Navigator.pop(context);
               },
             ),
             TextButton(
-              child: const Text('OK'),
+              child: Text('Kick', style: AppStyles.playerActionBtn.copyWith(
+                  color: AppStyles.red)),
               onPressed: () async {
                 final String finalCmd = '$cmd '
                     '${player.name} ${_textFieldController.text}';
                 await sendCommandToSv(finalCmd);
-                await refreshInfo();
                 Navigator.pop(context);
+                await refreshInfo();
               },
             ),
           ],
