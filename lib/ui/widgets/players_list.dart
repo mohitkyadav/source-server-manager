@@ -89,7 +89,7 @@ class PlayersList extends StatelessWidget {
           ListTile(
             selectedTileColor: AppStyles.blue2,
             leading: const FaIcon(FontAwesomeIcons.microphoneSlash, size: 18,),
-            title: Text('Mute ${player.name} (WIP)',
+            title: Text('Mute ${player.name}',
               style: AppStyles.playerActionText,),
             subtitle: const Text('Mute user from voice and text chat',
               style: AppStyles.playerActionSubText,),
