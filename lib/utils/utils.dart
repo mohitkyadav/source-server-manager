@@ -21,12 +21,13 @@ class Utils {
       final List<String> split = line.split('"')[2]
           .trim().replaceAll('  ', ' ').split(' ');
 
-      final String steamId = parseSteam64Id(split[0]);
+      final String steamId = split[0];
+      final String id = parseSteam64Id(steamId);
       final String time = split[1];
       final String ping = split[2];
       final String score = split[3];
 
-      playersOnSv.add(Player(name, score, time, ping, steamId));
+      playersOnSv.add(Player(name, score, time, ping, id, steamId));
     }
 
     return playersOnSv;
