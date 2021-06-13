@@ -147,15 +147,18 @@ class PlayersList extends StatelessWidget {
           title: Text('Mute Player ${player.name}'),
           backgroundColor: AppStyles.darkBg,
           content: Container(
-            height: 150,
+            height: 180,
             child: Column(
               children: <Widget>[
+                const SizedBox(height: 10,),
                 TextField(
                   controller: _durationFieldController,
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(hintText: 'Duration (optional)'),
+                  decoration: const InputDecoration(
+                      hintText: 'Duration in minutes (Default 10 min)',
+                  ),
                 ),
-                const SizedBox(height: 20,),
+                const SizedBox(height: 30,),
                 TextField(
                   controller: _textFieldController,
                   decoration: const InputDecoration(hintText: 'Reason (optional)'),
@@ -171,13 +174,13 @@ class PlayersList extends StatelessWidget {
               },
             ),
             TextButton(
-              child: Text('Mute', style: AppStyles.playerActionBtn.copyWith(
-                  color: AppStyles.red)),
+              child: const Text('Mute', style: AppStyles.playerActionBtn),
+              style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.red)),
               onPressed: () async {
                 final String finalCmd = '$cmd '
-                    '${player.name} ${_durationFieldController.text} '
-                    '${_textFieldController.text}';
-                print(finalCmd);
+                    '${player.name} ${_durationFieldController.text.isNotEmpty
+                    ? _durationFieldController.text : 10}'
+                    ' ${_textFieldController.text}';
                 await sendCommandToSv(finalCmd);
                 Navigator.pop(context);
               },
@@ -210,8 +213,8 @@ class PlayersList extends StatelessWidget {
               },
             ),
             TextButton(
-              child: Text('Kick', style: AppStyles.playerActionBtn.copyWith(
-                  color: AppStyles.red)),
+              child: const Text('Kick', style: AppStyles.playerActionBtn),
+              style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.red)),
               onPressed: () async {
                 final String finalCmd = '$cmd '
                     '${player.name} ${_textFieldController.text}';
