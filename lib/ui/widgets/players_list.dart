@@ -100,7 +100,8 @@ class PlayersList extends StatelessWidget {
 
     // ban player
     if (playerActions[2] == cmd) {
-      print('wip');
+      showToast(context, 'Hang on, this feature is still work in progress.',
+          durationSec: 4);
     }
   }
 
