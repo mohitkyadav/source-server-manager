@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:source_server/source_server.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:turrant/localization/app_localizations.dart';
 import 'package:turrant/models/models.dart';
@@ -127,7 +128,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
                   Tab(
                     child: Row(
                       children: <Widget>[
-                        const Icon(Icons.dns_rounded),
+                        const FaIcon(FontAwesomeIcons.infoCircle, size: 18),
                         const SizedBox(width: 10,),
                         Text(AppLocalizations.of(context)
                             .getTranslatedValue('details_tab_label'))
@@ -137,7 +138,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
                   Tab(
                     child: Row(
                       children: <Widget>[
-                        const Icon(Icons.keyboard_alt_outlined),
+                        const FaIcon(FontAwesomeIcons.terminal, size: 18,),
                         const SizedBox(width: 10,),
                         Text(AppLocalizations.of(context)
                             .getTranslatedValue('console_tab_label'))
