@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:turrant/models/models.dart';
 import 'package:turrant/themes/styling.dart';
 
@@ -12,11 +14,6 @@ class PlayersList extends StatelessWidget {
   final Function refreshInfo;
   final Function sendCommandToSv;
   final Function showToast;
-  final List<String> playerActions = <String>[
-    'Copy Steam_id',
-    'Kick',
-    'Ban (work in progress)',
-  ] ;
 
   @override
   Widget build(BuildContext context) {
@@ -44,16 +41,15 @@ class PlayersList extends StatelessWidget {
                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                    children: <Widget>[
                      Text(players[index].name, style: AppStyles.playerItemTitle,),
-                     DropdownButton<String>(
-                       underline: const SizedBox(),
-                       onChanged: (String action) => _displayTextInputDialog(
-                           context, action, players[index]),
-                       icon: const Icon(Icons.more_horiz),
-                       iconEnabledColor: AppStyles.white,
-                       items: playerActions.map(
-                             (String action) => DropdownMenuItem<String>(
-                           value: action, child: Text(action),),
-                       ).toList(),
+                     IconButton(
+                       onPressed: () {
+                         showModalBottomSheet<Widget>(
+                             context: context,
+                             isScrollControlled: true,
+                             builder: (BuildContext context) =>
+                                 _buildPlayerOptions(context, players[index]));
+                       },
+                       icon: const FaIcon(FontAwesomeIcons.ellipsisH, size: 18,)
                      ),
                    ],
                  ),
@@ -83,28 +79,51 @@ class PlayersList extends StatelessWidget {
     );
   }
 
-  Future<void> _displayTextInputDialog(BuildContext context, String cmd,
-      Player player) async {
-    // copy steam id
-    if (playerActions[0] == cmd) {
-      showToast(context, 'Copied Steam_Id ${player.steamId}', durationSec: 4);
+  Widget _buildPlayerOptions(BuildContext context, Player player) {
+    return Container(
+      color: AppStyles.darkBg,
+      height: 300,
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+      child: ListView(
+        children: <Widget>[
+          ListTile(
+            leading: const FaIcon(FontAwesomeIcons.microphoneSlash, size: 18,),
+            title: Text('Mute ${player.name} (WIP)',
+              style: AppStyles.playerActionText,),
+            subtitle: const Text('Mute user from voice and text chat',
+              style: AppStyles.playerActionSubText,),
+            // onTap: () => _displayKickDialog(context, 'sm_kick', player),
+          ),
+          ListTile(
+            leading: const FaIcon(FontAwesomeIcons.ban, size: 18,),
+            title: Text('Ban player ${player.name} (WIP)',
+                style: AppStyles.playerActionText),
+            // onTap: () => _displayKickDialog(context, 'sm_kick', player),
+          ),
+          ListTile(
+            leading: const FaIcon(FontAwesomeIcons.userSlash, size: 18,),
+            title: Text('Kick ${player.name} From The Server',
+                style: AppStyles.playerActionText),
+            onTap: () => _displayKickDialog(context, 'sm_kick', player),
+          ),
+          ListTile(
+            leading: const FaIcon(FontAwesomeIcons.copy, size: 18,),
+            title: const Text('Copy Steam id',
+                style: AppStyles.playerActionText),
+            subtitle: Text(player.steamId,
+              style: AppStyles.playerActionSubText,),
+            onTap: () async {
+              showToast(context, 'Copied Steam_Id ${player.steamId}', durationSec: 4);
 
-      final ClipboardData data = ClipboardData(text: player.steamId);
-      await Clipboard.setData(data);
-    }
-
-    // kick player
-    if (playerActions[1] == cmd) {
-      _displayKickDialog(context, 'sm_kick', player);
-    }
-
-    // ban player
-    if (playerActions[2] == cmd) {
-      showToast(context, 'Hang on, this feature is still work in progress.',
-          durationSec: 4);
-    }
+              final ClipboardData data = ClipboardData(text: player.steamId);
+              await Clipboard.setData(data);
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+    );
   }
-
 
   Future<void> _displayKickDialog(BuildContext context, String cmd,
       Player player) async {

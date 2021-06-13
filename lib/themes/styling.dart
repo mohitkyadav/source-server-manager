@@ -86,15 +86,29 @@ class AppStyles {
   );
 
   static const TextStyle playerItemTitle = TextStyle(
-    color:  white,
+    color: white,
     fontWeight: FontWeight.w600,
     fontStyle:  FontStyle.normal,
     letterSpacing: 0.32,
     fontSize: 16.0
   );
 
+  static const TextStyle playerActionText = TextStyle(
+    color: white,
+    fontStyle:  FontStyle.normal,
+    letterSpacing: 0.48,
+    fontSize: 16.0
+  );
+
+  static const TextStyle playerActionSubText = TextStyle(
+    color: white80,
+    fontStyle:  FontStyle.normal,
+    letterSpacing: 0.48,
+    fontSize: 12.0
+  );
+
   static const TextStyle serverItemTitle = TextStyle(
-    color:  white,
+    color: white,
     fontWeight: FontWeight.w500,
     fontStyle:  FontStyle.normal,
     fontSize: 16.0,
@@ -102,7 +116,7 @@ class AppStyles {
   );
 
   static const TextStyle serverItemActionText = TextStyle(
-    color:  white,
+    color: white,
     fontWeight: FontWeight.w500,
     fontStyle:  FontStyle.normal,
     fontSize: 14.0,
@@ -110,14 +124,14 @@ class AppStyles {
   );
 
   static const TextStyle serverItemSubTitle = TextStyle(
-    color:  Colors.white70,
+    color: white40,
     fontStyle:  FontStyle.normal,
     letterSpacing: 0.24,
     fontSize: 12.0
   );
 
   static const TextStyle serverDetailsHeaderTitle = TextStyle(
-    color:  white,
+    color: white,
     fontWeight: FontWeight.w500,
     fontStyle:  FontStyle.normal,
     fontSize: 16.0,
@@ -126,7 +140,7 @@ class AppStyles {
   );
 
   static const TextStyle serverDetailsHeaderSubTitle = TextStyle(
-    color:  white70,
+    color: white70,
     fontWeight: FontWeight.w600,
     fontStyle:  FontStyle.normal,
     fontSize: 14.0,
@@ -134,7 +148,7 @@ class AppStyles {
   );
 
   static const TextStyle consoleReq = TextStyle(
-      color:  green,
+      color: green,
       fontWeight: FontWeight.w600,
       fontStyle:  FontStyle.normal,
       letterSpacing: 2,
@@ -142,7 +156,7 @@ class AppStyles {
   );
 
   static const TextStyle consoleRes = TextStyle(
-      color:  white60,
+      color: white60,
       fontWeight: FontWeight.w400,
       fontStyle:  FontStyle.normal,
       letterSpacing: 1,
@@ -150,7 +164,7 @@ class AppStyles {
   );
 
   static const TextStyle tabItem = TextStyle(
-    color:  blue2,
+    color: blue2,
     fontWeight: FontWeight.w500,
     fontStyle:  FontStyle.normal,
     fontSize: 14.0,
@@ -158,7 +172,7 @@ class AppStyles {
   );
 
   static const TextStyle underlineButton = TextStyle(
-    color:  blue2,
+    color: blue2,
     fontWeight: FontWeight.w500,
     fontStyle:  FontStyle.normal,
     fontSize: 14.0,
@@ -167,7 +181,7 @@ class AppStyles {
   );
 
   static const TextStyle mapBtn = TextStyle(
-    color:  white,
+    color: white,
     fontWeight: FontWeight.bold,
     fontStyle:  FontStyle.normal,
     fontSize: 14.0,
@@ -175,9 +189,9 @@ class AppStyles {
   );
 
   static const TextStyle emptySvMsg = TextStyle(
-    color:  white,
+    color: white,
     fontWeight: FontWeight.bold,
-    fontStyle:  FontStyle.normal,
+    fontStyle: FontStyle.normal,
     fontSize: 24.0,
     letterSpacing: 0.96,
   );
