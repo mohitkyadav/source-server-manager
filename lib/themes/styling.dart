@@ -201,5 +201,13 @@ class AppStyles {
     fontSize: 24.0,
     letterSpacing: 0.96,
   );
+
+  static const TextStyle playerActionDialogTitle = TextStyle(
+    color: white,
+    fontWeight: FontWeight.bold,
+    fontStyle: FontStyle.normal,
+    fontSize: 18.0,
+    letterSpacing: 0.96,
+  );
 }
 

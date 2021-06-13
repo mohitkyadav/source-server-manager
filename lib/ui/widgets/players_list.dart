@@ -95,15 +95,17 @@ class PlayersList extends StatelessWidget {
               style: AppStyles.playerActionSubText,),
             onTap: () {
               Navigator.pop(context);
-              _displayMuteDialog(context, 'sm_mute', player);
+              _displayMuteDialog(context, 'sm_silence', player);
             },
           ),
           ListTile(
-            enabled: false,
             leading: const FaIcon(FontAwesomeIcons.ban, size: 18,),
-            title: Text('Ban player ${player.name} (WIP)',
+            title: Text('Ban player ${player.name}',
                 style: AppStyles.playerActionText),
-            // onTap: () => _displayKickDialog(context, 'sm_kick', player),
+            onTap: () {
+              Navigator.pop(context);
+              _displayBanDialog(context, 'sm_ban', player);
+            },
           ),
           ListTile(
             leading: const FaIcon(FontAwesomeIcons.userSlash, size: 18,),
@@ -135,6 +137,64 @@ class PlayersList extends StatelessWidget {
     );
   }
 
+  Future<void> _displayBanDialog(BuildContext context, String cmd,
+      Player player) async {
+    final TextEditingController _durationFieldController = TextEditingController();
+    final TextEditingController _textFieldController = TextEditingController();
+
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Ban Player ${player.name}'),
+          backgroundColor: AppStyles.darkBg,
+          titleTextStyle: AppStyles.playerActionDialogTitle,
+          content: Container(
+            height: 180,
+            child: Column(
+              children: <Widget>[
+                const SizedBox(height: 10,),
+                TextField(
+                  controller: _durationFieldController,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    hintText: 'Duration in minutes (Default 10 min)',
+                  ),
+                ),
+                const SizedBox(height: 30,),
+                TextField(
+                  controller: _textFieldController,
+                  decoration: const InputDecoration(hintText: 'Reason (optional)'),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel', style: AppStyles.playerActionBtn,),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            TextButton(
+              child: const Text('Ban', style: AppStyles.playerActionBtn),
+              style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.red)),
+              onPressed: () async {
+                final String finalCmd = '$cmd '
+                    '${player.name} ${_durationFieldController.text.isNotEmpty
+                    ? _durationFieldController.text : 10}'
+                    ' ${_textFieldController.text}';
+                await sendCommandToSv(finalCmd);
+                Navigator.pop(context);
+                await refreshInfo();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Future<void> _displayMuteDialog(BuildContext context, String cmd,
       Player player) async {
     final TextEditingController _durationFieldController = TextEditingController();
@@ -146,6 +206,7 @@ class PlayersList extends StatelessWidget {
         return AlertDialog(
           title: Text('Mute Player ${player.name}'),
           backgroundColor: AppStyles.darkBg,
+          titleTextStyle: AppStyles.playerActionDialogTitle,
           content: Container(
             height: 180,
             child: Column(
@@ -200,6 +261,7 @@ class PlayersList extends StatelessWidget {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Kick Player ${player.name}'),
+          titleTextStyle: AppStyles.playerActionDialogTitle,
           backgroundColor: AppStyles.darkBg,
           content: TextField(
             controller: _textFieldController,
