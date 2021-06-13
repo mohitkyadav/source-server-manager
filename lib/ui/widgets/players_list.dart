@@ -7,7 +7,7 @@ import 'package:turrant/models/models.dart';
 import 'package:turrant/themes/styling.dart';
 
 class PlayersList extends StatelessWidget {
-  PlayersList(this.players, this.refreshInfo,
+  const PlayersList(this.players, this.refreshInfo,
       this.sendCommandToSv, this.showToast);
 
   final List<Player> players;
@@ -93,8 +93,10 @@ class PlayersList extends StatelessWidget {
               style: AppStyles.playerActionText,),
             subtitle: const Text('Mute user from voice and text chat',
               style: AppStyles.playerActionSubText,),
-            enabled: false,
-            // onTap: () => _displayKickDialog(context, 'sm_kick', player),
+            onTap: () {
+              Navigator.pop(context);
+              _displayMuteDialog(context, 'sm_mute', player);
+            },
           ),
           ListTile(
             enabled: false,
@@ -130,6 +132,59 @@ class PlayersList extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Future<void> _displayMuteDialog(BuildContext context, String cmd,
+      Player player) async {
+    final TextEditingController _durationFieldController = TextEditingController();
+    final TextEditingController _textFieldController = TextEditingController();
+
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Mute Player ${player.name}'),
+          backgroundColor: AppStyles.darkBg,
+          content: Container(
+            height: 150,
+            child: Column(
+              children: <Widget>[
+                TextField(
+                  controller: _durationFieldController,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(hintText: 'Duration (optional)'),
+                ),
+                const SizedBox(height: 20,),
+                TextField(
+                  controller: _textFieldController,
+                  decoration: const InputDecoration(hintText: 'Reason (optional)'),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel', style: AppStyles.playerActionBtn,),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            TextButton(
+              child: Text('Mute', style: AppStyles.playerActionBtn.copyWith(
+                  color: AppStyles.red)),
+              onPressed: () async {
+                final String finalCmd = '$cmd '
+                    '${player.name} ${_durationFieldController.text} '
+                    '${_textFieldController.text}';
+                print(finalCmd);
+                await sendCommandToSv(finalCmd);
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
