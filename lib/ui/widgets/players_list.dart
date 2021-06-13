@@ -83,18 +83,21 @@ class PlayersList extends StatelessWidget {
     return Container(
       color: AppStyles.darkBg,
       height: 300,
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
       child: ListView(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
         children: <Widget>[
           ListTile(
+            selectedTileColor: AppStyles.blue2,
             leading: const FaIcon(FontAwesomeIcons.microphoneSlash, size: 18,),
             title: Text('Mute ${player.name} (WIP)',
               style: AppStyles.playerActionText,),
             subtitle: const Text('Mute user from voice and text chat',
               style: AppStyles.playerActionSubText,),
+            enabled: false,
             // onTap: () => _displayKickDialog(context, 'sm_kick', player),
           ),
           ListTile(
+            enabled: false,
             leading: const FaIcon(FontAwesomeIcons.ban, size: 18,),
             title: Text('Ban player ${player.name} (WIP)',
                 style: AppStyles.playerActionText),
@@ -113,7 +116,8 @@ class PlayersList extends StatelessWidget {
             subtitle: Text(player.steamId,
               style: AppStyles.playerActionSubText,),
             onTap: () async {
-              showToast(context, 'Copied Steam_Id ${player.steamId}', durationSec: 4);
+              showToast(context, 'Copied Steam_Id ${player.steamId}',
+                  durationSec: 4);
 
               final ClipboardData data = ClipboardData(text: player.steamId);
               await Clipboard.setData(data);

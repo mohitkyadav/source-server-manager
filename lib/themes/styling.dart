@@ -94,14 +94,12 @@ class AppStyles {
   );
 
   static const TextStyle playerActionText = TextStyle(
-    color: white,
     fontStyle:  FontStyle.normal,
     letterSpacing: 0.48,
     fontSize: 16.0
   );
 
   static const TextStyle playerActionSubText = TextStyle(
-    color: white80,
     fontStyle:  FontStyle.normal,
     letterSpacing: 0.48,
     fontSize: 12.0
