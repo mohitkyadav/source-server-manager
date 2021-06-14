@@ -260,9 +260,10 @@ class PlayersList extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return Dialog(
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(16.0))),
           backgroundColor: AppStyles.darkBg,
           child: Container(
-            padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(42.0),
             ),
@@ -271,37 +272,63 @@ class PlayersList extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text('Kick Player ${player.name}',
-                  style: AppStyles.playerActionDialogTitle,),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Text('Kick Player ${player.name}',
+                    style: AppStyles.playerActionDialogTitle,),
+                ),
                 const SizedBox(height: 30,),
-                TextField(
-                  controller: _textFieldController,
-                  decoration: AppStyles.playerActionInputDec(
-                    'Reason', 'Reason (optional)'),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: TextField(
+                    controller: _textFieldController,
+                    decoration: AppStyles.playerActionInputDec(
+                      'Reason', 'Reason (optional)'),
+                  ),
                 ),
                 const SizedBox(height: 40,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    TextButton(
-                      child: const Text('CANCEL', style: AppStyles.playerActionBtn,),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
+                Container(
+                  decoration: const BoxDecoration(
+                    color: AppStyles.black,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(16),
+                      bottomRight: Radius.circular(16),
                     ),
-                    const SizedBox(width: 16,),
-                    TextButton(
-                      child: const Text('KICK', style: AppStyles.playerActionBtn),
-                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.red)),
-                      onPressed: () async {
-                        final String finalCmd = '$cmd '
-                            '${player.name} ${_textFieldController.text}';
-                        await sendCommandToSv(finalCmd);
-                        Navigator.pop(context);
-                        await refreshInfo();
-                      },
-                    ),
-                  ],
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 20,
+                      vertical: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      TextButton(
+                        child: const Text('CANCEL', style: AppStyles.playerActionBtn,),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                      const SizedBox(width: 16,),
+                      TextButton(
+                        child: const Text('KICK', style: AppStyles.playerActionBtn),
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty
+                              .all(Colors.red),
+                          shape: MaterialStateProperty
+                              .all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            )
+                          )
+                        ),
+                        onPressed: () async {
+                          final String finalCmd = '$cmd '
+                              '${player.name} ${_textFieldController.text}';
+                          await sendCommandToSv(finalCmd);
+                          Navigator.pop(context);
+                          await refreshInfo();
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
