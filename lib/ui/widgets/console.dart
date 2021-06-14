@@ -1,14 +1,29 @@
 import 'package:flutter/material.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:turrant/models/models.dart';
 import 'package:turrant/themes/styling.dart';
 
-class Console extends StatelessWidget {
+class Console extends StatefulWidget {
   const Console(this.sendCommandToSv, this.commands);
 
   final Function sendCommandToSv;
   final List<Command> commands;
+
+  @override
+  _ConsoleState createState() => _ConsoleState();
+}
+
+class _ConsoleState extends State<Console> {
+  List<String> savedCommands = <String>[];
+
+  @override
+  void initState() {
+    _checkSavedCmds();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +37,9 @@ class Console extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 child: ListView.separated(
                   padding: const EdgeInsets.all(8),
-                  itemCount: commands.length,
+                  itemCount: widget.commands.length,
                   itemBuilder: (BuildContext context, int index) {
-                    final Command cmd = commands[index];
+                    final Command cmd = widget.commands[index];
 
                     return Text('${!cmd.isResponse ? '> ' : ''}${cmd.cmdText}',
                       style: cmd.isResponse
@@ -75,7 +90,7 @@ class Console extends StatelessWidget {
                   child: InkWell(
                     splashColor: AppStyles.blue2,
                     onTap: () {
-                      sendCommandToSv(_cmdInput.text);
+                      _addCommand(context, _cmdInput.text);
                     },
                     child: const SizedBox(
                         width: 40, height: 40, child: Icon(Icons.add)),
@@ -89,7 +104,7 @@ class Console extends StatelessWidget {
                   child: InkWell(
                     splashColor: AppStyles.blue2,
                     onTap: () {
-                      sendCommandToSv(_cmdInput.text);
+                      widget.sendCommandToSv(_cmdInput.text);
                     },
                     child: const SizedBox(
                         width: 40, height: 40, child: Icon(Icons.send)),
@@ -106,23 +121,16 @@ class Console extends StatelessWidget {
   }
 
   Widget _buildSavedChips (BuildContext context) {
-    const List<String> savedCmds = <String>[
-      'status',
-      'plugin_print',
-      'say hello',
-      'say bello',
-      'say chello',
-    ];
 
     return Container(
       height: 40,
       child: ListView.separated(
-        itemCount: savedCmds.length,
+        itemCount: savedCommands.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (BuildContext context, int index) {
           return InputChip(
             padding: const EdgeInsets.all(2.0),
-            label: Text(savedCmds[index],
+            label: Text(savedCommands[index],
                 style: const TextStyle(
                   color:AppStyles.white,
                   fontSize: 14,
@@ -137,10 +145,10 @@ class Console extends StatelessWidget {
             ),
             backgroundColor: AppStyles.white20,
             onSelected: (bool selected) {
-              sendCommandToSv(savedCmds[index]);
+              widget.sendCommandToSv(savedCommands[index]);
             },
             onDeleted: () {
-              print('delete');
+              _removeCommand(context, savedCommands[index]);
             },
           );
         },
@@ -149,5 +157,38 @@ class Console extends StatelessWidget {
         },
       ),
     );
+  }
+
+  void _checkSavedCmds () {
+    SharedPreferences.getInstance().then((SharedPreferences prefs) {
+      final String currentCmds = prefs.getString('savedCmds') ?? '';
+      final List<String> splitCmds = currentCmds.split(';');
+
+      setState(() {
+        savedCommands = splitCmds;
+      });
+    });
+  }
+
+
+  void _setSavedCmds (BuildContext context, List<String> cmds) {
+    SharedPreferences.getInstance().then((SharedPreferences prefs) {
+      prefs.setString('savedCmds', cmds.join(';'));
+
+      setState(() {
+        savedCommands = cmds;
+      });
+    });
+  }
+
+  void _addCommand (BuildContext context, String cmd) {
+    final List<String> newCommands = <String>[...savedCommands, cmd];
+    _setSavedCmds(context, newCommands);
+  }
+
+  void _removeCommand (BuildContext context, String cmdToRemoved) {
+    final List<String> newCommands = savedCommands
+        .where((String cmd) => cmdToRemoved != cmd).toList();
+    _setSavedCmds(context, newCommands);
   }
 }
