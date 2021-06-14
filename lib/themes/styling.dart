@@ -214,7 +214,11 @@ class AppStyles {
       String labelText) {
      return InputDecoration(
        contentPadding: const EdgeInsets.all(10.0),
-       border: const OutlineInputBorder(),
+       border: const OutlineInputBorder(
+         borderRadius: BorderRadius.all(
+           Radius.circular(10.0),
+         ),
+       ),
        hintText: hintText,
        labelText: labelText,
      );

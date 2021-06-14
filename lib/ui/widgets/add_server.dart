@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:source_server/source_server.dart';
 
@@ -53,6 +54,7 @@ class _AddServerFormState extends State<AddServerForm> {
             bottom: MediaQuery.of(context).viewInsets.bottom,
             left: 15,
           ),
+          // color: ,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -62,7 +64,11 @@ class _AddServerFormState extends State<AddServerForm> {
                 initialValue: name,
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.all(10.0),
-                  border: const OutlineInputBorder(),
+                  border: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10.0),
+                    ),
+                  ),
                   labelText: AppLocalizations.of(context)
                       .getTranslatedValue('form_name_field_txt'),
                   hintText: AppLocalizations.of(context)
@@ -77,7 +83,11 @@ class _AddServerFormState extends State<AddServerForm> {
                 initialValue: ip,
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.all(10.0),
-                  border: const OutlineInputBorder(),
+                  border: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10.0),
+                    ),
+                  ),
                   labelText: AppLocalizations.of(context)
                       .getTranslatedValue('form_ip_field_txt'),
                   hintText: AppLocalizations.of(context)
@@ -93,7 +103,11 @@ class _AddServerFormState extends State<AddServerForm> {
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.all(10.0),
-                  border: const OutlineInputBorder(),
+                  border: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10.0),
+                    ),
+                  ),
                   labelText: AppLocalizations.of(context)
                       .getTranslatedValue('form_port_field_txt'),
                   hintText: AppLocalizations.of(context)
@@ -108,14 +122,18 @@ class _AddServerFormState extends State<AddServerForm> {
                 initialValue: password,
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.all(10.0),
-                  border: const OutlineInputBorder(),
+                  border: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10.0),
+                    ),
+                  ),
                   labelText: AppLocalizations.of(context)
                       .getTranslatedValue('form_pass_field_txt'),
                   hintText: AppLocalizations.of(context)
                       .getTranslatedValue('form_pass_field_txt'),
                 ),
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(height: 15,),
               MaterialButton(
                 onPressed: () {
                   if (_key.currentState.validate()) {
@@ -123,13 +141,14 @@ class _AddServerFormState extends State<AddServerForm> {
                     _connectToServer();
                   }
                 },
-                height: 45,
+                height: 35,
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10))),
                 color: AppStyles.blue2,
                 child: Text(AppLocalizations.of(context)
                     .getTranslatedValue('form_submit_btn_txt')),
               ),
+              const SizedBox(height: 15,),
             ],
           ),
         ),

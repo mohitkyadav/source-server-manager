@@ -69,6 +69,9 @@ class _HomePageState extends State<HomePage> {
         showModalBottomSheet<Widget>(
             context: context,
             isScrollControlled: true,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
             builder: (BuildContext context) => Container(
               child: AddServerForm(refreshServers: _getServers,),
             ));
@@ -81,6 +84,9 @@ class _HomePageState extends State<HomePage> {
     showModalBottomSheet<Widget>(
       context: context,
       isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
       builder: (BuildContext context) => Container(
         child: AddServerForm(refreshServers: _getServers, sv: sv,),
       )
