@@ -259,33 +259,52 @@ class PlayersList extends StatelessWidget {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Kick Player ${player.name}'),
-          titleTextStyle: AppStyles.playerActionDialogTitle,
+        return Dialog(
           backgroundColor: AppStyles.darkBg,
-          content: TextField(
-            controller: _textFieldController,
-            decoration: const InputDecoration(hintText: 'Reason (optional)'),
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(42.0),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text('Kick Player ${player.name}',
+                  style: AppStyles.playerActionDialogTitle,),
+                const SizedBox(height: 20,),
+                TextField(
+                  controller: _textFieldController,
+                  decoration: const InputDecoration(hintText: 'Reason (optional)'),
+                ),
+                const SizedBox(height: 40,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    TextButton(
+                      child: const Text('CANCEL', style: AppStyles.playerActionBtn,),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    const SizedBox(width: 16,),
+                    TextButton(
+                      child: const Text('KICK', style: AppStyles.playerActionBtn),
+                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.red)),
+                      onPressed: () async {
+                        final String finalCmd = '$cmd '
+                            '${player.name} ${_textFieldController.text}';
+                        await sendCommandToSv(finalCmd);
+                        Navigator.pop(context);
+                        await refreshInfo();
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Cancel', style: AppStyles.playerActionBtn,),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-            TextButton(
-              child: const Text('Kick', style: AppStyles.playerActionBtn),
-              style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.red)),
-              onPressed: () async {
-                final String finalCmd = '$cmd '
-                    '${player.name} ${_textFieldController.text}';
-                await sendCommandToSv(finalCmd);
-                Navigator.pop(context);
-                await refreshInfo();
-              },
-            ),
-          ],
         );
       },
     );

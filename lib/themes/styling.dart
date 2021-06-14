@@ -206,8 +206,8 @@ class AppStyles {
     color: white,
     fontWeight: FontWeight.bold,
     fontStyle: FontStyle.normal,
-    fontSize: 18.0,
-    letterSpacing: 0.96,
+    fontSize: 20.0,
+    letterSpacing: 1,
   );
 }
 
