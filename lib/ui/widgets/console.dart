@@ -21,8 +21,6 @@ class Console extends StatelessWidget {
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 child: ListView.separated(
-                  // shrinkWrap: true,
-                  // physics: const NeverScrollableScrollPhysics(),
                   padding: const EdgeInsets.all(8),
                   itemCount: commands.length,
                   itemBuilder: (BuildContext context, int index) {
@@ -59,13 +57,34 @@ class Console extends StatelessWidget {
                     )
                   ),
                 ),
-                IconButton(
-                    icon: const Icon(Icons.send),
-                    tooltip: 'Send',
-                    onPressed: () {
-                      sendCommandToSv(_cmdInput.text);
-                    }
+                const SizedBox(width: 15,),
+                ClipOval(
+                  child: Material(
+                    color: AppStyles.white20,
+                    child: InkWell(
+                      splashColor: AppStyles.blue2,
+                      onTap: () {
+                        sendCommandToSv(_cmdInput.text);
+                      },
+                      child: const SizedBox(
+                          width: 40, height: 40, child: Icon(Icons.add)),
+                    ),
+                  ),
                 ),
+                const SizedBox(width: 15,),
+                ClipOval(
+                  child: Material(
+                    color: AppStyles.white20,
+                    child: InkWell(
+                      splashColor: AppStyles.blue2,
+                      onTap: () {
+                        sendCommandToSv(_cmdInput.text);
+                      },
+                      child: const SizedBox(
+                          width: 40, height: 40, child: Icon(Icons.send)),
+                    ),
+                  ),
+                )
               ],
             ),
           ),
