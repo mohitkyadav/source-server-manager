@@ -273,10 +273,15 @@ class PlayersList extends StatelessWidget {
               children: <Widget>[
                 Text('Kick Player ${player.name}',
                   style: AppStyles.playerActionDialogTitle,),
-                const SizedBox(height: 20,),
+                const SizedBox(height: 30,),
                 TextField(
                   controller: _textFieldController,
-                  decoration: const InputDecoration(hintText: 'Reason (optional)'),
+                  decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.all(10.0),
+                    border: OutlineInputBorder(),
+                    hintText: 'Reason (optional)',
+                    labelText: 'Reason',
+                  ),
                 ),
                 const SizedBox(height: 40,),
                 Row(
