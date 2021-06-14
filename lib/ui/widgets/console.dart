@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:turrant/models/models.dart';
 import 'package:turrant/themes/styling.dart';
@@ -105,34 +106,48 @@ class Console extends StatelessWidget {
   }
 
   Widget _buildSavedChips (BuildContext context) {
-    return Row(
-      children: <Widget>[
-        InputChip(
-          padding: const EdgeInsets.all(2.0),
-          label: const Text('status',
-              style: TextStyle(color:AppStyles.white)),
-          backgroundColor: AppStyles.blue2,
-          onSelected: (bool selected) {
-            print('selected');
-          },
-          onDeleted: () {
-            print('deleted');
-          },
-        ),
-        const SizedBox(width: 20,),
-        InputChip(
-          padding: const EdgeInsets.all(2.0),
-          label: const Text('plugin_print',
-              style: TextStyle(color:AppStyles.white)),
-          backgroundColor: AppStyles.blue2,
-          onSelected: (bool selected) {
-            print('selected');
-          },
-          onDeleted: () {
-            print('deleted');
-          },
-        ),
-      ],
+    const List<String> savedCmds = <String>[
+      'status',
+      'plugin_print',
+      'say hello',
+      'say bello',
+      'say chello',
+    ];
+
+    return Container(
+      height: 40,
+      child: ListView.separated(
+        itemCount: savedCmds.length,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (BuildContext context, int index) {
+          return InputChip(
+            padding: const EdgeInsets.all(2.0),
+            label: Text(savedCmds[index],
+                style: const TextStyle(
+                  color:AppStyles.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 0.78
+                ),
+            ),
+            deleteIcon: const FaIcon(
+              FontAwesomeIcons.solidTimesCircle,
+              size: 18,
+              color: AppStyles.red,
+            ),
+            backgroundColor: AppStyles.white20,
+            onSelected: (bool selected) {
+              print('selected');
+            },
+            onDeleted: () {
+              print('deleted');
+            },
+          );
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return SizedBox(width: 20,);
+        },
+      ),
     );
   }
 }
