@@ -125,7 +125,7 @@ class AppStyles {
     color: white40,
     fontStyle:  FontStyle.normal,
     letterSpacing: 0.24,
-    fontSize: 12.0
+    fontSize: 14.0
   );
 
   static const TextStyle serverDetailsHeaderTitle = TextStyle(

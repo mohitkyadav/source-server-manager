@@ -1,12 +1,16 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:source_server/source_server.dart';
 
 import 'package:turrant/localization/app_localizations.dart';
 import 'package:turrant/models/models.dart';
 import 'package:turrant/routes/route_names.dart';
 import 'package:turrant/themes/styling.dart';
 
-class ServerItem extends StatelessWidget {
+class ServerItem extends StatefulWidget {
   const ServerItem(this.server, this._removeServer, this.handleSvLongPress);
 
   final Server server;
@@ -14,18 +18,32 @@ class ServerItem extends StatelessWidget {
   final Function handleSvLongPress;
 
   @override
+  _ServerItemState createState() => _ServerItemState();
+}
+
+class _ServerItemState extends State<ServerItem> {
+  String playerInfo = 'Players: 0 / 10';
+
+  @override
+  void initState() {
+    _checkPlayerCount();
+    Timer.periodic(const Duration(seconds: 30), (Timer t) => _checkPlayerCount());
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
 
     return Slidable(
-      key: Key('${server.serverIp}:${server.serverName}'),
+      key: Key('${widget.server.serverIp}:${widget.server.serverName}'),
       actionPane: const SlidableBehindActionPane(),
       actionExtentRatio: 0.25,
       child: InkWell(
         onTap: () {
-          Navigator.pushNamed(context, serverDetailsRoute, arguments: server);
+          Navigator.pushNamed(context, serverDetailsRoute, arguments: widget.server);
         },
         onLongPress: () {
-          handleSvLongPress(server);
+          widget.handleSvLongPress(widget.server);
         },
         child: Material(
           elevation: 8,
@@ -45,16 +63,16 @@ class ServerItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Flexible(
-                        child: Text(server.serverName,
+                        child: Text(widget.server.serverName,
                           overflow: TextOverflow.ellipsis,
                           style: AppStyles.serverItemTitle,),
                       ),
-                      if(server.serverRcon != null) const Icon(
+                      if(widget.server.serverRcon != null) const Icon(
                         Icons.lock_open_rounded, size: 16,),
                     ],
                   ),
                   const SizedBox(height: 8,),
-                  Text(server.serverGame, style: AppStyles.serverItemSubTitle),
+                  Text(playerInfo ?? '', style: AppStyles.serverItemSubTitle),
                 ],
               ),
             ),
@@ -82,7 +100,7 @@ class ServerItem extends StatelessWidget {
                   ],
                 )
             ),
-            onTap: () => _removeServer(server)
+            onTap: () => widget._removeServer(widget.server)
         ),
       ],
       secondaryActions: <Widget>[
@@ -106,9 +124,29 @@ class ServerItem extends StatelessWidget {
                   ],
                 )
             ),
-            onTap: () => handleSvLongPress(server)
+            onTap: () => widget.handleSvLongPress(widget.server)
         ),
       ],
     );
+  }
+
+  Future<void> _checkPlayerCount() async {
+    final SourceServer sv = SourceServer(
+        InternetAddress(widget.server.serverIp),
+        int.parse(widget.server.serverPort),
+        widget.server.serverRcon
+    );
+
+    await sv.connect();
+    final Map<String, dynamic> serverInfo = await sv.getInfo();
+
+    final String numOfPlayers = serverInfo['players'].toString();
+    final String maxPlayers = serverInfo['maxplayers'].toString();
+
+    sv.close();
+
+    setState(() {
+      playerInfo = 'Players: $numOfPlayers / $maxPlayers';
+    });
   }
 }
