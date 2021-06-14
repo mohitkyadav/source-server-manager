@@ -137,15 +137,15 @@ class Console extends StatelessWidget {
             ),
             backgroundColor: AppStyles.white20,
             onSelected: (bool selected) {
-              print('selected');
+              sendCommandToSv(savedCmds[index]);
             },
             onDeleted: () {
-              print('deleted');
+              print('delete');
             },
           );
         },
         separatorBuilder: (BuildContext context, int index) {
-          return SizedBox(width: 20,);
+          return const SizedBox(width: 20,);
         },
       ),
     );
