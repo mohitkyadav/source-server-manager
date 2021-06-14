@@ -276,12 +276,8 @@ class PlayersList extends StatelessWidget {
                 const SizedBox(height: 30,),
                 TextField(
                   controller: _textFieldController,
-                  decoration: const InputDecoration(
-                    contentPadding: EdgeInsets.all(10.0),
-                    border: OutlineInputBorder(),
-                    hintText: 'Reason (optional)',
-                    labelText: 'Reason',
-                  ),
+                  decoration: AppStyles.playerActionInputDec(
+                    'Reason', 'Reason (optional)'),
                 ),
                 const SizedBox(height: 40,),
                 Row(

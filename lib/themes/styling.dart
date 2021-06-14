@@ -209,5 +209,15 @@ class AppStyles {
     fontSize: 20.0,
     letterSpacing: 1,
   );
+
+  static InputDecoration playerActionInputDec (String hintText,
+      String labelText) {
+     return InputDecoration(
+       contentPadding: const EdgeInsets.all(10.0),
+       border: const OutlineInputBorder(),
+       hintText: hintText,
+       labelText: labelText,
+     );
+  }
 }
 
