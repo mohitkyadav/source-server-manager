@@ -14,11 +14,11 @@ class Console extends StatelessWidget {
     final TextEditingController _cmdInput = TextEditingController();
 
     return Container(
+      color: AppStyles.black,
       child: Column(
         children: <Widget>[
           Expanded(
               child: Container(
-                color: AppStyles.black,
                 width: MediaQuery.of(context).size.width,
                 child: ListView.separated(
                   // shrinkWrap: true,
@@ -39,8 +39,14 @@ class Console extends StatelessWidget {
               )
           ),
           Container(
-            color: AppStyles.blackShadowOp50,
-            padding: const EdgeInsets.only(top: 5, right: 5, left: 10,
+            decoration: const BoxDecoration(
+              color: AppStyles.blackShadowOp50,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+              )
+            ),
+            padding: const EdgeInsets.only(top: 20, right: 5, left: 10,
                 bottom: 35),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -48,10 +54,9 @@ class Console extends StatelessWidget {
                 Expanded(
                   child: TextField(
                     controller: _cmdInput,
-                    decoration: const InputDecoration(
-                      labelText: 'Command to server',
-                      hintText: 'say hello',
-                    ),
+                    decoration: AppStyles.playerActionInputDec(
+                        '', 'Command to server'
+                    )
                   ),
                 ),
                 IconButton(
