@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -77,10 +78,10 @@ class _ConsoleState extends State<Console> {
             children: <Widget>[
               Expanded(
                 child: TextField(
-                    controller: _cmdInput,
-                    decoration: AppStyles.playerActionInputDec(
-                        '', 'Command to server'
-                    )
+                  controller: _cmdInput,
+                  decoration: AppStyles.playerActionInputDec(
+                      '', 'Command to server'
+                  )
                 ),
               ),
               const SizedBox(width: 15,),
@@ -178,8 +179,8 @@ class _ConsoleState extends State<Console> {
   void _checkSavedCmds () {
     SharedPreferences.getInstance().then((SharedPreferences prefs) {
       final String currentCmds = prefs.getString('savedCmds');
-      final List<String> splitCmds = currentCmds.isNotEmpty
-          ? currentCmds.split(';') : <String>[];
+      final List<String> splitCmds = currentCmds != null && currentCmds
+          .isNotEmpty ? currentCmds.split(';') : <String>[];
 
       setState(() {
         savedCommands = splitCmds;
@@ -203,8 +204,34 @@ class _ConsoleState extends State<Console> {
   }
 
   void _removeCommand (BuildContext context, String cmdToRemoved) {
-    final List<String> newCommands = savedCommands
-        .where((String cmd) => cmdToRemoved != cmd).toList();
-    _setSavedCmds(context, newCommands);
+    showDialog<Widget>(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: Text('Confirm Delete?', style: AppStyles
+            .chipActionText.copyWith(fontSize: 18)),
+        content: Text('Delete "$cmdToRemoved" from saved commands?',
+            style: AppStyles.chipActionText),
+        actions: <Widget>[
+          CupertinoDialogAction(
+            isDefaultAction: true,
+            child: const Text('No', style: AppStyles.chipActionText),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          CupertinoDialogAction(
+            child: Text('Yes', style: AppStyles.chipActionText
+                .copyWith(color: AppStyles.red)),
+            onPressed: () {
+              final List<String> newCommands = savedCommands
+                  .where((String cmd) => cmdToRemoved != cmd).toList();
+              _setSavedCmds(context, newCommands);
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      ),
+    );
+
   }
 }
