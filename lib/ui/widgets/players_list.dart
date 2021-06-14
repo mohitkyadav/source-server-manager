@@ -245,50 +245,96 @@ class PlayersList extends StatelessWidget {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Mute Player ${player.name}'),
+        return Dialog(
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(16.0))),
           backgroundColor: AppStyles.darkBg,
-          titleTextStyle: AppStyles.playerActionDialogTitle,
-          content: Container(
-            height: 180,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(42.0),
+            ),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const SizedBox(height: 10,),
-                TextField(
-                  controller: _durationFieldController,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                      hintText: 'Duration in minutes (Default 10 min)',
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Text('Mute Player ${player.name}',
+                    style: AppStyles.playerActionDialogTitle,),
+                ),
+                const SizedBox(height: 30,),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: TextField(
+                    controller: _durationFieldController,
+                    keyboardType: TextInputType.number,
+                    decoration: AppStyles.playerActionInputDec(
+                        'Mute Duration',
+                        'Duration in minutes (Default 10 min)'),
                   ),
                 ),
                 const SizedBox(height: 30,),
-                TextField(
-                  controller: _textFieldController,
-                  decoration: const InputDecoration(hintText: 'Reason (optional)'),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: TextField(
+                    controller: _textFieldController,
+                    decoration: AppStyles.playerActionInputDec(
+                        'Reason for Muting', 'Reason (optional)'),
+                  ),
+                ),
+                const SizedBox(height: 40,),
+                Container(
+                  decoration: const BoxDecoration(
+                    color: AppStyles.black,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(16),
+                      bottomRight: Radius.circular(16),
+                    ),
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 20,
+                      vertical: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      TextButton(
+                        child: const Text(
+                          'CANCEL', style: AppStyles.playerActionBtn,),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                      const SizedBox(width: 16,),
+                      TextButton(
+                        child: const Text(
+                            'MUTE', style: AppStyles.playerActionBtn),
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty
+                                .all(Colors.red),
+                            shape: MaterialStateProperty
+                                .all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                )
+                            )
+                        ),
+                        onPressed: () async {
+                          final String finalCmd = '$cmd '
+                              '${player.name} ${_durationFieldController.text
+                              .isNotEmpty
+                              ? _durationFieldController.text : 10}'
+                              ' ${_textFieldController.text}';
+                          await sendCommandToSv(finalCmd);
+                          Navigator.pop(context);
+                          await refreshInfo();
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
           ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Cancel', style: AppStyles.playerActionBtn,),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-            TextButton(
-              child: const Text('Mute', style: AppStyles.playerActionBtn),
-              style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.red)),
-              onPressed: () async {
-                final String finalCmd = '$cmd '
-                    '${player.name} ${_durationFieldController.text.isNotEmpty
-                    ? _durationFieldController.text : 10}'
-                    ' ${_textFieldController.text}';
-                await sendCommandToSv(finalCmd);
-                Navigator.pop(context);
-              },
-            ),
-          ],
         );
       },
     );
