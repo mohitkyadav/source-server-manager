@@ -177,15 +177,15 @@ class _ConsoleState extends State<Console> {
 
   void _checkSavedCmds () {
     SharedPreferences.getInstance().then((SharedPreferences prefs) {
-      final String currentCmds = prefs.getString('savedCmds') ?? '';
-      final List<String> splitCmds = currentCmds.split(';');
+      final String currentCmds = prefs.getString('savedCmds');
+      final List<String> splitCmds = currentCmds.isNotEmpty
+          ? currentCmds.split(';') : <String>[];
 
       setState(() {
         savedCommands = splitCmds;
       });
     });
   }
-
 
   void _setSavedCmds (BuildContext context, List<String> cmds) {
     SharedPreferences.getInstance().then((SharedPreferences prefs) {
