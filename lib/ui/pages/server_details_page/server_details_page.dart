@@ -181,6 +181,15 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
   }
 
   Future<void> sendCommandToSv(String cmd) async {
+    // clear console history
+    if (cmd == 'clear') {
+      setState(() {
+        commands = <Command>[];
+      });
+
+      return;
+    }
+
     final SourceServer sv = SourceServer(InternetAddress(ip), port, rconPassword);
 
     await sv.connect();

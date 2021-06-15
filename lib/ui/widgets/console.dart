@@ -80,7 +80,7 @@ class _ConsoleState extends State<Console> {
                 child: TextField(
                   controller: _cmdInput,
                   decoration: AppStyles.playerActionInputDec(
-                      '', 'Command to server'
+                      'use "clear" to clean history ', 'Command to server'
                   )
                 ),
               ),
