@@ -192,7 +192,12 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
 
     final SourceServer sv = SourceServer(InternetAddress(ip), port, rconPassword);
 
-    await sv.connect();
+    await sv.connect().timeout(const Duration (seconds: 2),
+        onTimeout: () {
+          sendCommandToSv(cmd);
+        }
+    );
+
     final String res = await sv.send(cmd);
 
     setState(() {
@@ -213,7 +218,11 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
   Future<void> _setMaps() async {
     final SourceServer sv = SourceServer(InternetAddress(ip), port, rconPassword);
 
-    await sv.connect();
+    await sv.connect().timeout(const Duration (seconds: 2),
+        onTimeout: () {
+          _setMaps();
+        }
+    );
     final String res = await sv.send('maps *');
     setState(() {
       maps = Utils.parseMaps(res);
@@ -223,7 +232,12 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
   Future<void> refreshInfo() async {
     final SourceServer sourceServer = SourceServer(
         InternetAddress(ip), port, rconPassword);
-    await sourceServer.connect();
+
+    await sourceServer.connect().timeout(const Duration (seconds: 2),
+      onTimeout: () {
+        refreshInfo();
+      }
+    );
 
     setState(() {
       isLoading = true;

@@ -17,6 +17,11 @@ class Utils {
         break;
       }
 
+      // Dont count GOTV as a player
+      if (line.contains('GOTV')) {
+        continue;
+      }
+
       final String name = line.substring(line.indexOf('"') + 1, line.lastIndexOf('"'));
       final List<String> split = line.split('"')[2]
           .trim().replaceAll('  ', ' ').split(' ');
