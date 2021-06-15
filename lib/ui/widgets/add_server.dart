@@ -158,7 +158,11 @@ class _AddServerFormState extends State<AddServerForm> {
 
   Future<void> _connectToServer() async {
     final SourceServer server = SourceServer(InternetAddress(ip), port, password);
-    await server.connect();
+    await server.connect().timeout(const Duration (seconds: 2),
+        onTimeout: () {
+          _connectToServer();
+        }
+    );;
 
     final Map<String, dynamic> serverInfo = await server.getInfo();
 
