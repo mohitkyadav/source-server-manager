@@ -173,7 +173,6 @@ class _AddServerFormState extends State<AddServerForm> {
       connectionAttempt += 1;
     });
 
-    print(connectionAttempt);
     if (connectionAttempt >= 4) {
       return null;
     }
