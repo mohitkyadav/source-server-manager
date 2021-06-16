@@ -125,16 +125,11 @@ class _ConsoleState extends State<Console> {
 
     if (savedCommands.isEmpty) {
       return Container(
-        height: 40,
+        height: 30,
         alignment: Alignment.centerLeft,
         child: const Text(
           'Type a command and tap on the + icon to save it.',
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            letterSpacing: 0.42,
-            color: AppStyles.white60,
-          ),
+          style: AppStyles.consoleInfoText,
         ),
       );
     }
