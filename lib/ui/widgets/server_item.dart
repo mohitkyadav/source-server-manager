@@ -22,13 +22,20 @@ class ServerItem extends StatefulWidget {
 
 class _ServerItemState extends State<ServerItem> {
   String playerInfo = 'Players: 0 / 10';
+  Timer _periodicCheckInfo;
 
   @override
   void initState() {
     _checkPlayerCount();
-    Timer.periodic(
+    _periodicCheckInfo = Timer.periodic(
         const Duration(seconds: 20), (Timer t) => _checkPlayerCount());
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _periodicCheckInfo.cancel();
+    super.dispose();
   }
 
   @override
