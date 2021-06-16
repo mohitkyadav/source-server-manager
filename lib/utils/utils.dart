@@ -17,14 +17,14 @@ class Utils {
         break;
       }
 
-      // Dont count GOTV as a player
-      if (line.contains('GOTV')) {
-        continue;
-      }
-
       final String name = line.substring(line.indexOf('"') + 1, line.lastIndexOf('"'));
       final List<String> split = line.split('"')[2]
           .trim().replaceAll('  ', ' ').split(' ');
+
+      // Skip bots and GOTV
+      if (split.length < 5) {
+        continue;
+      }
 
       final String steamId = split[0];
       final String id = parseSteam64Id(steamId);
