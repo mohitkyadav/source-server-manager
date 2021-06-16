@@ -27,7 +27,8 @@ class _ServerItemState extends State<ServerItem> {
   @override
   void initState() {
     _checkPlayerCount();
-    Timer.periodic(const Duration(seconds: 30), (Timer t) => _checkPlayerCount());
+    Timer.periodic(
+        const Duration(seconds: 10), (Timer t) => _checkPlayerCount());
     super.initState();
   }
 
@@ -131,22 +132,17 @@ class _ServerItemState extends State<ServerItem> {
   }
 
   Future<void> _checkPlayerCount() async {
-    final SourceServer sv = SourceServer(
-        InternetAddress(widget.server.serverIp),
-        int.parse(widget.server.serverPort),
-        widget.server.serverRcon
+    final SourceServer server = await SourceServer.connect(
+      widget.server.serverIp,
+      int.parse(widget.server.serverPort),
+      password: widget.server.serverRcon,
     );
 
-    await sv.connect();
-    final Map<String, dynamic> serverInfo = await sv.getInfo();
-
-    final String numOfPlayers = serverInfo['players'].toString();
-    final String maxPlayers = serverInfo['maxplayers'].toString();
-
-    sv.close();
+    final ServerInfo info = await server.getInfo();
+    server.close();
 
     setState(() {
-      playerInfo = 'Players: $numOfPlayers / $maxPlayers';
+       playerInfo = 'Players: ${info.players} / ${info.maxPlayers}';
     });
   }
 }
