@@ -28,7 +28,7 @@ class _ServerItemState extends State<ServerItem> {
   void initState() {
     _checkPlayerCount();
     Timer.periodic(
-        const Duration(seconds: 10), (Timer t) => _checkPlayerCount());
+        const Duration(seconds: 20), (Timer t) => _checkPlayerCount());
     super.initState();
   }
 
