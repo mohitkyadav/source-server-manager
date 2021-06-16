@@ -156,19 +156,23 @@ class _AddServerFormState extends State<AddServerForm> {
     );
   }
 
-  Future<void> _connectToServer() async {
-    final SourceServer server = SourceServer(InternetAddress(ip), port, password);
-    await server.connect().timeout(const Duration (seconds: 2),
-        onTimeout: () {
-          _connectToServer();
-        }
-    );;
+  Future<SourceServer> _createSourceServer () async{
+    return await SourceServer.connect(
+        ip, port, password: password
+    );
+  }
 
-    final Map<String, dynamic> serverInfo = await server.getInfo();
+  Future<void> _connectToServer() async {
+    final SourceServer server = await _createSourceServer().timeout(
+        const Duration(seconds: 2), onTimeout: () => _createSourceServer());
+
+    final ServerInfo info = await server.getInfo();
+
+    server.close();
 
     final Server localServer = Server((name != null
-        && name.trim().length > 1) ? name : serverInfo['name'].toString(),
-        ip, port.toString(), password, serverInfo['game'].toString());
+        && name.trim().length > 1) ? name : info.name,
+        ip, port.toString(), password, info.game);
 
     SharedPreferences.getInstance().then((SharedPreferences prefs) {
       final List<String> currentAddedServers = prefs
@@ -192,6 +196,5 @@ class _AddServerFormState extends State<AddServerForm> {
       widget.refreshServers();
       Navigator.of(context).pop();
     });
-    server.close();
   }
 }
