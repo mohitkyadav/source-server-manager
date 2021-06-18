@@ -59,7 +59,6 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
     rconPassword = widget.server.serverRcon;
 
     refreshInfo();
-    _setMaps();
     choices = <Choice>[
       Choice(title: 'Restart server', icon: Icons.refresh_sharp,
           onSelect: _restartSv),
@@ -229,18 +228,6 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
     ));
   }
 
-  Future<void> _setMaps() async {
-    _connectToServer((SourceServer sourceServer) async {
-      final String mapsRes = await sourceServer.command('maps *');
-
-      setState(() {
-        maps = Utils.parseMaps(mapsRes);
-      });
-
-      sourceServer.close();
-    });
-  }
-
   Future<void> refreshInfo() async {
     setState(() {
       isLoading = true;
@@ -248,12 +235,14 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
     _connectToServer((SourceServer sourceServer) async {
       final ServerInfo serverInfo = await sourceServer.getInfo();
       final String statusRes = await sourceServer.command('status');
+      final String mapsRes = await sourceServer.command('maps *');
 
       setState(() {
         players = Utils.parseStatus(statusRes);
         map = serverInfo.map;
         numOfPlayers = serverInfo.players.toString();
         maxPlayers = serverInfo.maxPlayers.toString();
+        maps = Utils.parseMaps(mapsRes);
         isLoading = false;
       });
 
