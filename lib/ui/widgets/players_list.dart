@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:turrant/models/models.dart';
@@ -127,7 +128,7 @@ class PlayersList extends StatelessWidget {
 
     return Container(
       color: AppStyles.darkBg,
-      height: 400,
+      height: 480,
       child: ListView(
         padding: const EdgeInsets.only(bottom: 15),
         children: <Widget>[
@@ -164,11 +165,22 @@ class PlayersList extends StatelessWidget {
           ),
           const Divider(height: 5, color: AppStyles.white60),
           ListTile(
-            leading: const FaIcon(FontAwesomeIcons.copy, size: 18,),
-            title: const Text('Copy Steam id',
+            leading: const FaIcon(FontAwesomeIcons.steamSymbol, size: 18,),
+            title: const Text('Open Steam Profile',
                 style: AppStyles.playerActionText),
+            onTap: () async {
+              final String url = 'https://steamcommunity.com/profiles'
+                  '/${player.id}';
+              await launch(url);
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            leading: const FaIcon(FontAwesomeIcons.copy, size: 18,),
             subtitle: Text(player.steamId,
               style: AppStyles.playerActionSubText,),
+            title: const Text('Copy Steam Id',
+                style: AppStyles.playerActionText),
             onTap: () async {
               showToast(context, 'Copied Steam_Id ${player.steamId}',
                   durationSec: 4);

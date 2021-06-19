@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -29,8 +30,7 @@ class _PlayerProfileState extends State<PlayerProfile> {
     _fetchProfile();
 
     name = widget.player.name;
-    // flags = widget.player.flag;
-    flags = 'bot, root, admin, res';
+    flags = widget.player.flag;
 
     super.initState();
   }
@@ -69,7 +69,9 @@ class _PlayerProfileState extends State<PlayerProfile> {
           ),
           const SizedBox(height: 20,),
           if (inGame != null)
-          Text(' Playing $inGame', style: AppStyles.inGameInfoText,),
+            Text('Playing $inGame',
+              overflow: TextOverflow.ellipsis,
+              style: AppStyles.inGameInfoText,),
         ],
       ),
     );
@@ -117,7 +119,7 @@ class _PlayerProfileState extends State<PlayerProfile> {
 
   Future<void> _fetchProfile () async {
     final dynamic playerProfile = await getPlayerDetails(widget.player.id);
-    print(playerProfile['profile']['inGameInfo']['gameName']);
+    print(playerProfile);
 
     setState(() {
       isLoading = false;
