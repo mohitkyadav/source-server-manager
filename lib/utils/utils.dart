@@ -26,7 +26,9 @@ class Utils {
         // ignore: use_raw_strings
         line.trim().replaceAll(RegExp('\\s+'), ' ').split(' ')[1]: line.trim()
             // ignore: use_raw_strings
-            .replaceAll(RegExp('\\s+'), ' ').split(' ')[2]
+            .replaceAll(RegExp('\\s+'), ' ').split(' ').sublist(2, line.trim()
+                // ignore: use_raw_strings
+                .replaceAll(RegExp('\\s+'), ' ').split(' ').length).toString()
     };
 
     print(accessLevelMap);

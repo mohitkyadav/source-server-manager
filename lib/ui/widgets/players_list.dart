@@ -25,9 +25,13 @@ class PlayersList extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       itemCount: players.length,
       itemBuilder: (BuildContext context, int index) {
-          final bool isRoot = players[index].flag.contains('root');
+        final String userFlags = players[index].flag ?? '';
+        final bool isRoot = userFlags.contains('root')
+            || userFlags.contains('admin');
+        final bool isVip = userFlags.contains('res');
+        final bool isBot = userFlags.contains('bot');
 
-          return Material(
+        return Material(
           elevation: 4,
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 300),
@@ -35,7 +39,8 @@ class PlayersList extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(5)),
               border: Border.all(width: 2,
-                  color: (isRoot ? Colors.yellow : AppStyles.blue2).withOpacity(0.5)),
+                  color: (isRoot ? AppStyles.yellow
+                      : AppStyles.blue2).withOpacity(0.5)),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,27 +66,48 @@ class PlayersList extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text('Ping: ${players[index].ping}ms',
-                        style: AppStyles.serverItemSubTitle,
+                      Row(
+                        children: [
+                          Text('Ping: ${players[index].ping}ms',
+                            style: AppStyles.serverItemSubTitle,
+                          ),
+                          const SizedBox(width: 20,),
+                          Text('Time: ${players[index].duration} mins',
+                            style: AppStyles.serverItemSubTitle,
+                          ),
+                        ],
                       ),
-                      Text('Score: ${players[index].score}',
-                        style: AppStyles.serverItemSubTitle,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          if (isBot) ...<Widget>[
+                            const SizedBox(width: 20,),
+                            const Tooltip(
+                              message: 'Bot',
+                              child: FaIcon(
+                                  FontAwesomeIcons.robot, size: 16,
+                                  color: AppStyles.blue2),
+                            ),
+                          ],
+                          if (isVip) ...<Widget>[
+                            const SizedBox(width: 20,),
+                            const Tooltip(
+                                message: 'Reserved Slot',
+                                child: FaIcon(FontAwesomeIcons.crown, size: 14,
+                                    color: AppStyles.green80),
+                              ),
+                          ],
+                          if (isRoot) ...<Widget>[
+                            const SizedBox(width: 20,),
+                            const Tooltip(
+                              message: 'Admin',
+                              child: FaIcon(
+                                  FontAwesomeIcons.shieldAlt, size: 16,
+                                  color: AppStyles.yellow),
+                            ),
+                          ],
+                        ],
                       ),
-                      Text('Duration: ${players[index].duration} Min',
-                        style: AppStyles.serverItemSubTitle,
-                      ),
-                      if (players[index].flag.contains('res'))
-                        const Tooltip(
-                          message: 'Reserved Slot',
-                          child: FaIcon(FontAwesomeIcons.crown, size: 16,
-                              color: AppStyles.blue2),
-                        ),
-                      if (players[index].flag.contains('root'))
-                        Tooltip(
-                          message: 'Admin',
-                          child: FaIcon(FontAwesomeIcons.shieldAlt, size: 16,
-                              color: isRoot ? Colors.yellow : AppStyles.blue2),
-                        ),
                     ],
                   ),
                 ),
