@@ -74,8 +74,10 @@ class Utils {
       return '';
     }
 
-    return ((int.parse(steamId.split(':')[2]) * 2) + 76561197960265728)
-        .toString();
+    final int steam64Id = ((int.parse(steamId.split(':')[2]) * 2)
+        + 76561197960265728) | int.parse(steamId.split(':')[1]);
+
+    return steam64Id.toString();
   }
 
   static List<String> parseMaps(String maps) {
