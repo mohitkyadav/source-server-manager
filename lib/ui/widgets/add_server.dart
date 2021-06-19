@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,6 +30,8 @@ class _AddServerFormState extends State<AddServerForm> {
   int port;
   String password;
   bool isEditing = false;
+  bool isLoading = false;
+  int connectionAttempt = 0;
 
   @override
   void initState() {
@@ -60,6 +63,7 @@ class _AddServerFormState extends State<AddServerForm> {
             children: <Widget>[
               const SizedBox(height: 10,),
               TextFormField(
+                enabled: !isLoading,
                 onSaved: (String val) => setState(() => name = val),
                 initialValue: name,
                 decoration: InputDecoration(
@@ -77,6 +81,7 @@ class _AddServerFormState extends State<AddServerForm> {
               ),
               const SizedBox(height: 20,),
               TextFormField(
+                enabled: !isLoading,
                 validator: (String val)  => val.isEmpty ? AppLocalizations.of(context)
                     .getTranslatedValue('form_ip_field_err') : null,
                 onSaved: (String val) => setState(() => ip = val),
@@ -96,6 +101,7 @@ class _AddServerFormState extends State<AddServerForm> {
               ),
               const SizedBox(height: 20,),
               TextFormField(
+                enabled: !isLoading,
                 validator: (String val)  => val.isEmpty ? AppLocalizations.of(context)
                     .getTranslatedValue('form_port_field_err') : null,
                 onSaved: (String val) => setState(() => port = int.parse(val)),
@@ -116,6 +122,7 @@ class _AddServerFormState extends State<AddServerForm> {
               ),
               const SizedBox(height: 20,),
               TextFormField(
+                enabled: !isLoading,
                 validator: (String val)  => val.isEmpty ? AppLocalizations.of(context)
                     .getTranslatedValue('form_pass_field_err') : null,
                 onSaved: (String val) => setState(() => password = val),
@@ -135,8 +142,13 @@ class _AddServerFormState extends State<AddServerForm> {
               ),
               const SizedBox(height: 15,),
               MaterialButton(
-                onPressed: () {
-                  if (_key.currentState.validate()) {
+                onPressed: isLoading ? null : () {
+                  if (_key.currentState.validate() && !isLoading) {
+                    setState(() {
+                      connectionAttempt = 0;
+                      isLoading = true;
+                    });
+
                     _key.currentState.save();
                     _connectToServer();
                   }
@@ -145,8 +157,8 @@ class _AddServerFormState extends State<AddServerForm> {
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10))),
                 color: AppStyles.blue2,
-                child: Text(AppLocalizations.of(context)
-                    .getTranslatedValue('form_submit_btn_txt')),
+                child: Text(isLoading ? 'Connection attempt $connectionAttempt'
+                    : 'Save'),
               ),
               const SizedBox(height: 15,),
             ],
@@ -156,42 +168,89 @@ class _AddServerFormState extends State<AddServerForm> {
     );
   }
 
+  Future<SourceServer> _createSourceServer () async{
+    setState(() {
+      connectionAttempt += 1;
+    });
+
+    if (connectionAttempt >= 4) {
+      return null;
+    }
+
+    return await SourceServer.connect(
+        ip, port, password: password
+    );
+  }
+
   Future<void> _connectToServer() async {
-    final SourceServer server = SourceServer(InternetAddress(ip), port, password);
-    await server.connect().timeout(const Duration (seconds: 2),
-        onTimeout: () {
-          _connectToServer();
-        }
-    );;
+    try {
+      final SourceServer server = await _createSourceServer()
+          .timeout(const Duration(seconds: 2));
 
-    final Map<String, dynamic> serverInfo = await server.getInfo();
+      if (server == null) {
+        setState(() {
+          connectionAttempt = 0;
+          isLoading = false;
+        });
 
-    final Server localServer = Server((name != null
-        && name.trim().length > 1) ? name : serverInfo['name'].toString(),
-        ip, port.toString(), password, serverInfo['game'].toString());
+        showDialog<Widget>(
+          context: context,
+          builder: (BuildContext context) => CupertinoAlertDialog(
+            title: Text('Error', style: AppStyles
+                .chipActionText.copyWith(fontSize: 18)),
+            content: const Text('Could not connect to the server.'
+                'Please check ip, port and password.',
+                style: AppStyles.chipActionText),
+            actions: <Widget>[
+              CupertinoDialogAction(
+                child: const Text('Ok', style: AppStyles.chipActionText),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        );
 
-    SharedPreferences.getInstance().then((SharedPreferences prefs) {
-      final List<String> currentAddedServers = prefs
-          .getStringList('addedServers') ?? <String>[];
-
-      final String jsonLocalServer = jsonEncode(localServer.toJson());
-
-      if (isEditing) {
-        final int indexOfCurrentSv = currentAddedServers
-            .indexOf(jsonEncode(widget.sv.toJson()));
-        currentAddedServers.replaceRange(
-            indexOfCurrentSv, indexOfCurrentSv + 1, <String>[jsonLocalServer]);
-        currentAddedServers.join(', ');
-
-        prefs.setStringList('addedServers', currentAddedServers);
-      } else {
-        prefs.setStringList('addedServers', <String>[...currentAddedServers,
-          jsonLocalServer]);
+        return;
       }
 
-      widget.refreshServers();
-      Navigator.of(context).pop();
-    });
-    server.close();
+      final ServerInfo info = await server.getInfo();
+      server.close();
+
+      final Server localServer = Server((name != null
+          && name.trim().length > 1) ? name : info.name,
+          ip, port.toString(), password, info.game);
+
+      SharedPreferences.getInstance().then((SharedPreferences prefs) {
+        final List<String> currentAddedServers = prefs
+            .getStringList('addedServers') ?? <String>[];
+
+        final String jsonLocalServer = jsonEncode(localServer.toJson());
+
+        if (isEditing) {
+          final int indexOfCurrentSv = currentAddedServers
+              .indexOf(jsonEncode(widget.sv.toJson()));
+          currentAddedServers.replaceRange(
+              indexOfCurrentSv, indexOfCurrentSv + 1, <String>[jsonLocalServer]);
+          currentAddedServers.join(', ');
+
+          prefs.setStringList('addedServers', currentAddedServers);
+        } else {
+          prefs.setStringList('addedServers', <String>[...currentAddedServers,
+            jsonLocalServer]);
+        }
+
+        widget.refreshServers();
+        setState(() {
+          connectionAttempt = 0;
+          isLoading = false;
+        });
+        Navigator.of(context).pop();
+      });
+    } catch (e) {
+      print(e);
+      _connectToServer();
+    }
   }
 }

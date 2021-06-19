@@ -59,7 +59,6 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
     rconPassword = widget.server.serverRcon;
 
     refreshInfo();
-    _setMaps();
     choices = <Choice>[
       Choice(title: 'Restart server', icon: Icons.refresh_sharp,
           onSelect: _restartSv),
@@ -180,6 +179,26 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
     return Console(sendCommandToSv, commands);
   }
 
+
+  Future<SourceServer> _createSourceServer () async{
+    return await SourceServer.connect(
+        ip, port, password: rconPassword
+    );
+  }
+
+  Future<void> _connectToServer(Function callBack) async {
+    try {
+      final SourceServer server = await _createSourceServer()
+          .timeout(const Duration(seconds: 2));
+
+      callBack(server);
+    } catch (e) {
+      print('Connection to server timed out');
+      print(e);
+      _connectToServer(callBack);
+    }
+  }
+
   Future<void> sendCommandToSv(String cmd) async {
     // clear console history
     if (cmd == 'clear') {
@@ -190,22 +209,16 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
       return;
     }
 
-    final SourceServer sv = SourceServer(InternetAddress(ip), port, rconPassword);
+    _connectToServer((SourceServer sv) async {
+      final String res = await sv.command(cmd);
 
-    await sv.connect().timeout(const Duration (seconds: 2),
-        onTimeout: () {
-          sendCommandToSv(cmd);
-        }
-    );
+      setState(() {
+        commands.add(Command(cmd, false));
+        commands.add(Command(res, true));
+      });
 
-    final String res = await sv.send(cmd);
-
-    setState(() {
-      commands.add(Command(cmd, false));
-      commands.add(Command(res, true));
+      sv.close();
     });
-
-    sv.close();
   }
 
   void showToast(BuildContext context, String text, {int durationSec = 1}) {
@@ -215,45 +228,27 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
     ));
   }
 
-  Future<void> _setMaps() async {
-    final SourceServer sv = SourceServer(InternetAddress(ip), port, rconPassword);
-
-    await sv.connect().timeout(const Duration (seconds: 2),
-        onTimeout: () {
-          _setMaps();
-        }
-    );
-    final String res = await sv.send('maps *');
-    setState(() {
-      maps = Utils.parseMaps(res);
-    });
-  }
-
   Future<void> refreshInfo() async {
-    final SourceServer sourceServer = SourceServer(
-        InternetAddress(ip), port, rconPassword);
-
-    await sourceServer.connect().timeout(const Duration (seconds: 2),
-      onTimeout: () {
-        refreshInfo();
-      }
-    );
-
     setState(() {
       isLoading = true;
     });
+    _connectToServer((SourceServer sourceServer) async {
+      final ServerInfo serverInfo = await sourceServer.getInfo();
+      final String statusRes = await sourceServer.command('status');
+      final String mapsRes = await sourceServer.command('maps *');
+      // admins, mods, vips
+      final String playersWithPower = await sourceServer.command('sm_who');
 
-    final Map<String, dynamic> serverInfo = await sourceServer.getInfo();
-    final String statusRes = await sourceServer.send('status');
+      setState(() {
+        players = Utils.parseStatus(statusRes, playersWithPower);
+        map = serverInfo.map;
+        numOfPlayers = serverInfo.players.toString();
+        maxPlayers = serverInfo.maxPlayers.toString();
+        maps = Utils.parseMaps(mapsRes);
+        isLoading = false;
+      });
 
-    setState(() {
-      players = Utils.parseStatus(statusRes);
-      map = serverInfo['map'].toString();
-      numOfPlayers = serverInfo['players'].toString();
-      maxPlayers = serverInfo['maxplayers'].toString();
-      isLoading = false;
+      sourceServer.close();
     });
-
-    sourceServer.close();
   }
 }

@@ -106,6 +106,18 @@ class AppStyles {
     color: white,
   );
 
+  static const TextStyle consoleInfoText = TextStyle(
+    fontSize: 14,
+    letterSpacing: 0.42,
+    color: AppStyles.white60,
+  );
+
+  static const TextStyle inGameInfoText = TextStyle(
+    fontSize: 14,
+    letterSpacing: 0.62,
+    color: AppStyles.blue2,
+  );
+
   static const TextStyle playerActionSubText = TextStyle(
     fontStyle:  FontStyle.normal,
     letterSpacing: 0.48,

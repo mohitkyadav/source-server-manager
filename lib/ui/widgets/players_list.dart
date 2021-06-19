@@ -1,10 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:turrant/models/models.dart';
 import 'package:turrant/themes/styling.dart';
+import 'package:turrant/ui/widgets/widgets.dart';
 
 class PlayersList extends StatelessWidget {
   const PlayersList(this.players, this.refreshInfo,
@@ -24,15 +27,22 @@ class PlayersList extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       itemCount: players.length,
       itemBuilder: (BuildContext context, int index) {
+        final String userFlags = players[index].flag ?? '';
+        final bool isRoot = userFlags.contains('root')
+            || userFlags.contains('admin');
+        final bool isVip = userFlags.contains('res');
+        final bool isBot = userFlags.contains('bot');
 
         return Material(
           elevation: 4,
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 300),
-            padding: const EdgeInsets.only(top: 0, right: 15, bottom: 12, left: 10),
+            padding: const EdgeInsets.only(top: 0, right: 0, bottom: 12, left: 10),
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(5)),
-              border: Border.all(width: 2, color: AppStyles.blue2.withOpacity(0.5)),
+              border: Border.all(width: 2,
+                  color: (isRoot ? AppStyles.yellow
+                      : AppStyles.blue2).withOpacity(0.5)),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,20 +63,55 @@ class PlayersList extends StatelessWidget {
                      ),
                    ],
                  ),
-                Row(
-                  children: <Widget>[
-                    Text('Ping: ${players[index].ping}ms',
-                      style: AppStyles.serverItemSubTitle,
-                    ),
-                    const SizedBox(width: 15,),
-                    Text('Score: ${players[index].score}',
-                      style: AppStyles.serverItemSubTitle,
-                    ),
-                    const SizedBox(width: 15,),
-                    Text('Duration: ${players[index].duration} Minutes',
-                      style: AppStyles.serverItemSubTitle,
-                    ),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Row(
+                        children: [
+                          Text('Ping: ${players[index].ping}ms',
+                            style: AppStyles.serverItemSubTitle,
+                          ),
+                          const SizedBox(width: 20,),
+                          Text('Time: ${players[index].duration} mins',
+                            style: AppStyles.serverItemSubTitle,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          if (isBot) ...<Widget>[
+                            const SizedBox(width: 20,),
+                            const Tooltip(
+                              message: 'Bot',
+                              child: FaIcon(
+                                  FontAwesomeIcons.robot, size: 16,
+                                  color: AppStyles.blue2),
+                            ),
+                          ],
+                          if (isVip) ...<Widget>[
+                            const SizedBox(width: 20,),
+                            const Tooltip(
+                                message: 'Reserved Slot',
+                                child: FaIcon(FontAwesomeIcons.crown, size: 14,
+                                    color: AppStyles.green80),
+                              ),
+                          ],
+                          if (isRoot) ...<Widget>[
+                            const SizedBox(width: 20,),
+                            const Tooltip(
+                              message: 'Admin',
+                              child: FaIcon(
+                                  FontAwesomeIcons.shieldAlt, size: 16,
+                                  color: AppStyles.yellow),
+                            ),
+                          ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -80,12 +125,14 @@ class PlayersList extends StatelessWidget {
   }
 
   Widget _buildPlayerOptions(BuildContext context, Player player) {
+
     return Container(
       color: AppStyles.darkBg,
-      height: 300,
+      height: 480,
       child: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 15),
+        padding: const EdgeInsets.only(bottom: 15),
         children: <Widget>[
+          PlayerProfile(player: player,),
           ListTile(
             selectedTileColor: AppStyles.blue2,
             leading: const FaIcon(FontAwesomeIcons.microphoneSlash, size: 18,),
@@ -118,11 +165,22 @@ class PlayersList extends StatelessWidget {
           ),
           const Divider(height: 5, color: AppStyles.white60),
           ListTile(
-            leading: const FaIcon(FontAwesomeIcons.copy, size: 18,),
-            title: const Text('Copy Steam id',
+            leading: const FaIcon(FontAwesomeIcons.steamSymbol, size: 18,),
+            title: const Text('Open Steam Profile',
                 style: AppStyles.playerActionText),
+            onTap: () async {
+              final String url = 'https://steamcommunity.com/profiles'
+                  '/${player.id}';
+              await launch(url);
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            leading: const FaIcon(FontAwesomeIcons.copy, size: 18,),
             subtitle: Text(player.steamId,
               style: AppStyles.playerActionSubText,),
+            title: const Text('Copy Steam Id',
+                style: AppStyles.playerActionText),
             onTap: () async {
               showToast(context, 'Copied Steam_Id ${player.steamId}',
                   durationSec: 4);
@@ -220,7 +278,6 @@ class PlayersList extends StatelessWidget {
                               '${player.name} ${_durationFieldController.text.isNotEmpty
                               ? _durationFieldController.text : 10}'
                               ' ${_textFieldController.text}';
-                          print(finalCmd);
                           await sendCommandToSv(finalCmd);
                           Navigator.pop(context);
                           await refreshInfo();

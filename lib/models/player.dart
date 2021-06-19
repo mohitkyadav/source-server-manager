@@ -1,6 +1,6 @@
 class Player {
   Player(this.name, this.score, this.duration, this.ping, this.id,
-      this.steamId);
+      this.steamId, this.flag);
 
   String name;
   String score;
@@ -8,6 +8,7 @@ class Player {
   String ping;
   String id;
   String steamId;
+  String flag;
 
   @override
   String toString() {
@@ -21,11 +22,13 @@ class Player {
     'id': id,
     'ping': ping,
     'steamId': steamId,
+    'flag': flag,
   };
 
   static Player fromJson(Map<String, dynamic> json) => Player(
     json['name'].toString(), json['score'].toString(),
     json['duration'].toString(), json['id'].toString(),
-    json['ping'].toString(), json['steamId'].toString()
+    json['ping'].toString(), json['steamId'].toString(),
+    json['flag'].toString(),
   );
 }

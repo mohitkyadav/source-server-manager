@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -23,12 +22,20 @@ class ServerItem extends StatefulWidget {
 
 class _ServerItemState extends State<ServerItem> {
   String playerInfo = 'Players: 0 / 10';
+  Timer _periodicCheckInfo;
 
   @override
   void initState() {
     _checkPlayerCount();
-    Timer.periodic(const Duration(seconds: 30), (Timer t) => _checkPlayerCount());
+    _periodicCheckInfo = Timer.periodic(
+        const Duration(seconds: 20), (Timer t) => _checkPlayerCount());
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _periodicCheckInfo.cancel();
+    super.dispose();
   }
 
   @override
@@ -131,22 +138,17 @@ class _ServerItemState extends State<ServerItem> {
   }
 
   Future<void> _checkPlayerCount() async {
-    final SourceServer sv = SourceServer(
-        InternetAddress(widget.server.serverIp),
-        int.parse(widget.server.serverPort),
-        widget.server.serverRcon
+    final SourceServer server = await SourceServer.connect(
+      widget.server.serverIp,
+      int.parse(widget.server.serverPort),
+      password: widget.server.serverRcon,
     );
 
-    await sv.connect();
-    final Map<String, dynamic> serverInfo = await sv.getInfo();
-
-    final String numOfPlayers = serverInfo['players'].toString();
-    final String maxPlayers = serverInfo['maxplayers'].toString();
-
-    sv.close();
+    final ServerInfo info = await server.getInfo();
+    server.close();
 
     setState(() {
-      playerInfo = 'Players: $numOfPlayers / $maxPlayers';
+       playerInfo = 'Players: ${info.players} / ${info.maxPlayers}';
     });
   }
 }
