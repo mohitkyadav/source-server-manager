@@ -21,16 +21,16 @@ class Utils {
   static List<Player> parseUsers(List<String> playerStrings,
       List<String> powerStrings) {
     final List<Player> playersOnSv = <Player>[];
-    // TODO: Fix this mess
-    final Map<String, String> accessLevelMap = <String, String>{
-      for(final String line in powerStrings)
-        // ignore: use_raw_strings
-        line.trim().replaceAll(RegExp('\\s+'), ' ').split(' ')[1]: line.trim()
-            // ignore: use_raw_strings
-            .replaceAll(RegExp('\\s+'), ' ').split(' ').sublist(2, line.trim()
-                // ignore: use_raw_strings
-                .replaceAll(RegExp('\\s+'), ' ').split(' ').length).toString()
-    };
+
+    final Map<String, String> accessLevelMap = Map<String, String>.fromEntries(
+        powerStrings.map((String line) {
+          final List<String> splitPower = line.trim()
+              // ignore: use_raw_strings
+              .replaceAll(RegExp('\\s+'), ' ').split(' ');
+
+          return MapEntry<String, String>(splitPower[1], splitPower.sublist(
+              2, splitPower.length).toString());
+        }));
 
     for (final String line in playerStrings) {
       if (line.startsWith('#end')) {
