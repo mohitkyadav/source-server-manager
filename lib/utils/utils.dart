@@ -21,6 +21,7 @@ class Utils {
   static List<Player> parseUsers(List<String> playerStrings,
       List<String> powerStrings) {
     final List<Player> playersOnSv = <Player>[];
+    // TODO: Fix this mess
     final Map<String, String> accessLevelMap = <String, String>{
       for(final String line in powerStrings)
         // ignore: use_raw_strings
@@ -30,8 +31,6 @@ class Utils {
                 // ignore: use_raw_strings
                 .replaceAll(RegExp('\\s+'), ' ').split(' ').length).toString()
     };
-
-    print(accessLevelMap);
 
     for (final String line in playerStrings) {
       if (line.startsWith('#end')) {
