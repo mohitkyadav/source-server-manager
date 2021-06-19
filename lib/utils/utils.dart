@@ -1,16 +1,35 @@
 import 'package:turrant/models/player.dart';
 
 class Utils {
-  static List<Player> parseStatus(String statusRes) {
+  static List<Player> parseStatus(String statusRes, String playersWithPower) {
     final String status = statusRes.trim();
-    final List<String> lines = status.split('\n');
-    final int index = lines.indexWhere((String line) => line.startsWith('#'));
+    final List<String> linesStatus = status.split('\n');
+    final List<String> linesPlayers = playersWithPower.split('\n');
+    final int rightIdx = linesPlayers
+        .indexWhere((String line) => line.trim().startsWith('1.'));
+    final int index = linesStatus
+        .indexWhere((String line) => line.startsWith('#'));
 
-    return parseUsers(lines.sublist(index + 1, lines.length - 1));
+    return parseUsers(
+        linesStatus.sublist(index + 1, linesStatus.length - 1),
+        rightIdx > 0
+            ? linesPlayers.sublist(rightIdx, linesPlayers.length - 1)
+            : <String>[],
+    );
   }
 
-  static List<Player> parseUsers(List<String> playerStrings) {
+  static List<Player> parseUsers(List<String> playerStrings,
+      List<String> powerStrings) {
     final List<Player> playersOnSv = <Player>[];
+    final Map<String, String> accessLevelMap = <String, String>{
+      for(final String line in powerStrings)
+        // ignore: use_raw_strings
+        line.trim().replaceAll(RegExp('\\s+'), ' ').split(' ')[1]: line.trim()
+            // ignore: use_raw_strings
+            .replaceAll(RegExp('\\s+'), ' ').split(' ')[2]
+    };
+
+    print(accessLevelMap);
 
     for (final String line in playerStrings) {
       if (line.startsWith('#end')) {
@@ -32,7 +51,8 @@ class Utils {
       final String ping = split[2];
       final String score = split[3];
 
-      playersOnSv.add(Player(name, score, time, ping, id, steamId));
+      playersOnSv.add(Player(name, score, time, ping,
+          id, steamId, accessLevelMap[name]));
     }
 
     return playersOnSv;

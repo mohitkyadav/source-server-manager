@@ -236,9 +236,11 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
       final ServerInfo serverInfo = await sourceServer.getInfo();
       final String statusRes = await sourceServer.command('status');
       final String mapsRes = await sourceServer.command('maps *');
+      // admins, mods, vips
+      final String playersWithPower = await sourceServer.command('sm_who');
 
       setState(() {
-        players = Utils.parseStatus(statusRes);
+        players = Utils.parseStatus(statusRes, playersWithPower);
         map = serverInfo.map;
         numOfPlayers = serverInfo.players.toString();
         maxPlayers = serverInfo.maxPlayers.toString();

@@ -220,7 +220,6 @@ class PlayersList extends StatelessWidget {
                               '${player.name} ${_durationFieldController.text.isNotEmpty
                               ? _durationFieldController.text : 10}'
                               ' ${_textFieldController.text}';
-                          print(finalCmd);
                           await sendCommandToSv(finalCmd);
                           Navigator.pop(context);
                           await refreshInfo();
