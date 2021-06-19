@@ -127,6 +127,7 @@ class _AddServerFormState extends State<AddServerForm> {
                     .getTranslatedValue('form_pass_field_err') : null,
                 onSaved: (String val) => setState(() => password = val),
                 initialValue: password,
+                obscureText: true,
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.all(10.0),
                   border: const OutlineInputBorder(
