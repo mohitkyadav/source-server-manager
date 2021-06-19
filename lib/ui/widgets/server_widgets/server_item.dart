@@ -146,7 +146,7 @@ class _ServerItemState extends State<ServerItem> {
 
     final ServerInfo info = await server.getInfo();
     server.close();
-    
+
     setState(() {
        playerInfo = 'Players: ${info.players} / ${info.maxPlayers}';
     });
