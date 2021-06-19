@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:turrant/models/models.dart';
 
-import 'server_item.dart';
+import 'server_widgets/server_item.dart';
 
 class ServersList extends StatelessWidget {
   const ServersList(this.servers, this._removeServer, this.handleSvLongPress);
