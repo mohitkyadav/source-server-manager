@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -24,15 +25,17 @@ class PlayersList extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       itemCount: players.length,
       itemBuilder: (BuildContext context, int index) {
+          final bool isRoot = players[index].flag.contains('root');
 
-        return Material(
+          return Material(
           elevation: 4,
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 300),
-            padding: const EdgeInsets.only(top: 0, right: 15, bottom: 12, left: 10),
+            padding: const EdgeInsets.only(top: 0, right: 0, bottom: 12, left: 10),
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(5)),
-              border: Border.all(width: 2, color: AppStyles.blue2.withOpacity(0.5)),
+              border: Border.all(width: 2,
+                  color: (isRoot ? Colors.yellow : AppStyles.blue2).withOpacity(0.5)),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,20 +56,34 @@ class PlayersList extends StatelessWidget {
                      ),
                    ],
                  ),
-                Row(
-                  children: <Widget>[
-                    Text('Ping: ${players[index].ping}ms',
-                      style: AppStyles.serverItemSubTitle,
-                    ),
-                    const SizedBox(width: 15,),
-                    Text('Score: ${players[index].score}',
-                      style: AppStyles.serverItemSubTitle,
-                    ),
-                    const SizedBox(width: 15,),
-                    Text('Duration: ${players[index].duration} Minutes',
-                      style: AppStyles.serverItemSubTitle,
-                    ),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text('Ping: ${players[index].ping}ms',
+                        style: AppStyles.serverItemSubTitle,
+                      ),
+                      Text('Score: ${players[index].score}',
+                        style: AppStyles.serverItemSubTitle,
+                      ),
+                      Text('Duration: ${players[index].duration} Min',
+                        style: AppStyles.serverItemSubTitle,
+                      ),
+                      if (players[index].flag.contains('res'))
+                        const Tooltip(
+                          message: 'Reserved Slot',
+                          child: FaIcon(FontAwesomeIcons.crown, size: 16,
+                              color: AppStyles.blue2),
+                        ),
+                      if (players[index].flag.contains('root'))
+                        Tooltip(
+                          message: 'Admin',
+                          child: FaIcon(FontAwesomeIcons.shieldAlt, size: 16,
+                              color: isRoot ? Colors.yellow : AppStyles.blue2),
+                        ),
+                    ],
+                  ),
                 ),
               ],
             ),
