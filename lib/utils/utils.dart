@@ -34,6 +34,7 @@ class Utils {
 
           final List<String> finalAccessLevels = restString.trim()
               .replaceAll(RegExp(', '), '')
+              // ignore: use_raw_strings
               .replaceAll(RegExp('\\['), '')
               .replaceAll(RegExp(']'), '').split(' ');
 
