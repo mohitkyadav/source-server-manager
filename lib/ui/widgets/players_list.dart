@@ -5,8 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:turrant/models/models.dart';
-import 'package:turrant/steam_api/steam_api.dart';
 import 'package:turrant/themes/styling.dart';
+import 'package:turrant/ui/widgets/widgets.dart';
 
 class PlayersList extends StatelessWidget {
   const PlayersList(this.players, this.refreshInfo,
@@ -124,15 +124,14 @@ class PlayersList extends StatelessWidget {
   }
 
   Widget _buildPlayerOptions(BuildContext context, Player player) {
-    // final String playerProfile = getPlayerDetails(player.id);
-    // print(playerProfile);
 
     return Container(
       color: AppStyles.darkBg,
-      height: 300,
+      height: 400,
       child: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 15),
+        padding: const EdgeInsets.only(bottom: 15),
         children: <Widget>[
+          PlayerProfile(player: player,),
           ListTile(
             selectedTileColor: AppStyles.blue2,
             leading: const FaIcon(FontAwesomeIcons.microphoneSlash, size: 18,),
