@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:turrant/models/models.dart';
+import 'package:turrant/steam_api/steam_api.dart';
 import 'package:turrant/themes/styling.dart';
 
 class PlayersList extends StatelessWidget {
@@ -123,6 +124,9 @@ class PlayersList extends StatelessWidget {
   }
 
   Widget _buildPlayerOptions(BuildContext context, Player player) {
+    // final String playerProfile = getPlayerDetails(player.id);
+    // print(playerProfile);
+
     return Container(
       color: AppStyles.darkBg,
       height: 300,
