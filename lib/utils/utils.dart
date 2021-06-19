@@ -24,12 +24,21 @@ class Utils {
 
     final Map<String, String> accessLevelMap = Map<String, String>.fromEntries(
         powerStrings.map((String line) {
-          final List<String> splitPower = line.trim()
-              // ignore: use_raw_strings
-              .replaceAll(RegExp('\\s+'), ' ').split(' ');
 
-          return MapEntry<String, String>(splitPower[1], splitPower.sublist(
-              2, splitPower.length).toString());
+          final List<String> splitFromIndex = line.trim().split('.');
+          final List<String> splitNameFromAcc = splitFromIndex[1].trim()
+              .split('  ');
+          final String restString = splitNameFromAcc
+              .sublist(1, splitNameFromAcc.length).toString();
+
+
+          final List<String> finalAccessLevels = restString.trim()
+              .replaceAll(RegExp(', '), '')
+              .replaceAll(RegExp('\\['), '')
+              .replaceAll(RegExp(']'), '').split(' ');
+
+          return MapEntry<String, String>(
+              splitNameFromAcc[0], finalAccessLevels.toString());
         }));
 
     for (final String line in playerStrings) {
