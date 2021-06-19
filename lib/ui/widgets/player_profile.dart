@@ -22,7 +22,7 @@ class _PlayerProfileState extends State<PlayerProfile> {
   bool isLoading = true;
   String profileImg;
   String name;
-  String inGame;
+  bool isVacBanned = false;
   String flags;
 
   @override
@@ -50,7 +50,10 @@ class _PlayerProfileState extends State<PlayerProfile> {
           Row(
             children: <Widget>[
               if (isLoading)
-                const CircleAvatar(backgroundColor: AppStyles.blue2)
+                const Padding(
+                  padding: EdgeInsets.all(12),
+                  child: CircularProgressIndicator(),
+                )
               else CircleAvatar(
                   backgroundColor: AppStyles.blue2,
                   backgroundImage: NetworkImage(profileImg),
@@ -68,10 +71,20 @@ class _PlayerProfileState extends State<PlayerProfile> {
             ],
           ),
           const SizedBox(height: 20,),
-          if (inGame != null)
-            Text('Playing $inGame',
-              overflow: TextOverflow.ellipsis,
-              style: AppStyles.inGameInfoText,),
+          Row(
+            children: <Widget>[
+              const Text('VAC Status',
+                overflow: TextOverflow.ellipsis,
+                style: AppStyles.gameInfoText,),
+              const SizedBox(width: 15,),
+              Tooltip(
+                message: isVacBanned ? 'VAC Banned' : 'Clean',
+                child: FaIcon(isVacBanned ? FontAwesomeIcons.userTimes
+                    : FontAwesomeIcons.userCheck, size: 16,
+                color: isVacBanned ? AppStyles.red : AppStyles.green,),
+              ),
+            ],
+          ),
         ],
       ),
     );
@@ -119,14 +132,13 @@ class _PlayerProfileState extends State<PlayerProfile> {
 
   Future<void> _fetchProfile () async {
     final dynamic playerProfile = await getPlayerDetails(widget.player.id);
-    print(playerProfile);
 
     setState(() {
       isLoading = false;
       profileImg = playerProfile['profile']['avatarFull'].toString();
 
-      if (playerProfile['profile']['inGameInfo'] != null) {
-        inGame = playerProfile['profile']['inGameInfo']['gameName'].toString();
+      if (playerProfile['profile'] != null) {
+        isVacBanned = playerProfile['profile']['vacBanned'] != '0';
       }
     });
   }

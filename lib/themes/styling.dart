@@ -112,7 +112,7 @@ class AppStyles {
     color: AppStyles.white60,
   );
 
-  static const TextStyle inGameInfoText = TextStyle(
+  static const TextStyle gameInfoText = TextStyle(
     fontSize: 14,
     letterSpacing: 0.62,
     color: AppStyles.blue2,
