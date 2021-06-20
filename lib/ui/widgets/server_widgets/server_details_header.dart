@@ -6,11 +6,10 @@ import 'package:turrant/themes/styling.dart';
 
 class ServerDetailsHeader extends StatelessWidget {
   const ServerDetailsHeader(this.server, this.map, this.availableMaps,
-      this.version, this.isPublic, this.isVacEnabled, this.isTvEnabled);
+      this.isPublic, this.isVacEnabled, this.isTvEnabled);
 
   final Server server;
   final String map;
-  final String version;
   final bool isPublic;
   final bool isVacEnabled;
   final bool isTvEnabled;
@@ -33,7 +32,7 @@ class ServerDetailsHeader extends StatelessWidget {
               duration: const Duration(milliseconds: 300),
               color: AppStyles.blackShadowOp40,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15,),
+                padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -68,6 +67,20 @@ class ServerDetailsHeader extends StatelessWidget {
                               print('isPublic: $isPublic');
                             },
                           ),
+                          if (isTvEnabled) ...<Widget>[
+                            const SizedBox(width: 15,),
+                            ActionChip(
+                              backgroundColor: AppStyles.darkBg,
+                              elevation: 7,
+                              label: const Text('TV',),
+                              avatar: const Icon(Icons.tv,
+                                color: AppStyles.blue, size: 16,
+                              ),
+                              onPressed: () {
+                                print('Tv is on.');
+                              },
+                            ),
+                          ]
                         ],
                       ),
                     ),

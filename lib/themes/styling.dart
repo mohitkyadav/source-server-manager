@@ -112,6 +112,12 @@ class AppStyles {
     color: AppStyles.white60,
   );
 
+  static const TextStyle serverVersionTxt = TextStyle(
+    fontSize: 16,
+    letterSpacing: 0.42,
+    color: AppStyles.white,
+  );
+
   static const TextStyle gameInfoText = TextStyle(
     fontSize: 14,
     letterSpacing: 0.62,

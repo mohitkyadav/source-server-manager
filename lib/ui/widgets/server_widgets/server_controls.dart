@@ -10,7 +10,7 @@ import 'package:turrant/themes/styling.dart';
 class ServerControls extends StatelessWidget {
   const ServerControls(this.server, this.map, this.refreshInfo,
       this.sendCommandToSv, this.showToast, this.maps,  this.numOfPlayers,
-      this.maxPlayers);
+      this.maxPlayers, this.version);
 
   final Server server;
   final String map;
@@ -20,6 +20,7 @@ class ServerControls extends StatelessWidget {
   final List<String> maps;
   final String numOfPlayers;
   final String maxPlayers;
+  final String version;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,7 @@ class ServerControls extends StatelessWidget {
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,6 +53,21 @@ class ServerControls extends StatelessWidget {
                           const SizedBox(height: 2,),
                           Text('${server.serverIp}:${server.serverPort}',
                               style: AppStyles.serverDetailsHeaderSubTitle),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12,),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      const Icon(FontAwesomeIcons.codeBranch,
+                        color: AppStyles.blue2, size: 20,),
+                      const SizedBox(width: 10,),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(version, style: AppStyles.serverVersionTxt,),
                         ],
                       ),
                     ],

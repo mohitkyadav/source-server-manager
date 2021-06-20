@@ -171,10 +171,11 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
       onRefresh: () => refreshInfo(),
       child: !isLoading ? ListView(
         children: <Widget>[
-          ServerDetailsHeader(widget.server, map, defaultMaps, version, isPublic,
+          ServerDetailsHeader(widget.server, map, defaultMaps, isPublic,
               isVacEnabled, isTvEnabled),
           ServerControls(widget.server, map, refreshInfo,
-              sendCommandToSv, showToast, maps, numOfPlayers, maxPlayers,),
+              sendCommandToSv, showToast, maps, numOfPlayers,
+              maxPlayers, version),
           PlayersList(players, refreshInfo, sendCommandToSv, showToast),
           if (players.isEmpty) EmptyServerState(),
         ],
@@ -256,6 +257,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
         isPublic = serverInfo.visibility == ServerVisibility.public;
         isVacEnabled = serverInfo.vac == ServerVAC.secured;
         isTvEnabled = serverInfo.tvPort != null;
+        version = serverInfo.version;
         isLoading = false;
       });
 
