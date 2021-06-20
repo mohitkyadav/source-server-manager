@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:turrant/localization/app_localizations.dart';
 
 import 'package:turrant/models/models.dart';
@@ -57,35 +58,25 @@ class ServerControls extends StatelessWidget {
                   ),
                 ],
               ),
-              PopupMenuButton<String>(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                  decoration: const BoxDecoration(
-                      color: AppStyles.blue2,
-                      borderRadius: BorderRadius.all(Radius.circular(5))
+              TextButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(AppStyles.blue2),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                      )
                   ),
-                  child: Text(AppLocalizations.of(context)
-                      .getTranslatedValue('change_map'),
-                    style: AppStyles.mapBtn,),
                 ),
-                onSelected: (String map) {
-                  sendCommandToSv('map $map');
-                  showToast(context, 'Changing map to $map', durationSec: 4);
-
-                  // ignore: always_specify_types
-                  Future<void>.delayed(const Duration(seconds: 4),
-                          () => refreshInfo());
-                },
-                itemBuilder: (BuildContext context) {
-                  return maps.map((String map) {
-                    return PopupMenuItem<String>(
-                      value: map,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: Text(map)
-                      ),
-                    );
-                  }).toList();
+                // borderRadius: BorderRadius.all(Radius.circular(5))
+                child: Text(AppLocalizations.of(context)
+                    .getTranslatedValue('change_map'),
+                  style: AppStyles.mapBtn,),
+                onPressed: () {
+                  showModalBottomSheet<Widget>(
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (BuildContext context) =>
+                          _buildMapOptions(context));
                 },
               ),
             ],
@@ -117,6 +108,53 @@ class ServerControls extends StatelessWidget {
           ),
         )
       ],
+    );
+  }
+
+
+  Widget _buildMapOptions(BuildContext context) {
+    final double sheetHeight = MediaQuery.of(context).size.height * 0.75;
+    final double searchHeight = 0;
+
+    return Container(
+      height: sheetHeight,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          // Container(
+          //   height: searchHeight,
+          //   child: TextField(
+          //     decoration: InputDecoration(
+          //       suffixIcon: Icon(Icons.search),
+          //       labelText: 'Search',
+          //       contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+          //     ),
+          //   ),
+          // ),
+          Container(
+            height: sheetHeight - searchHeight,
+            child: ListView.builder(
+              itemCount: maps.length,
+              padding: const EdgeInsets.only(bottom: 15),
+              itemBuilder: (BuildContext context, int i) {
+                return ListTile(
+                  title: Text(maps[i], style: AppStyles.playerActionText),
+                  onTap: () {
+                    Navigator.pop(context);
+                    sendCommandToSv('map ${maps[i]}');
+                    showToast(context, 'Changing map to ${maps[i]}',
+                        durationSec: 4);
+
+                    // ignore: always_specify_types
+                    Future<void>.delayed(const Duration(seconds: 4),
+                            () => refreshInfo());
+                  },
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
