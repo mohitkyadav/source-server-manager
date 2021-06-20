@@ -47,6 +47,12 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
   String map;
   String numOfPlayers;
   String maxPlayers;
+  String version;
+  int tvPort;
+  bool isPublic = true;
+  bool isVacEnabled = true;
+  bool isTvEnabled = false;
+
 
   List<Choice> choices = <Choice>[];
 
@@ -165,7 +171,8 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
       onRefresh: () => refreshInfo(),
       child: !isLoading ? ListView(
         children: <Widget>[
-          ServerDetailsHeader(widget.server, map, defaultMaps),
+          ServerDetailsHeader(widget.server, map, defaultMaps, version, isPublic,
+              isVacEnabled, isTvEnabled),
           ServerControls(widget.server, map, refreshInfo,
               sendCommandToSv, showToast, maps, numOfPlayers, maxPlayers,),
           PlayersList(players, refreshInfo, sendCommandToSv, showToast),
@@ -187,6 +194,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
   }
 
   Future<void> _connectToServer(Function callBack) async {
+    // only doing this cause, servers sometime don't respond at all
     try {
       final SourceServer server = await _createSourceServer()
           .timeout(const Duration(seconds: 2));
@@ -245,6 +253,9 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
         numOfPlayers = serverInfo.players.toString();
         maxPlayers = serverInfo.maxPlayers.toString();
         maps = Utils.parseMaps(mapsRes);
+        isPublic = serverInfo.visibility == ServerVisibility.public;
+        isVacEnabled = serverInfo.vac == ServerVAC.secured;
+        isTvEnabled = serverInfo.tvPort != null;
         isLoading = false;
       });
 

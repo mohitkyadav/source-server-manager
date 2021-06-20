@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:turrant/models/models.dart';
 import 'package:turrant/themes/styling.dart';
 
 class ServerDetailsHeader extends StatelessWidget {
-  const ServerDetailsHeader(this.server, this.map, this.availableMaps);
+  const ServerDetailsHeader(this.server, this.map, this.availableMaps,
+      this.version, this.isPublic, this.isVacEnabled, this.isTvEnabled);
 
   final Server server;
   final String map;
+  final String version;
+  final bool isPublic;
+  final bool isVacEnabled;
+  final bool isTvEnabled;
   final List<String> availableMaps;
 
   @override
@@ -25,7 +31,49 @@ class ServerDetailsHeader extends StatelessWidget {
           Positioned.fill(
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 300),
-              color: AppStyles.blackShadowOp30,
+              color: AppStyles.blackShadowOp40,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15,),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Container(
+                      child: Row(
+                        children: <Widget>[
+                          ActionChip(
+                            backgroundColor: AppStyles.darkBg,
+                            elevation: 7,
+                            label: const Text('VAC',),
+                            avatar: Icon(Icons.shield, color: isVacEnabled
+                                ? AppStyles.green80 : AppStyles.red,
+                              size: 16,
+                            ),
+                            onPressed: () {
+                              print('isVacEnabled: $isVacEnabled');
+                            },
+                          ),
+                          const SizedBox(width: 15,),
+                          ActionChip(
+                            backgroundColor: AppStyles.darkBg,
+                            elevation: 7,
+                            label: Text(isPublic ?  'Public' : 'Private',),
+                            avatar: Icon(
+                              isPublic ? Icons.lock_open : Icons.lock_rounded,
+                              color: isPublic
+                                  ? AppStyles.blue2 : AppStyles.yellow,
+                              size: 16,
+                            ),
+                            onPressed: () {
+                              print('isPublic: $isPublic');
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
          const SizedBox(height: 130,)
