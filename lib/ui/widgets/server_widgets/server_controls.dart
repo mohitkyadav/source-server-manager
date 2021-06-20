@@ -10,7 +10,7 @@ import 'package:turrant/themes/styling.dart';
 class ServerControls extends StatelessWidget {
   const ServerControls(this.server, this.map, this.refreshInfo,
       this.sendCommandToSv, this.showToast, this.maps,  this.numOfPlayers,
-      this.maxPlayers, this.version);
+      this.maxPlayers, this.version, this.tvPort);
 
   final Server server;
   final String map;
@@ -21,6 +21,7 @@ class ServerControls extends StatelessWidget {
   final String numOfPlayers;
   final String maxPlayers;
   final String version;
+  final int tvPort;
 
   @override
   Widget build(BuildContext context) {
@@ -33,33 +34,84 @@ class ServerControls extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppStyles.blue2.withOpacity(0.44),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Column(
             children: <Widget>[
-              Column(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Row(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      const Icon(Icons.map_rounded, color: AppStyles.blue2,),
-                      const SizedBox(width: 10,),
-                      Column(
+                      Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(map, overflow: TextOverflow.ellipsis,
-                              style: AppStyles.serverDetailsHeaderTitle),
-                          const SizedBox(height: 2,),
-                          Text('${server.serverIp}:${server.serverPort}',
-                              style: AppStyles.serverDetailsHeaderSubTitle),
+                          const Icon(Icons.map_rounded, color: AppStyles.blue2,),
+                          const SizedBox(width: 10,),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(map, overflow: TextOverflow.ellipsis,
+                                  style: AppStyles.serverDetailsHeaderTitle),
+                              const SizedBox(height: 2,),
+                              Text('${server.serverIp}:${server.serverPort}',
+                                  style: AppStyles.serverDetailsHeaderSubTitle),
+                            ],
+                          ),
                         ],
                       ),
                     ],
                   ),
-                  const SizedBox(height: 12,),
+                  TextButton(
+                    style: ButtonStyle(
+                      elevation: MaterialStateProperty.all(5),
+                      backgroundColor: MaterialStateProperty.all(AppStyles.blue2),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5),
+                          )
+                      ),
+                    ),
+                    // borderRadius: BorderRadius.all(Radius.circular(5))
+                    child: Text(AppLocalizations.of(context)
+                        .getTranslatedValue('change_map'),
+                      style: AppStyles.mapBtn,),
+                    onPressed: () {
+                      showModalBottomSheet<Widget>(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (BuildContext context) =>
+                              _buildMapOptions(context));
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12,),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  if (tvPort != null)
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        const Icon(Icons.tv, color: AppStyles.blue2,),
+                        const SizedBox(width: 10,),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            const Text('Source TV address',
+                                overflow: TextOverflow.ellipsis,
+                                style: AppStyles.serverDetailsHeaderTitle),
+                            const SizedBox(height: 2,),
+                            Text('${server.serverIp}:$tvPort',
+                                style: AppStyles.serverDetailsHeaderSubTitle),
+                          ],
+                        ),
+                      ],
+                    ),
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       const Icon(FontAwesomeIcons.codeBranch,
                         color: AppStyles.blue2, size: 20,),
@@ -67,33 +119,16 @@ class ServerControls extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(version, style: AppStyles.serverVersionTxt,),
+                          Text(version,
+                            style: AppStyles.serverDetailsHeaderTitle,),
+                          const SizedBox(height: 2,),
+                          const Text('Server Version',
+                              style: AppStyles.consoleRes),
                         ],
                       ),
                     ],
                   ),
                 ],
-              ),
-              TextButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(AppStyles.blue2),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                      )
-                  ),
-                ),
-                // borderRadius: BorderRadius.all(Radius.circular(5))
-                child: Text(AppLocalizations.of(context)
-                    .getTranslatedValue('change_map'),
-                  style: AppStyles.mapBtn,),
-                onPressed: () {
-                  showModalBottomSheet<Widget>(
-                      context: context,
-                      isScrollControlled: true,
-                      builder: (BuildContext context) =>
-                          _buildMapOptions(context));
-                },
               ),
             ],
           ),
@@ -130,7 +165,7 @@ class ServerControls extends StatelessWidget {
 
   Widget _buildMapOptions(BuildContext context) {
     final double sheetHeight = MediaQuery.of(context).size.height * 0.75;
-    final double searchHeight = 0;
+    const double searchHeight = 0;
 
     return Container(
       height: sheetHeight,

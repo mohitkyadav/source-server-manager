@@ -32,7 +32,7 @@ class ServerDetailsHeader extends StatelessWidget {
               duration: const Duration(milliseconds: 300),
               color: AppStyles.blackShadowOp40,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
+                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.end,

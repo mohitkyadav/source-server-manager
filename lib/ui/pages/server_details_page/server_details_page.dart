@@ -175,7 +175,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
               isVacEnabled, isTvEnabled),
           ServerControls(widget.server, map, refreshInfo,
               sendCommandToSv, showToast, maps, numOfPlayers,
-              maxPlayers, version),
+              maxPlayers, version, tvPort),
           PlayersList(players, refreshInfo, sendCommandToSv, showToast),
           if (players.isEmpty) EmptyServerState(),
         ],
@@ -258,6 +258,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
         isVacEnabled = serverInfo.vac == ServerVAC.secured;
         isTvEnabled = serverInfo.tvPort != null;
         version = serverInfo.version;
+        tvPort = serverInfo.tvPort;
         isLoading = false;
       });
 
