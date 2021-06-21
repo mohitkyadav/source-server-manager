@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_avatar/flutter_advanced_avatar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:turrant/models/models.dart';
@@ -51,37 +52,44 @@ class _PlayerProfileState extends State<PlayerProfile> {
             children: <Widget>[
               if (isLoading)
                 const Padding(
-                  padding: EdgeInsets.all(12),
+                  padding: EdgeInsets.all(17),
                   child: CircularProgressIndicator(),
                 )
-              else CircleAvatar(
-                  backgroundColor: AppStyles.blue2,
-                  backgroundImage: NetworkImage(profileImg),
-                  radius: 30,
+              else AdvancedAvatar(
+                name: name,
+                image: NetworkImage(profileImg),
+                size: 70,
+                bottomLeft: _buildBadges(context),
+                foregroundDecoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: _getBorderColor(context),
+                    width: 3.0,
+                  ),
+                ),
               ),
               const SizedBox(width: 15,),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(name, style: AppStyles.playerItemTitle,),
-                  const SizedBox(height: 10,),
-                  _buildBadges(context),
+                  Text(name, style: AppStyles.playerItemTitle,
+                    overflow: TextOverflow.ellipsis,),
+                  const SizedBox(height: 8,),
+                  Row(
+                    children: <Widget>[
+                      const Text('VAC Status',
+                        overflow: TextOverflow.ellipsis,
+                        style: AppStyles.gameInfoText,),
+                      const SizedBox(width: 15,),
+                      Tooltip(
+                        message: isVacBanned ? 'VAC Banned' : 'Clean',
+                        child: FaIcon(isVacBanned ? FontAwesomeIcons.userTimes
+                            : FontAwesomeIcons.userCheck, size: 16,
+                          color: isVacBanned ? AppStyles.red : AppStyles.green,),
+                      ),
+                    ],
+                  ),
                 ],
-              ),
-            ],
-          ),
-          const SizedBox(height: 20,),
-          Row(
-            children: <Widget>[
-              const Text('VAC Status',
-                overflow: TextOverflow.ellipsis,
-                style: AppStyles.gameInfoText,),
-              const SizedBox(width: 15,),
-              Tooltip(
-                message: isVacBanned ? 'VAC Banned' : 'Clean',
-                child: FaIcon(isVacBanned ? FontAwesomeIcons.userTimes
-                    : FontAwesomeIcons.userCheck, size: 16,
-                color: isVacBanned ? AppStyles.red : AppStyles.green,),
               ),
             ],
           ),
@@ -90,44 +98,55 @@ class _PlayerProfileState extends State<PlayerProfile> {
     );
   }
 
+  Color _getBorderColor (BuildContext context) {
+    final String userFlags = flags ?? '';
+    final bool isRoot = userFlags.contains('root')
+        || userFlags.contains('admin');
+    final bool isVip = userFlags.contains('res');
+
+    if (isRoot) {
+      return AppStyles.yellow.withOpacity(0.8);
+    }
+
+    if (isVip) {
+      return AppStyles.purple.withOpacity(0.8);
+    }
+
+    return Colors.transparent;
+  }
+
   Widget _buildBadges (BuildContext context) {
     final String userFlags = flags ?? '';
     final bool isRoot = userFlags.contains('root')
         || userFlags.contains('admin');
     final bool isVip = userFlags.contains('res');
-    final bool isBot = userFlags.contains('bot');
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        if (isRoot) ...<Widget>[
-          const Tooltip(
-            message: 'Admin',
-            child: FaIcon(
-                FontAwesomeIcons.shieldAlt, size: 16,
-                color: AppStyles.yellow),
-          ),
-          const SizedBox(width: 20,),
-        ],
-        if (isBot) ...<Widget>[
-          const Tooltip(
-            message: 'Bot',
-            child: FaIcon(
-                FontAwesomeIcons.robot, size: 16,
-                color: AppStyles.blue2),
-          ),
-          const SizedBox(width: 20,),
-        ],
-        if (isVip) ...<Widget>[
-          const Tooltip(
-            message: 'Reserved Slot',
-            child: FaIcon(FontAwesomeIcons.crown, size: 16,
-                color: AppStyles.green80),
-          ),
-          const SizedBox(width: 20,),
-        ],
-      ],
-    );
+    if (isRoot) {
+      return Container(
+        padding: const EdgeInsets.all(4),
+        decoration: const BoxDecoration(
+            color: AppStyles.black,
+            shape: BoxShape.circle
+        ),
+        child: const FaIcon(
+            FontAwesomeIcons.shieldAlt, size: 12,
+            color: AppStyles.yellow),
+      );
+    }
+
+    if (isVip) {
+      return Container(
+        padding: const EdgeInsets.all(4),
+        decoration: const BoxDecoration(
+            color: AppStyles.black,
+            shape: BoxShape.circle
+        ),
+        child: const FaIcon(FontAwesomeIcons.crown, size: 10,
+              color: AppStyles.purple),
+      );
+    }
+
+    return null;
   }
 
   Future<void> _fetchProfile () async {

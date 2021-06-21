@@ -31,6 +31,7 @@ class AppStyles {
   static const Color blackShadowOp60 = Color.fromRGBO(0, 0, 0, 0.60);
   static const Color blackShadowOp70 = Color.fromRGBO(0, 0, 0, 0.70);
 
+  static const Color purple = Color.fromRGBO(102, 105, 210, 1);
   static const Color lightPurple = Color.fromRGBO(114, 137, 218, 1);
   static const Color lightGray = Color.fromRGBO(153, 170, 181, 1);
   static const Color darkGray = Color.fromRGBO(44, 47, 51, 1);
