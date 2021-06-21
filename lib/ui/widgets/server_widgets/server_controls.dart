@@ -64,7 +64,9 @@ class ServerControls extends StatelessWidget {
                   ),
                   TextButton(
                     style: ButtonStyle(
-                      elevation: MaterialStateProperty.all(5),
+                      padding: MaterialStateProperty.all(
+                          const EdgeInsets.symmetric(horizontal: 12)),
+                      elevation: MaterialStateProperty.all(4),
                       backgroundColor: MaterialStateProperty.all(AppStyles.blue2),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
@@ -114,7 +116,7 @@ class ServerControls extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       const Icon(FontAwesomeIcons.codeBranch,
-                        color: AppStyles.blue2, size: 20,),
+                        color: AppStyles.blue2,),
                       const SizedBox(width: 10,),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
