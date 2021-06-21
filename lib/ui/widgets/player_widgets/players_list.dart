@@ -27,93 +27,28 @@ class PlayersList extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       itemCount: players.length,
       itemBuilder: (BuildContext context, int index) {
-        final String userFlags = players[index].flag ?? '';
-        final bool isRoot = userFlags.contains('root')
-            || userFlags.contains('admin');
-        final bool isVip = userFlags.contains('res');
-        final bool isBot = userFlags.contains('bot');
 
         return Material(
           elevation: 4,
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
-            padding: const EdgeInsets.only(top: 0, right: 0, bottom: 12, left: 10),
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(5)),
-              border: Border.all(width: 2,
-                  color: (isRoot ? AppStyles.yellow
-                      : AppStyles.blue2).withOpacity(0.5)),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                 Row(
-                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                   children: <Widget>[
-                     Text(players[index].name, style: AppStyles.playerItemTitle,),
-                     IconButton(
-                       onPressed: () {
-                         showModalBottomSheet<Widget>(
-                             context: context,
-                             isScrollControlled: true,
-                             builder: (BuildContext context) =>
-                                 _buildPlayerOptions(context, players[index]));
-                       },
-                       icon: const FaIcon(FontAwesomeIcons.ellipsisH, size: 18,)
-                     ),
-                   ],
-                 ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Row(
-                        children: [
-                          Text('Ping: ${players[index].ping}ms',
-                            style: AppStyles.serverItemSubTitle,
-                          ),
-                          const SizedBox(width: 20,),
-                          Text('Time: ${players[index].duration} mins',
-                            style: AppStyles.serverItemSubTitle,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          if (isBot) ...<Widget>[
-                            const SizedBox(width: 20,),
-                            const Tooltip(
-                              message: 'Bot',
-                              child: FaIcon(
-                                  FontAwesomeIcons.robot, size: 16,
-                                  color: AppStyles.blue2),
-                            ),
-                          ],
-                          if (isVip) ...<Widget>[
-                            const SizedBox(width: 20,),
-                            const Tooltip(
-                                message: 'Reserved Slot',
-                                child: FaIcon(FontAwesomeIcons.crown, size: 14,
-                                    color: AppStyles.green80),
-                              ),
-                          ],
-                          if (isRoot) ...<Widget>[
-                            const SizedBox(width: 20,),
-                            const Tooltip(
-                              message: 'Admin',
-                              child: FaIcon(
-                                  FontAwesomeIcons.shieldAlt, size: 16,
-                                  color: AppStyles.yellow),
-                            ),
-                          ],
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+          child: InkWell(
+            onTap: () {
+             showModalBottomSheet<Widget>(
+                 context: context,
+                 isScrollControlled: true,
+                 builder: (BuildContext context) =>
+                     _buildPlayerOptions(context, players[index]));
+            },
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+                border: Border.all(width: 2,
+                    color: _getBorderColor(context, index),)
+              ),
+              child: PlayerProfile(player: players[index], imgSize: 50,
+                  bgColor: AppStyles.darkBg,
+                  borderRadius: const BorderRadius.all(Radius.circular(8))
+              ),
             ),
           ),
         );
@@ -122,6 +57,24 @@ class PlayersList extends StatelessWidget {
         return const SizedBox(height: 10,);
       },
     );
+  }
+
+
+  Color _getBorderColor (BuildContext context, int index) {
+    final String userFlags = players[index].flag ?? '';
+    final bool isRoot = userFlags.contains('root')
+        || userFlags.contains('admin');
+    final bool isVip = userFlags.contains('res');
+
+    if (isRoot) {
+      return AppStyles.yellow.withOpacity(0.5);
+    }
+
+    if (isVip) {
+      return AppStyles.purple.withOpacity(0.6);
+    }
+
+    return AppStyles.blue2.withOpacity(0.5);
   }
 
   Widget _buildPlayerOptions(BuildContext context, Player player) {

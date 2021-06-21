@@ -11,9 +11,15 @@ class PlayerProfile extends StatefulWidget {
   const PlayerProfile({
     Key key,
     this.player,
+    this.imgSize,
+    this.bgColor,
+    this.borderRadius,
   }) : super(key: key);
 
   final Player player;
+  final double imgSize;
+  final Color bgColor;
+  final BorderRadius borderRadius;
 
   @override
   _PlayerProfileState createState() => _PlayerProfileState();
@@ -23,7 +29,6 @@ class _PlayerProfileState extends State<PlayerProfile> {
   bool isLoading = true;
   String profileImg;
   String name;
-  bool isVacBanned = false;
   String flags;
 
   @override
@@ -41,16 +46,17 @@ class _PlayerProfileState extends State<PlayerProfile> {
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
-      padding: const EdgeInsets.all(15),
-      decoration: const BoxDecoration(
-        color: AppStyles.black,
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: widget.bgColor ?? AppStyles.black,
+        borderRadius: widget.borderRadius
       ),
       child: Row(
         children: <Widget>[
           if (isLoading)
             Container(
-              width: 70,
-              height: 70,
+              width: widget.imgSize ?? 70,
+              height: widget.imgSize ?? 70,
               decoration: const BoxDecoration(
               shape: BoxShape.circle,
               gradient: LinearGradient(
@@ -63,13 +69,13 @@ class _PlayerProfileState extends State<PlayerProfile> {
           else AdvancedAvatar(
             name: name,
             image: NetworkImage(profileImg),
-            size: 70,
+            size: widget.imgSize ?? 70,
             bottomLeft: _buildBadges(context),
             foregroundDecoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
                 color: _getBorderColor(context),
-                width: 3.0,
+                width: 2.0,
               ),
             ),
           ),
@@ -85,15 +91,18 @@ class _PlayerProfileState extends State<PlayerProfile> {
               const SizedBox(height: 8,),
               Row(
                 children: <Widget>[
-                  const Text('VAC Status',
-                    overflow: TextOverflow.ellipsis,
-                    style: AppStyles.gameInfoText,),
-                  const SizedBox(width: 15,),
-                  Tooltip(
-                    message: isVacBanned ? 'VAC Banned' : 'Clean',
-                    child: FaIcon(isVacBanned ? FontAwesomeIcons.userTimes
-                        : FontAwesomeIcons.userCheck, size: 16,
-                      color: isVacBanned ? AppStyles.red : AppStyles.green,),
+                  const Icon(CupertinoIcons.wifi, size: 16,
+                    color: AppStyles.white40,),
+                  const SizedBox(width: 8,),
+                  Text('${widget.player.ping}ms',
+                    style: AppStyles.serverItemSubTitle,
+                  ),
+                  const SizedBox(width: 20,),
+                  const Icon(FontAwesomeIcons.clock, size: 16,
+                    color: AppStyles.white40,),
+                  const SizedBox(width: 8,),
+                  Text('${widget.player.duration} mins',
+                    style: AppStyles.serverItemSubTitle,
                   ),
                 ],
               ),
@@ -111,7 +120,7 @@ class _PlayerProfileState extends State<PlayerProfile> {
     final bool isVip = userFlags.contains('res');
 
     if (isRoot) {
-      return AppStyles.yellow.withOpacity(0.8);
+      return AppStyles.yellow.withOpacity(0.6);
     }
 
     if (isVip) {
@@ -161,10 +170,6 @@ class _PlayerProfileState extends State<PlayerProfile> {
     setState(() {
       isLoading = false;
       profileImg = playerProfile['profile']['avatarFull'].toString();
-
-      if (playerProfile['profile'] != null) {
-        isVacBanned = playerProfile['profile']['vacBanned'] != '0';
-      }
     });
   }
 }
