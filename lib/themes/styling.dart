@@ -151,7 +151,7 @@ class AppStyles {
     color: white,
     fontWeight: FontWeight.w500,
     fontStyle:  FontStyle.normal,
-    fontSize: 16.0,
+    fontSize: 14.0,
     letterSpacing: 0.32,
     height: 1.2,
   );

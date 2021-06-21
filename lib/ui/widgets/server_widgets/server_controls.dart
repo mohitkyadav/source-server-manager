@@ -46,8 +46,10 @@ class ServerControls extends StatelessWidget {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          const Icon(Icons.map_rounded, color: AppStyles.blue2,),
-                          const SizedBox(width: 10,),
+                          const Icon(Icons.map, color: AppStyles.blue2,
+                              size: 18
+                          ),
+                          const SizedBox(width: 8,),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
@@ -64,8 +66,6 @@ class ServerControls extends StatelessWidget {
                   ),
                   TextButton(
                     style: ButtonStyle(
-                      padding: MaterialStateProperty.all(
-                          const EdgeInsets.symmetric(horizontal: 12)),
                       elevation: MaterialStateProperty.all(4),
                       backgroundColor: MaterialStateProperty.all(AppStyles.blue2),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -88,7 +88,7 @@ class ServerControls extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 12,),
+              const SizedBox(height: 8,),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -97,8 +97,8 @@ class ServerControls extends StatelessWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        const Icon(Icons.tv, color: AppStyles.blue2,),
-                        const SizedBox(width: 10,),
+                        const Icon(Icons.tv, color: AppStyles.blue2, size: 18,),
+                        const SizedBox(width: 8,),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -116,8 +116,8 @@ class ServerControls extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       const Icon(FontAwesomeIcons.codeBranch,
-                        color: AppStyles.blue2,),
-                      const SizedBox(width: 10,),
+                        color: AppStyles.blue2, size: 18),
+                      const SizedBox(width: 8,),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
@@ -141,8 +141,8 @@ class ServerControls extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text('${AppLocalizations.of(context)
-                  .getTranslatedValue('player_count')} ($numOfPlayers/$maxPlayers)',
+              Text('${AppLocalizations.of(context).getTranslatedValue(
+                  'player_count')} ($numOfPlayers/$maxPlayers)',
                 style: AppStyles.serverDetailsHeaderSubTitle
                     .copyWith(color: AppStyles.white),),
               InkWell(
