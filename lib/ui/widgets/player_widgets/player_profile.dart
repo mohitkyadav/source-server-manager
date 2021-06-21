@@ -45,49 +45,55 @@ class _PlayerProfileState extends State<PlayerProfile> {
       decoration: const BoxDecoration(
         color: AppStyles.black,
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              if (isLoading)
-                const Padding(
-                  padding: EdgeInsets.all(17),
-                  child: CircularProgressIndicator(),
-                )
-              else AdvancedAvatar(
-                name: name,
-                image: NetworkImage(profileImg),
-                size: 70,
-                bottomLeft: _buildBadges(context),
-                foregroundDecoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: _getBorderColor(context),
-                    width: 3.0,
-                  ),
+          if (isLoading)
+            Container(
+              width: 70,
+              height: 70,
+              decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: LinearGradient(
+                  colors: <Color>[AppStyles.red, AppStyles.purple],
+                  begin: Alignment.bottomLeft,
+                  end: Alignment.topRight
                 ),
+              )
+            )
+          else AdvancedAvatar(
+            name: name,
+            image: NetworkImage(profileImg),
+            size: 70,
+            bottomLeft: _buildBadges(context),
+            foregroundDecoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: _getBorderColor(context),
+                width: 3.0,
               ),
-              const SizedBox(width: 15,),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            ),
+          ),
+          const SizedBox(width: 15,),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.60,
+                child: Text(name, style: AppStyles.playerItemTitle,
+                  overflow: TextOverflow.ellipsis,),
+              ),
+              const SizedBox(height: 8,),
+              Row(
                 children: <Widget>[
-                  Text(name, style: AppStyles.playerItemTitle,
-                    overflow: TextOverflow.ellipsis,),
-                  const SizedBox(height: 8,),
-                  Row(
-                    children: <Widget>[
-                      const Text('VAC Status',
-                        overflow: TextOverflow.ellipsis,
-                        style: AppStyles.gameInfoText,),
-                      const SizedBox(width: 15,),
-                      Tooltip(
-                        message: isVacBanned ? 'VAC Banned' : 'Clean',
-                        child: FaIcon(isVacBanned ? FontAwesomeIcons.userTimes
-                            : FontAwesomeIcons.userCheck, size: 16,
-                          color: isVacBanned ? AppStyles.red : AppStyles.green,),
-                      ),
-                    ],
+                  const Text('VAC Status',
+                    overflow: TextOverflow.ellipsis,
+                    style: AppStyles.gameInfoText,),
+                  const SizedBox(width: 15,),
+                  Tooltip(
+                    message: isVacBanned ? 'VAC Banned' : 'Clean',
+                    child: FaIcon(isVacBanned ? FontAwesomeIcons.userTimes
+                        : FontAwesomeIcons.userCheck, size: 16,
+                      color: isVacBanned ? AppStyles.red : AppStyles.green,),
                   ),
                 ],
               ),
