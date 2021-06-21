@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:source_server/source_server.dart';
@@ -21,8 +22,9 @@ class ServerItem extends StatefulWidget {
 }
 
 class _ServerItemState extends State<ServerItem> {
-  String playerInfo = 'Players: 0 / 10';
+  String playerInfo = '0 / 10';
   Timer _periodicCheckInfo;
+  bool isTvEnabled = false;
 
   @override
   void initState() {
@@ -75,11 +77,27 @@ class _ServerItemState extends State<ServerItem> {
                           style: AppStyles.serverItemTitle,),
                       ),
                       if(widget.server.serverRcon != null) const Icon(
-                        Icons.lock_open_rounded, size: 16,),
+                        Icons.lock_open_rounded, size: 16,
+                          color: AppStyles.white40),
                     ],
                   ),
                   const SizedBox(height: 8,),
-                  Text(playerInfo ?? '', style: AppStyles.serverItemSubTitle),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          const Icon(Icons.group, size: 20,
+                            color: AppStyles.white40,),
+                          const SizedBox(width: 5,),
+                          Text(playerInfo, style: AppStyles.serverItemSubTitle),
+                        ],
+                      ),
+                      if (isTvEnabled)
+                        const Icon(Icons.tv, size: 16,
+                          color: AppStyles.white40,),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -148,7 +166,8 @@ class _ServerItemState extends State<ServerItem> {
     server.close();
 
     setState(() {
-       playerInfo = 'Players: ${info.players} / ${info.maxPlayers}';
+       playerInfo = '${info.players} / ${info.maxPlayers}';
+       isTvEnabled = info.tvPort != null;
     });
   }
 }
