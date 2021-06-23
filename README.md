@@ -27,9 +27,9 @@ Manage CSGO dedicated servers from mobile.
 - 🔨 Kick, mute or Ban players with one click.
 
 <div align="left">
-    <img width="280" src="demo/home.png">
-    <img width="280" src="demo/edit.png">
-    <img width="280" src="demo/sv.png">
+    <img width="270" src="demo/home.png">
+    <img width="270" src="demo/edit.png">
+    <img width="270" src="demo/sv.png">
 </div>
 
 ## 🤝 Contributing
