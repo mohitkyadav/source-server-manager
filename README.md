@@ -1,16 +1,44 @@
-# turrant
+<p align="center">
+  <a href="https://play.google.com/store/apps/details?id=come.csgo.server.manager">
+    <img src="demo/banner.png">
+  </a>
+</p>
 
-A new Flutter project.
+<h1 align="center">Source Server Manager</h1>
 
-## Getting Started
+<div align="center">
 
-This project is a starting point for a Flutter application.
+Manage CSGO dedicated servers from mobile.
 
-A few resources to get you started if this is your first Flutter project:
+  <a href="https://play.google.com/store/apps/details?id=come.csgo.server.manager">
+    <img width="250" src="demo/google-play-badge.png">
+  </a>
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+<!-- Add Badges here -->
+</div>
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## ✨ Features
+
+- 🌈 Modern UI.
+- 🔐 Manage unlimited servers with RCON.
+- ⚙️ Manage server maps and almost anything from real time console.
+- 🌍 Supports 3 languages (English, Hindi and Arabic).
+- 🤠 View players on server with their roles.
+- 🔨 Kick, mute or Ban players with one click.
+
+## 🤝 Contributing
+
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)
+
+We welcome all contributions.
+
+- You can submit any ideas as Pull Request or Issues.
+- If you'd like to improve code, make sure you stick to exisiting practices in code.
+
+## 💬 Support
+
+For any queries message us on Discord Server [here](https://discord.gg/kDxrYXWqbf)
+
+## 🙏 Credits
+
+Made with <a href="https://github.com/Hexer10/source_server" title="Flaticon"> source_server</a> by <a href="https://github.com/Hexer10" title="Freepik">Hexer10</a>
