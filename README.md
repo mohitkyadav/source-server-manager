@@ -26,6 +26,12 @@ Manage CSGO dedicated servers from mobile.
 - 🤠 View players on server with their roles.
 - 🔨 Kick, mute or Ban players with one click.
 
+<div align="left">
+    <img width="200" src="demo/home.png">
+    <img width="200" src="demo/edit.png">
+    <img width="200" src="demo/sv.png">
+</div>
+
 ## 🤝 Contributing
 
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)
