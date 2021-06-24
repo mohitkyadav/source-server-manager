@@ -35,6 +35,7 @@ Manage CSGO dedicated servers from mobile.
 ## 🤝 Contributing
 
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)
+[![Bugs](https://img.shields.io/static/v1?label=Bugs&message=Report&color=red&style=flat-square)](https://github.com/mohitkyadav/source-server-manager/issues)
 
 We welcome all contributions.
 
@@ -50,3 +51,7 @@ For any queries message us on Discord Server
 ## 🙏 Credits
 
 Made with <a href="https://github.com/Hexer10/source_server" title="Flaticon"> source_server</a> by <a href="https://github.com/Hexer10" title="Freepik">Hexer10</a>
+
+## 📃 License
+
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge&color=orange)](https://github.com/mohitkyadav/source-server-manager/blob/main/LICENSE)
