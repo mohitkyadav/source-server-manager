@@ -8,8 +8,6 @@
 
 <div align="center">
 
-Manage CSGO dedicated servers from mobile.
-
   <a href="https://play.google.com/store/apps/details?id=come.csgo.server.manager">
     <img width="250" src="demo/google-play-badge.png">
   </a>
@@ -17,9 +15,9 @@ Manage CSGO dedicated servers from mobile.
 <!-- Add Badges here -->
 </div>
 
-## ✨ Features
+## Features
 
-- 🌈 Modern UI.
+- ✨ Modern UI.
 - 🔐 Manage unlimited servers with RCON.
 - ⚙️ Manage server maps and almost anything from real time console.
 - 🌍 Supports 3 languages (English, Hindi and Arabic).
@@ -32,7 +30,7 @@ Manage CSGO dedicated servers from mobile.
     <img width="270" src="demo/sv.png">
 </div>
 
-## 🤝 Contributing
+## Contributing
 
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)
 [![Bugs](https://img.shields.io/static/v1?label=Bugs&message=Report&color=red&style=flat-square)](https://github.com/mohitkyadav/source-server-manager/issues)
@@ -42,16 +40,18 @@ We welcome all contributions.
 - You can submit any ideas as Pull Request or Issues.
 - If you'd like to improve code, make sure you stick to exisiting practices in code.
 
-## 💬 Support
+## Support And Feedback
 
-For any queries message us on Discord Server
+Join support `#csgo-server-manager` channel on Discord
 
 [![Discord](https://img.shields.io/discord/522610943037931551?color=7389D8&logo=discord&style=for-the-badge)](https://discord.gg/kDxrYXWqbf)
 
-## 🙏 Credits
+## Credits
 
 Made with <a href="https://github.com/Hexer10/source_server" title="Flaticon"> source_server</a> by <a href="https://github.com/Hexer10" title="Freepik">Hexer10</a>
 
-## 📃 License
+## License
+
+Copyright (c) Mohit Kumar Yadav. All rights reserved.
 
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge&color=orange)](https://github.com/mohitkyadav/source-server-manager/blob/main/LICENSE)
