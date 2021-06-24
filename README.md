@@ -43,7 +43,9 @@ We welcome all contributions.
 
 ## 💬 Support
 
-For any queries message us on Discord Server [here](https://discord.gg/kDxrYXWqbf)
+For any queries message us on Discord Server
+
+[![Discord](https://img.shields.io/discord/522610943037931551?color=7389D8&logo=discord&style=for-the-badge)](https://discord.gg/kDxrYXWqbf)
 
 ## 🙏 Credits
 
