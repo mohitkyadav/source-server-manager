@@ -109,8 +109,8 @@ class _ConsoleState extends State<Console> {
                   child: InkWell(
                     splashColor: AppStyles.blue2,
                     onTap: () {
-                      widget.sendCommandToSv(_cmdInput.text);
-                      _scrollToBottom();
+                      widget.sendCommandToSv(_cmdInput.text,
+                          callback:_scrollToBottom);
                     },
                     child: const SizedBox(
                         width: 40, height: 40, child: Icon(Icons.send)),
@@ -161,9 +161,9 @@ class _ConsoleState extends State<Console> {
               color: AppStyles.red,
             ),
             backgroundColor: AppStyles.white20,
-            onSelected: (bool selected) {
-              widget.sendCommandToSv(savedCommands[index]);
-              _scrollToBottom();
+            onSelected: (bool selected) async {
+              widget.sendCommandToSv(savedCommands[index],
+                  callback:_scrollToBottom);
             },
             onDeleted: () {
               _removeCommand(context, savedCommands[index]);
@@ -178,8 +178,11 @@ class _ConsoleState extends State<Console> {
   }
 
   void _scrollToBottom() {
-    Timer(const Duration(milliseconds: 500),
-            () => _controller.jumpTo(_controller.position.maxScrollExtent));
+    Timer(const Duration(milliseconds: 500), () =>
+      _controller.animateTo(
+        _controller.position.maxScrollExtent,
+        curve: Curves.easeOut,
+        duration: const Duration(milliseconds: 300),));
   }
 
   void _checkSavedCmds () {

@@ -208,7 +208,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
     }
   }
 
-  Future<void> sendCommandToSv(String cmd) async {
+  Future<void> sendCommandToSv(String cmd, {Function callback}) async {
     // clear console history
     if (cmd == 'clear') {
       setState(() {
@@ -227,6 +227,10 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
       });
 
       sv.close();
+
+      if (res != null && callback != null) {
+        callback();
+      }
     });
   }
 
