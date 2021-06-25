@@ -30,7 +30,7 @@ class _ServerItemState extends State<ServerItem> {
   void initState() {
     _checkPlayerCount();
     _periodicCheckInfo = Timer.periodic(
-        const Duration(seconds: 20), (Timer t) => _checkPlayerCount());
+        const Duration(seconds: 15), (Timer t) => _checkPlayerCount());
     super.initState();
   }
 
