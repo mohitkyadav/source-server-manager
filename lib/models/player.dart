@@ -1,6 +1,6 @@
 class Player {
   Player(this.name, this.score, this.duration, this.ping, this.id,
-      this.steamId, this.flag);
+      this.steamId, this.flag, this.timesConnected);
 
   String name;
   String score;
@@ -9,6 +9,7 @@ class Player {
   String id;
   String steamId;
   String flag;
+  String timesConnected;
 
   @override
   String toString() {
@@ -29,6 +30,6 @@ class Player {
     json['name'].toString(), json['score'].toString(),
     json['duration'].toString(), json['id'].toString(),
     json['ping'].toString(), json['steamId'].toString(),
-    json['flag'].toString(),
+    json['flag'].toString(), json['timesConnected'].toString(),
   );
 }

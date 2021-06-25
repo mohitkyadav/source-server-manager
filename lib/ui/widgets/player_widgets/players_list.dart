@@ -81,7 +81,7 @@ class PlayersList extends StatelessWidget {
 
     return Container(
       color: AppStyles.darkBg,
-      height: 480,
+      height: 500,
       child: ListView(
         padding: const EdgeInsets.only(bottom: 15),
         children: <Widget>[
@@ -143,6 +143,14 @@ class PlayersList extends StatelessWidget {
               Navigator.pop(context);
             },
           ),
+          if (player.flag != null)
+            ListTile(
+              leading: const FaIcon(FontAwesomeIcons.flag, size: 18,),
+              subtitle: Text(player.flag,
+                style: AppStyles.playerActionSubText,),
+              title: const Text('User flags',
+                  style: AppStyles.playerActionText),
+            ),
         ],
       ),
     );
