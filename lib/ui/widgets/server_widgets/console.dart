@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +21,7 @@ class Console extends StatefulWidget {
 
 class _ConsoleState extends State<Console> {
   List<String> savedCommands = <String>[];
+  ScrollController _controller = ScrollController();
 
   @override
   void initState() {
@@ -37,6 +40,7 @@ class _ConsoleState extends State<Console> {
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 child: ListView.separated(
+                  controller: _controller,
                   padding: const EdgeInsets.all(8),
                   itemCount: widget.commands.length,
                   itemBuilder: (BuildContext context, int index) {
@@ -106,6 +110,7 @@ class _ConsoleState extends State<Console> {
                     splashColor: AppStyles.blue2,
                     onTap: () {
                       widget.sendCommandToSv(_cmdInput.text);
+                      _scrollToBottom();
                     },
                     child: const SizedBox(
                         width: 40, height: 40, child: Icon(Icons.send)),
@@ -158,6 +163,7 @@ class _ConsoleState extends State<Console> {
             backgroundColor: AppStyles.white20,
             onSelected: (bool selected) {
               widget.sendCommandToSv(savedCommands[index]);
+              _scrollToBottom();
             },
             onDeleted: () {
               _removeCommand(context, savedCommands[index]);
@@ -169,6 +175,11 @@ class _ConsoleState extends State<Console> {
         },
       ),
     );
+  }
+
+  void _scrollToBottom() {
+    Timer(const Duration(milliseconds: 500),
+            () => _controller.jumpTo(_controller.position.maxScrollExtent));
   }
 
   void _checkSavedCmds () {
