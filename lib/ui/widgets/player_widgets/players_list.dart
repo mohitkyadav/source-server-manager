@@ -71,7 +71,7 @@ class PlayersList extends StatelessWidget {
     }
 
     if (isVip) {
-      return AppStyles.purple.withOpacity(0.6);
+      return AppStyles.green50;
     }
 
     return AppStyles.blue2.withOpacity(0.5);

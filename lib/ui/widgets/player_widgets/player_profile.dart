@@ -60,7 +60,7 @@ class _PlayerProfileState extends State<PlayerProfile> {
               decoration: const BoxDecoration(
               shape: BoxShape.circle,
               gradient: LinearGradient(
-                  colors: <Color>[AppStyles.red, AppStyles.purple],
+                  colors: <Color>[AppStyles.blue2, AppStyles.purple],
                   begin: Alignment.bottomLeft,
                   end: Alignment.topRight
                 ),
@@ -127,11 +127,11 @@ class _PlayerProfileState extends State<PlayerProfile> {
     final bool isVip = userFlags.contains('res');
 
     if (isRoot) {
-      return AppStyles.yellow.withOpacity(0.6);
+      return AppStyles.yellow.withOpacity(0.7);
     }
 
     if (isVip) {
-      return AppStyles.purple.withOpacity(0.8);
+      return AppStyles.green60;
     }
 
     return Colors.transparent;
@@ -164,7 +164,7 @@ class _PlayerProfileState extends State<PlayerProfile> {
             shape: BoxShape.circle
         ),
         child: const FaIcon(FontAwesomeIcons.crown, size: 10,
-              color: AppStyles.purple),
+              color: AppStyles.green80),
       );
     }
 
