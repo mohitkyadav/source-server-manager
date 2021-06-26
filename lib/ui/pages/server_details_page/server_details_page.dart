@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:source_server/source_server.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -68,6 +69,8 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
     choices = <Choice>[
       Choice(title: 'Restart server', icon: Icons.refresh_sharp,
           onSelect: _restartSv),
+      Choice(title: 'Copy Server Ip', icon: Icons.copy,
+          onSelect: _copyServerIp),
     ];
   }
 
@@ -84,6 +87,16 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
     // ignore: always_specify_types
     Future.delayed(const Duration(seconds: 2),
             () => Navigator.of(context).pop());
+  }
+
+  Future<void> _copyServerIp (BuildContext context) async {
+    showToast(context, 'Copied Server Ip!',
+        durationSec: 2);
+
+    final ClipboardData data = ClipboardData(
+        text: '${widget.server.serverIp}:${widget.server.serverPort}');
+
+    await Clipboard.setData(data);
   }
 
   @override
