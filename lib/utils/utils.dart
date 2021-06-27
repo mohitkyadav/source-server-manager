@@ -26,20 +26,15 @@ class Utils {
         powerStrings.map((String line) {
 
           final List<String> splitFromIndex = line.trim().split('.');
-          final List<String> splitNameFromAcc = splitFromIndex[1].trim()
-              .split('  ');
-          final String restString = splitNameFromAcc
-              .sublist(1, splitNameFromAcc.length).toString();
-
-
-          final List<String> finalAccessLevels = restString.trim()
-              .replaceAll(RegExp(', '), '')
-              // ignore: use_raw_strings
-              .replaceAll(RegExp('\\['), '')
-              .replaceAll(RegExp(']'), '').split(' ');
+          final List<String> splitNameFromAcc = removeEmptyItems(
+              splitFromIndex[1].trim().split('  '));
+          final List<String> restString = splitNameFromAcc.length > 1
+              ? splitNameFromAcc.sublist(1, splitNameFromAcc.length)
+              : <String>[];
 
           return MapEntry<String, String>(
-              splitNameFromAcc[0], finalAccessLevels.toString());
+              splitNameFromAcc.length > 1 ? splitNameFromAcc[0] : '',
+              restString.join(','));
         }));
 
     for (final String line in playerStrings) {
@@ -94,5 +89,13 @@ class Utils {
     }
 
     return mapsResponse;
+  }
+
+  static List<String> removeEmptyItems(List<String> list) {
+    if (list == null) {
+      return <String>[];
+    }
+
+    return list.where((String string) => string.isNotEmpty).toList();
   }
 }
