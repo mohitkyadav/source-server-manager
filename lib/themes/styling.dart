@@ -98,7 +98,8 @@ class AppStyles {
   static const TextStyle playerActionText = TextStyle(
     fontStyle:  FontStyle.normal,
     letterSpacing: 0.48,
-    fontSize: 16.0
+    fontSize: 16.0,
+    fontFamily: 'DMSans'
   );
 
   static const TextStyle chipActionText = TextStyle(
