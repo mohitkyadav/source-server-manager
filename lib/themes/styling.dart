@@ -99,6 +99,12 @@ class AppStyles {
     fontStyle:  FontStyle.normal,
     letterSpacing: 0.48,
     fontSize: 16.0,
+  );
+
+  static const TextStyle tabItemLabelStyle = TextStyle(
+    fontStyle:  FontStyle.normal,
+    letterSpacing: 0.48,
+    fontSize: 14.0,
     fontFamily: 'DMSans'
   );
 
