@@ -24,6 +24,7 @@ class AppStyles {
   static const Color red40 = Color.fromRGBO(205, 83, 74, 0.4);
   static const Color red60 = Color.fromRGBO(205, 83, 74, 0.6);
 
+  static const Color blackShadowOp10 = Color.fromRGBO(0, 0, 0, 0.10);
   static const Color blackShadowOp15 = Color.fromRGBO(0, 0, 0, 0.15);
   static const Color blackShadowOp20 = Color.fromRGBO(0, 0, 0, 0.20);
   static const Color blackShadowOp30 = Color.fromRGBO(0, 0, 0, 0.30);
