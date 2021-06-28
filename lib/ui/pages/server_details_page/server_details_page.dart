@@ -131,7 +131,9 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
             child: Container(
               alignment: Alignment.centerLeft,
               decoration: const BoxDecoration(
-                color: AppStyles.blackShadowOp10,
+                border: Border(
+                  top: BorderSide(color: AppStyles.white20, width: 1.0,),
+                )
               ),
               child: TabBar(
                 isScrollable: true,
