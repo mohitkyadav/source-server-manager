@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:window_size/window_size.dart';
 
 import 'package:turrant/themes/theme_notifier.dart';
 import 'package:turrant/themes/app_themes.dart';
@@ -28,6 +31,13 @@ void main () {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent, // transparent status bar
     ));
+
+    WidgetsFlutterBinding.ensureInitialized();
+    if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+      setWindowTitle('Source Server Manager');
+      setWindowMinSize(const Size(600, 900));
+      setWindowMaxSize(const Size(700, 900));
+    }
     runApp(MyApp(darkModeOn, selectedLocale));
   });
 }

@@ -67,6 +67,9 @@ class ServerControls extends StatelessWidget {
                   TextButton(
                     style: ButtonStyle(
                       elevation: MaterialStateProperty.all(4),
+                      padding: MaterialStateProperty.all(
+                        const EdgeInsets.all(8.0)
+                      ),
                       backgroundColor: MaterialStateProperty.all(AppStyles.blue2),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(

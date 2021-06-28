@@ -149,7 +149,8 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
                         const FaIcon(FontAwesomeIcons.infoCircle, size: 18),
                         const SizedBox(width: 10,),
                         Text(AppLocalizations.of(context)
-                            .getTranslatedValue('details_tab_label'))
+                            .getTranslatedValue('details_tab_label'),
+                          style: AppStyles.tabItemLabelStyle,)
                       ],
                     ),
                   ),
@@ -159,7 +160,8 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
                         const FaIcon(FontAwesomeIcons.terminal, size: 18,),
                         const SizedBox(width: 10,),
                         Text(AppLocalizations.of(context)
-                            .getTranslatedValue('console_tab_label'))
+                            .getTranslatedValue('console_tab_label'),
+                          style: AppStyles.tabItemLabelStyle,)
                       ],
                     ),
                   ),
