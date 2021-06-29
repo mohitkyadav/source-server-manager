@@ -24,7 +24,8 @@ class ServerItem extends StatefulWidget {
 class _ServerItemState extends State<ServerItem> {
   String playerInfo = '0 / 10';
   Timer _periodicCheckInfo;
-  bool isTvEnabled = false;
+  bool _isTvEnabled = false;
+  bool _isOffline = false;
 
   @override
   void initState() {
@@ -56,11 +57,13 @@ class _ServerItemState extends State<ServerItem> {
         },
         child: Material(
           elevation: 8,
-          shadowColor: AppStyles.blue2.withOpacity(0.1),
+          shadowColor: (_isOffline ? AppStyles.red : AppStyles.blue2)
+              .withOpacity(0.1),
           child: Container(
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-              color: AppStyles.blue2.withOpacity(0.2),
+              color: (_isOffline ? AppStyles.red : AppStyles.blue2)
+                  .withOpacity(0.2),
               borderRadius: const BorderRadius.all(Radius.circular(5)),
             ),
             child: Padding(
@@ -93,8 +96,11 @@ class _ServerItemState extends State<ServerItem> {
                           Text(playerInfo, style: AppStyles.serverItemSubTitle),
                         ],
                       ),
-                      if (isTvEnabled)
+                      if (_isTvEnabled)
                         const Icon(Icons.tv, size: 16,
+                          color: AppStyles.white40,),
+                      if (_isOffline)
+                        const Icon(Icons.signal_wifi_off_sharp, size: 16,
                           color: AppStyles.white40,),
                     ],
                   ),
@@ -156,18 +162,26 @@ class _ServerItemState extends State<ServerItem> {
   }
 
   Future<void> _checkPlayerCount() async {
-    final SourceServer server = await SourceServer.connect(
-      widget.server.serverIp,
-      int.parse(widget.server.serverPort),
-      password: widget.server.serverRcon,
-    );
+    try {
+      final SourceServer server = await SourceServer.connect(
+        widget.server.serverIp,
+        int.parse(widget.server.serverPort),
+        password: widget.server.serverRcon,
+      );
 
-    final ServerInfo info = await server.getInfo();
-    server.close();
+      final ServerInfo info = await server.getInfo();
+      server.close();
 
-    setState(() {
-       playerInfo = '${info.players} / ${info.maxPlayers}';
-       isTvEnabled = info.tvPort != null;
-    });
+      setState(() {
+        playerInfo = '${info.players} / ${info.maxPlayers}';
+        _isTvEnabled = info.tvPort != null;
+        _isOffline = false;
+      });
+    } catch (e) {
+      setState(() {
+        _isOffline = true;
+        _isTvEnabled = false;
+      });
+    }
   }
 }
