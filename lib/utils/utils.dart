@@ -43,7 +43,8 @@ class Utils {
       }
 
       // get name of the player
-      final String name = line.substring(line.indexOf('"') + 1, line.lastIndexOf('"'));
+      final String name = line.substring(line.indexOf('"') + 1,
+          line.lastIndexOf('"'));
       final List<String> split = line.split('"')[2]
           .trim().replaceAll('  ', ' ').split(' ');
 
@@ -57,7 +58,8 @@ class Utils {
       final String time = split[1];
       final String ping = split[2];
       final String score = split[3];
-      final String timesConnected = line.split('"')[0].split(' ')[2].trim();
+      final String timesConnected = line.split('"')[0].split('#')[1]
+          .trim().split(' ')[0];
 
       playersOnSv.add(Player(name, score, time, ping,
           id, steamId, accessLevelMap[name], timesConnected));
