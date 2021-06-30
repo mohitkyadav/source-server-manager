@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:turrant/utils/utils.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -192,7 +193,9 @@ class PlayersList extends StatelessWidget {
                         'Ban Duration', 'Duration in minutes (Default 10 min)'),
                   ),
                 ),
-                const SizedBox(height: 30,),
+                const SizedBox(height: 15,),
+                _buildDurationPresets(context, _durationFieldController),
+                const SizedBox(height: 15,),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: TextField(
@@ -226,7 +229,7 @@ class PlayersList extends StatelessWidget {
                         child: const Text('BAN', style: AppStyles.playerActionBtn),
                         style: ButtonStyle(
                             backgroundColor: MaterialStateProperty
-                                .all(Colors.red),
+                                .all(AppStyles.red),
                             shape: MaterialStateProperty
                                 .all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
@@ -292,7 +295,9 @@ class PlayersList extends StatelessWidget {
                         'Duration in minutes (Default 10 min)'),
                   ),
                 ),
-                const SizedBox(height: 30,),
+                const SizedBox(height: 15,),
+                _buildDurationPresets(context, _durationFieldController),
+                const SizedBox(height: 15,),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: TextField(
@@ -328,7 +333,7 @@ class PlayersList extends StatelessWidget {
                             'MUTE', style: AppStyles.playerActionBtn),
                         style: ButtonStyle(
                             backgroundColor: MaterialStateProperty
-                                .all(Colors.red),
+                                .all(AppStyles.red),
                             shape: MaterialStateProperty
                                 .all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
@@ -354,6 +359,55 @@ class PlayersList extends StatelessWidget {
             ),
           ),
         );
+      },
+    );
+  }
+
+  Widget _buildDurationPresets (BuildContext context,
+      TextEditingController durationFieldController) {
+      return  Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Row(
+            children: <Widget>[
+              _buildDurationPreset(context, '+ 1 day',
+                  durationFieldController, const Duration(days: 1)),
+              const SizedBox(width: 10,),
+              _buildDurationPreset(context, '+ 1 week',
+                  durationFieldController, const Duration(days: 7)),
+              const SizedBox(width: 10,),
+              _buildDurationPreset(context, '+ 1 month',
+                  durationFieldController, const Duration(days: 30)),
+            ],
+          )
+      );
+  }
+
+  Widget _buildDurationPreset (BuildContext context, String dur,
+      TextEditingController durationFieldController, Duration duration) {
+    return TextButton(
+      child: Text(dur),
+      style: ButtonStyle(
+          backgroundColor: MaterialStateProperty
+              .all(AppStyles.purple),
+          foregroundColor: MaterialStateProperty
+              .all(AppStyles.white),
+          shape: MaterialStateProperty
+              .all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              )
+          )
+      ),
+      onPressed: () {
+        final String currDur = durationFieldController.text;
+        final bool isDurNum = Utils.isNumeric(currDur);
+
+        if (!isDurNum) {
+          durationFieldController.text = duration.inMinutes.toString();
+        } else {
+          durationFieldController.text = (int.parse(currDur) + duration
+              .inMinutes).toString();
+        }
       },
     );
   }
@@ -417,7 +471,7 @@ class PlayersList extends StatelessWidget {
                         child: const Text('KICK', style: AppStyles.playerActionBtn),
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty
-                              .all(Colors.red),
+                              .all(AppStyles.red),
                           shape: MaterialStateProperty
                               .all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(

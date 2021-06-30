@@ -100,4 +100,11 @@ class Utils {
 
     return list.where((String string) => string.isNotEmpty).toList();
   }
+
+  static bool isNumeric(String s) {
+    if (s == null) {
+      return false;
+    }
+    return double.tryParse(s) != null;
+  }
 }
