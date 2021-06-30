@@ -17,3 +17,17 @@ Future<dynamic> getPlayerDetails(String id) async {
     return null;
   }
 }
+
+Future<dynamic> checkForSvUpdate(String ver) async {
+
+  final http.Response response = await http.get(
+      Uri.parse('http://api.steampowered.com/ISteamApps/UpToDateCheck/v0001/'
+          '?appid=730&version=$ver&format=json'));
+
+  if (response.statusCode == 200) {
+    return jsonDecode(response.body);
+  } else {
+    print('Request failed with status: ${response.statusCode}.');
+    return null;
+  }
+}

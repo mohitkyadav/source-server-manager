@@ -8,6 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:turrant/localization/app_localizations.dart';
 import 'package:turrant/models/models.dart';
+import 'package:turrant/steam_api/steam_api.dart';
 import 'package:turrant/themes/styling.dart';
 import 'package:turrant/ui/widgets/widgets.dart';
 import 'package:turrant/utils/utils.dart';
@@ -53,7 +54,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
   bool isPublic = true;
   bool isVacEnabled = true;
   bool isTvEnabled = false;
-
+  bool isSvOutDated = false;
 
   List<Choice> choices = <Choice>[];
 
@@ -202,7 +203,6 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
     return Console(sendCommandToSv, commands);
   }
 
-
   Future<SourceServer> _createSourceServer () async{
     return await SourceServer.connect(
         ip, port, password: rconPassword
@@ -260,6 +260,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
     setState(() {
       isLoading = true;
     });
+    _checkForSvUpdate();
     _connectToServer((SourceServer sourceServer) async {
       final ServerInfo serverInfo = await sourceServer.getInfo();
       final String statusRes = await sourceServer.command('status');
@@ -283,5 +284,19 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
 
       sourceServer.close();
     });
+  }
+
+  Future<void> _checkForSvUpdate () async {
+    final dynamic svUpdateStatus = await checkForSvUpdate(version);
+    print(svUpdateStatus['response']['up_to_date']);
+
+    if (svUpdateStatus['response']['up_to_date'] == 'true') {
+      print('here');
+      setState(() {
+        isSvOutDated = false;
+      });
+    } else {
+      isSvOutDated = true;
+    }
   }
 }
