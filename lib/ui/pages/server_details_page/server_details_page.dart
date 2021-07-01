@@ -191,7 +191,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
               isVacEnabled, isTvEnabled),
           ServerControls(widget.server, map, refreshInfo,
               sendCommandToSv, showToast, maps, numOfPlayers,
-              maxPlayers, version, tvPort),
+              maxPlayers, version, tvPort, isSvOutDated),
           PlayersList(players, refreshInfo, sendCommandToSv, showToast),
           if (players.isEmpty) EmptyServerState(),
         ],
@@ -260,7 +260,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
     setState(() {
       isLoading = true;
     });
-    _checkForSvUpdate();
+
     _connectToServer((SourceServer sourceServer) async {
       final ServerInfo serverInfo = await sourceServer.getInfo();
       final String statusRes = await sourceServer.command('status');
@@ -282,21 +282,16 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
         isLoading = false;
       });
 
+      _checkForSvUpdate();
       sourceServer.close();
     });
   }
 
   Future<void> _checkForSvUpdate () async {
     final dynamic svUpdateStatus = await checkForSvUpdate(version);
-    print(svUpdateStatus['response']['up_to_date']);
 
-    if (svUpdateStatus['response']['up_to_date'] == 'true') {
-      print('here');
-      setState(() {
-        isSvOutDated = false;
-      });
-    } else {
-      isSvOutDated = true;
-    }
+    setState(() {
+      isSvOutDated = svUpdateStatus['response']['up_to_date'] != true;
+    });
   }
 }

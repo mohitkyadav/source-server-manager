@@ -10,7 +10,7 @@ import 'package:turrant/themes/styling.dart';
 class ServerControls extends StatelessWidget {
   const ServerControls(this.server, this.map, this.refreshInfo,
       this.sendCommandToSv, this.showToast, this.maps,  this.numOfPlayers,
-      this.maxPlayers, this.version, this.tvPort);
+      this.maxPlayers, this.version, this.tvPort, this.isSvOutDated);
 
   final Server server;
   final String map;
@@ -22,6 +22,7 @@ class ServerControls extends StatelessWidget {
   final String maxPlayers;
   final String version;
   final int tvPort;
+  final bool isSvOutDated;
 
   @override
   Widget build(BuildContext context) {
@@ -46,10 +47,10 @@ class ServerControls extends StatelessWidget {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          const Icon(Icons.map, color: AppStyles.blue2,
-                              size: 18
+                          const Icon(FontAwesomeIcons.solidMap, color: AppStyles.blue2,
+                              size: 16
                           ),
-                          const SizedBox(width: 8,),
+                          const SizedBox(width: 10,),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
@@ -100,8 +101,9 @@ class ServerControls extends StatelessWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        const Icon(Icons.tv, color: AppStyles.blue2, size: 18,),
-                        const SizedBox(width: 8,),
+                        const Icon(FontAwesomeIcons.tv,
+                          color: AppStyles.blue2, size: 16,),
+                        const SizedBox(width: 10,),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -118,16 +120,19 @@ class ServerControls extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      const Icon(FontAwesomeIcons.codeBranch,
-                        color: AppStyles.blue2, size: 18),
-                      const SizedBox(width: 8,),
+                      if (!isSvOutDated) const Icon(FontAwesomeIcons.codeBranch,
+                        color: AppStyles.blue2, size: 16)
+                      else const Icon(FontAwesomeIcons.exclamationTriangle,
+                          color: AppStyles.yellow, size: 16
+                      ),
+                      const SizedBox(width: 10,),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(version,
                             style: AppStyles.serverDetailsHeaderTitle,),
                           const SizedBox(height: 2,),
-                          const Text('Server Version',
+                          Text(isSvOutDated ? 'Update available!' : 'Up to Date',
                               style: AppStyles.consoleRes),
                         ],
                       ),
