@@ -172,7 +172,6 @@ class ServerControls extends StatelessWidget {
     );
   }
 
-
   Widget _buildMapOptions(BuildContext context) {
     final double sheetHeight = MediaQuery.of(context).size.height * 0.75;
     const double searchHeight = 0;
