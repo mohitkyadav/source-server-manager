@@ -115,3 +115,17 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+msix_config:
+  display_name: Source Server Manager
+  publisher_display_name: Mohit K. Yadav
+  msix_version: 1.0.0.0
+  identity_name: 41296MohitK.Yadav.SourceServerManager
+  publisher: CN=E084BD99-5E29-49DA-A294-C50E784A81F3
+  logo_path: assets/icn/launcher.png
+  start_menu_icon_path: assets/icn/launcher.png
+  tile_icon_path: assets/icn/launcher.png
+  icons_background_color: transparent
+  architecture: x64
+  capabilities: 'internetClient'
+  store: true
