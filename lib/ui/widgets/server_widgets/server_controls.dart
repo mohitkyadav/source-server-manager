@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:turrant/localization/app_localizations.dart';
@@ -68,6 +69,7 @@ class ServerControls extends StatelessWidget {
                   TextButton(
                     style: ButtonStyle(
                       elevation: MaterialStateProperty.all(4),
+                      padding: MaterialStateProperty.all(EdgeInsets.zero),
                       backgroundColor: MaterialStateProperty
                           .all(AppStyles.blue2),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -76,9 +78,8 @@ class ServerControls extends StatelessWidget {
                           )
                       ),
                     ),
-                    // borderRadius: BorderRadius.all(Radius.circular(5))
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
                       child: Text(AppLocalizations.of(context)
                           .getTranslatedValue('change_map'),
                         style: AppStyles.mapBtn,),
