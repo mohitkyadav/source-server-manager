@@ -68,9 +68,6 @@ class ServerControls extends StatelessWidget {
                   TextButton(
                     style: ButtonStyle(
                       elevation: MaterialStateProperty.all(4),
-                      padding: MaterialStateProperty.all(
-                        const EdgeInsets.all(8.0)
-                      ),
                       backgroundColor: MaterialStateProperty.all(AppStyles.blue2),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
@@ -79,9 +76,12 @@ class ServerControls extends StatelessWidget {
                       ),
                     ),
                     // borderRadius: BorderRadius.all(Radius.circular(5))
-                    child: Text(AppLocalizations.of(context)
-                        .getTranslatedValue('change_map'),
-                      style: AppStyles.mapBtn,),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(AppLocalizations.of(context)
+                          .getTranslatedValue('change_map'),
+                        style: AppStyles.mapBtn,),
+                    ),
                     onPressed: () {
                       showModalBottomSheet<Widget>(
                           context: context,
@@ -181,16 +181,6 @@ class ServerControls extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          // Container(
-          //   height: searchHeight,
-          //   child: TextField(
-          //     decoration: InputDecoration(
-          //       suffixIcon: Icon(Icons.search),
-          //       labelText: 'Search',
-          //       contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-          //     ),
-          //   ),
-          // ),
           Container(
             height: sheetHeight - searchHeight,
             child: ListView.builder(
