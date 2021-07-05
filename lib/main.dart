@@ -35,8 +35,8 @@ void main () {
     WidgetsFlutterBinding.ensureInitialized();
     if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
       setWindowTitle('Source Server Manager');
-      setWindowMinSize(const Size(540, 900));
-      setWindowMaxSize(const Size(680, 900));
+      // setWindowMinSize(const Size(540, 900));
+      // setWindowMaxSize(const Size(680, 900));
     }
     runApp(MyApp(darkModeOn, selectedLocale));
   });

@@ -68,7 +68,8 @@ class ServerControls extends StatelessWidget {
                   TextButton(
                     style: ButtonStyle(
                       elevation: MaterialStateProperty.all(4),
-                      backgroundColor: MaterialStateProperty.all(AppStyles.blue2),
+                      backgroundColor: MaterialStateProperty
+                          .all(AppStyles.blue2),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5),
@@ -133,7 +134,9 @@ class ServerControls extends StatelessWidget {
                             style: AppStyles.serverDetailsHeaderTitle,),
                           const SizedBox(height: 2,),
                           Text(isSvOutDated ? 'Update available!' : 'Up to Date',
-                              style: AppStyles.consoleRes),
+                              style: AppStyles.consoleRes.
+                              copyWith(color: isSvOutDated
+                                  ? AppStyles.yellow : AppStyles.white60)),
                         ],
                       ),
                     ],
