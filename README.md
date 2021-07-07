@@ -13,6 +13,7 @@
   </a>
   <a href="https://www.producthunt.com/posts/csgo-dedicated-server-manager?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-csgo-dedicated-server-manager" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=301819&theme=dark" alt="CSGO Dedicated Server Manager - Manage Source Dedicated Server | Product Hunt" height="80" width="250" /></a>
 
+<a href='//www.microsoft.com/store/apps/9P4M8TZH3TZ2?cid=storebadge&ocid=badge'><img src='https://developer.microsoft.com/store/badges/images/English_get-it-from-MS.png' alt='English badge' width="184" /></a>
 <!-- Add Badges here -->
 </div>
 
