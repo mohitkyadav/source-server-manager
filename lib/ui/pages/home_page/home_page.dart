@@ -31,6 +31,12 @@ class _HomePageState extends State<HomePage> {
     final String _title = AppLocalizations.of(context)
         .getTranslatedValue('app_bar_title');
 
+    final bool isSmallScreen = MediaQuery.of(context).size.width < 900;
+
+    if (!isSmallScreen) {
+      return _buildLargeScreenLayout(context, _title);
+    }
+
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
@@ -56,6 +62,46 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
           ServersList(servers, _removeServer, handleSvLongPress),
+        ],
+      ),
+      floatingActionButton: addSvFab(context),
+    );
+  }
+
+  Widget _buildLargeScreenLayout (BuildContext context, String _title) {
+
+    return Scaffold(
+      body: Row(
+        children: <Widget>[
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.4,
+            child: CustomScrollView(
+              slivers: <Widget>[
+                SliverAppBar(
+                  title: Padding(
+                    padding: const EdgeInsets.only(left: 3),
+                    child: Text(_title, style: AppStyles.appBarTitle,),
+                  ),
+                  centerTitle: false,
+                  expandedHeight: 120,
+                  flexibleSpace: FlexibleSpaceBar(
+                    title: Text('${servers.length} Servers',
+                      style: AppStyles.appBarSubTitle,),
+                    titlePadding: const EdgeInsets.all(20),
+                  ),
+                  collapsedHeight: 80,
+                  floating: true,
+                  pinned: true,
+                  actions: <Widget>[
+                    CircleButton(const Icon(Icons.settings, size: 18,), () {
+                      Navigator.of(context).pushNamed(settingsRoute);
+                    }),
+                  ],
+                ),
+                ServersList(servers, _removeServer, handleSvLongPress),
+              ],
+            ),
+          ),
         ],
       ),
       floatingActionButton: addSvFab(context),
