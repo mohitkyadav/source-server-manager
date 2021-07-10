@@ -119,7 +119,7 @@ flutter:
 msix_config:
   display_name: Source Server Manager
   publisher_display_name: Mohit K. Yadav
-  msix_version: 1.0.1
+  msix_version: 1.0.1.0
   identity_name: 41296MohitK.Yadav.SourceServerManager
   publisher: CN=E084BD99-5E29-49DA-A294-C50E784A81F3
   logo_path: assets/icn/launcher.png
