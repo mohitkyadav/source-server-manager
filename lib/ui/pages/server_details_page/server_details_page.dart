@@ -102,6 +102,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(

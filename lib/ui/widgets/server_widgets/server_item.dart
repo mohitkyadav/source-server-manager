@@ -11,11 +11,13 @@ import 'package:turrant/routes/route_names.dart';
 import 'package:turrant/themes/styling.dart';
 
 class ServerItem extends StatefulWidget {
-  const ServerItem(this.server, this._removeServer, this.handleSvLongPress);
+  const ServerItem(this.server, this._removeServer,
+      this._handleSvLongPress, this._setSelectedServer);
 
   final Server server;
   final Function _removeServer;
-  final Function handleSvLongPress;
+  final Function _handleSvLongPress;
+  final Function _setSelectedServer;
 
   @override
   _ServerItemState createState() => _ServerItemState();
@@ -50,10 +52,16 @@ class _ServerItemState extends State<ServerItem> {
       actionExtentRatio: 0.25,
       child: InkWell(
         onTap: () {
-          Navigator.pushNamed(context, serverDetailsRoute, arguments: widget.server);
+          final bool isSmallScreen = MediaQuery.of(context).size.width < 900;
+
+          if (isSmallScreen) {
+            Navigator.pushNamed(context, serverDetailsRoute,
+                arguments: widget.server);
+          }
+          widget._setSelectedServer(widget.server);
         },
         onLongPress: () {
-          widget.handleSvLongPress(widget.server);
+          widget._handleSvLongPress(widget.server);
         },
         child: Material(
           elevation: 8,
@@ -155,7 +163,7 @@ class _ServerItemState extends State<ServerItem> {
                   ],
                 )
             ),
-            onTap: () => widget.handleSvLongPress(widget.server)
+            onTap: () => widget._handleSvLongPress(widget.server)
         ),
       ],
     );

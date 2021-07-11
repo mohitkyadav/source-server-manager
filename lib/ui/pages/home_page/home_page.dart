@@ -7,6 +7,7 @@ import 'package:turrant/localization/app_localizations.dart';
 import 'package:turrant/models/models.dart';
 import 'package:turrant/routes/route_names.dart';
 import 'package:turrant/themes/styling.dart';
+import 'package:turrant/ui/pages/pages.dart';
 import 'package:turrant/ui/widgets/widgets.dart';
 
 class HomePage extends StatefulWidget {
@@ -19,6 +20,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   List<Server> servers = <Server>[];
+  Server _currentServer;
 
   @override
   void initState() {
@@ -40,28 +42,9 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
-          SliverAppBar(
-            title: Padding(
-              padding: const EdgeInsets.only(left: 3),
-              child: Text(_title, style: AppStyles.appBarTitle,),
-            ),
-            centerTitle: false,
-            expandedHeight: 120,
-            flexibleSpace: FlexibleSpaceBar(
-              title: Text('${servers.length} Servers',
-                style: AppStyles.appBarSubTitle,),
-              titlePadding: const EdgeInsets.all(20),
-            ),
-            collapsedHeight: 80,
-            floating: true,
-            pinned: true,
-            actions: <Widget>[
-              CircleButton(const Icon(Icons.settings, size: 18,), () {
-                Navigator.of(context).pushNamed(settingsRoute);
-              }),
-            ],
-          ),
-          ServersList(servers, _removeServer, handleSvLongPress),
+          _buildAppBar(context, _title),
+          ServersList(servers, _removeServer,
+              _handleSvLongPress, _setSelectedServer),
         ],
       ),
       floatingActionButton: addSvFab(context),
@@ -77,35 +60,50 @@ class _HomePageState extends State<HomePage> {
             width: MediaQuery.of(context).size.width * 0.4,
             child: CustomScrollView(
               slivers: <Widget>[
-                SliverAppBar(
-                  title: Padding(
-                    padding: const EdgeInsets.only(left: 3),
-                    child: Text(_title, style: AppStyles.appBarTitle,),
-                  ),
-                  centerTitle: false,
-                  expandedHeight: 120,
-                  flexibleSpace: FlexibleSpaceBar(
-                    title: Text('${servers.length} Servers',
-                      style: AppStyles.appBarSubTitle,),
-                    titlePadding: const EdgeInsets.all(20),
-                  ),
-                  collapsedHeight: 80,
-                  floating: true,
-                  pinned: true,
-                  actions: <Widget>[
-                    CircleButton(const Icon(Icons.settings, size: 18,), () {
-                      Navigator.of(context).pushNamed(settingsRoute);
-                    }),
-                  ],
-                ),
-                ServersList(servers, _removeServer, handleSvLongPress),
+                _buildAppBar(context, _title),
+                ServersList(servers, _removeServer,
+                    _handleSvLongPress, _setSelectedServer),
               ],
             ),
+          ),
+          if (_currentServer != null) Expanded(
+            child: ServerDetailsPage(_currentServer),
           ),
         ],
       ),
       floatingActionButton: addSvFab(context),
     );
+  }
+
+  Widget _buildAppBar (BuildContext context, String _title) {
+    return
+      SliverAppBar(
+        title: Padding(
+          padding: const EdgeInsets.only(left: 3),
+          child: Text(_title, style: AppStyles.appBarTitle,),
+        ),
+        centerTitle: false,
+        expandedHeight: 120,
+        flexibleSpace: FlexibleSpaceBar(
+          title: Text('${servers.length} Servers',
+            style: AppStyles.appBarSubTitle,),
+          titlePadding: const EdgeInsets.all(20),
+        ),
+        collapsedHeight: 80,
+        floating: true,
+        pinned: true,
+        actions: <Widget>[
+          CircleButton(const Icon(Icons.settings, size: 18,), () {
+            Navigator.of(context).pushNamed(settingsRoute);
+          }),
+        ],
+      );
+  }
+
+  void _setSelectedServer (Server server) {
+    setState(() {
+      _currentServer = server;
+    });
   }
 
   Widget addSvFab(BuildContext context) {
@@ -126,7 +124,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void handleSvLongPress(Server sv) {
+  void _handleSvLongPress(Server sv) {
     showModalBottomSheet<Widget>(
       context: context,
       isScrollControlled: true,
