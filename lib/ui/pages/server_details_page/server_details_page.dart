@@ -75,6 +75,23 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
     ];
   }
 
+  @override
+  void didUpdateWidget(covariant ServerDetailsPage oldWidget) {
+    ip = widget.server.serverIp;
+    port = int.parse(widget.server.serverPort);
+    rconPassword = widget.server.serverRcon;
+
+    refreshInfo();
+    choices = <Choice>[
+      Choice(title: 'Restart server', icon: Icons.refresh_sharp,
+          onSelect: _restartSv),
+      Choice(title: 'Copy Server Ip', icon: Icons.copy,
+          onSelect: _copyServerIp),
+    ];
+
+    super.didUpdateWidget(oldWidget);
+  }
+
   void _selectChoice(Choice choice) {
     if (choice.onSelect != null) {
       choice.onSelect(context);
