@@ -259,17 +259,8 @@ class _ConsoleState extends State<Console> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      TextButton(
-                        child: Text('DELETE', style: AppStyles
-                            .playerActionBtn.copyWith(color: AppStyles.red)),
-                        style: ButtonStyle(
-                            shape: MaterialStateProperty
-                                .all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                )
-                            )
-                        ),
+                      IconButton(
+                        icon: const Icon(Icons.delete, color: AppStyles.red,),
                         onPressed: () async {
                           final List<String> newCommands = savedCommands
                               .where((String cmd) => cmdToRemoved != cmd).toList();
