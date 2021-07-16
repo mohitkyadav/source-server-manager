@@ -156,9 +156,9 @@ class _ConsoleState extends State<Console> {
                 ),
             ),
             deleteIcon: const FaIcon(
-              FontAwesomeIcons.solidTimesCircle,
+              Icons.pending,
               size: 18,
-              color: AppStyles.red,
+              color: AppStyles.yellow,
             ),
             backgroundColor: AppStyles.white20,
             onSelected: (bool selected) async {
@@ -166,7 +166,7 @@ class _ConsoleState extends State<Console> {
                   callback:_scrollToBottom);
             },
             onDeleted: () {
-              _removeCommand(context, savedCommands[index]);
+              _displayChipActionDialog(context, savedCommands[index]);
             },
           );
         },
@@ -212,35 +212,110 @@ class _ConsoleState extends State<Console> {
     _setSavedCmds(context, newCommands);
   }
 
-  void _removeCommand (BuildContext context, String cmdToRemoved) {
-    showDialog<Widget>(
-      context: context,
-      builder: (BuildContext context) => CupertinoAlertDialog(
-        title: Text('Confirm Delete?', style: AppStyles
-            .chipActionText.copyWith(fontSize: 18)),
-        content: Text('Delete "$cmdToRemoved" from saved commands?',
-            style: AppStyles.chipActionText),
-        actions: <Widget>[
-          CupertinoDialogAction(
-            isDefaultAction: true,
-            child: const Text('No', style: AppStyles.chipActionText),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          CupertinoDialogAction(
-            child: Text('Yes', style: AppStyles.chipActionText
-                .copyWith(color: AppStyles.red)),
-            onPressed: () {
-              final List<String> newCommands = savedCommands
-                  .where((String cmd) => cmdToRemoved != cmd).toList();
-              _setSavedCmds(context, newCommands);
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      ),
-    );
+  Future<void> _displayChipActionDialog(BuildContext context, String cmdToRemoved) async {
+    final TextEditingController _textFieldController = TextEditingController();
 
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(16.0))),
+          backgroundColor: AppStyles.darkBg,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(42.0),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: Text('Change Saved Command',
+                    style: AppStyles.playerActionDialogTitle,),
+                ),
+                const SizedBox(height: 30,),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: TextField(
+                    controller: _textFieldController..text = cmdToRemoved,
+                    decoration: AppStyles.playerActionInputDec(
+                        'New Command', 'New Command'),
+                  ),
+                ),
+                const SizedBox(height: 40,),
+                Container(
+                  decoration: const BoxDecoration(
+                    color: AppStyles.black,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(16),
+                      bottomRight: Radius.circular(16),
+                    ),
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 20,
+                      vertical: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      TextButton(
+                        child: Text('DELETE', style: AppStyles
+                            .playerActionBtn.copyWith(color: AppStyles.red)),
+                        style: ButtonStyle(
+                            shape: MaterialStateProperty
+                                .all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                )
+                            )
+                        ),
+                        onPressed: () async {
+                          final List<String> newCommands = savedCommands
+                              .where((String cmd) => cmdToRemoved != cmd).toList();
+                          _setSavedCmds(context, newCommands);
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          TextButton(
+                            child: const Text('CANCEL', style: AppStyles.playerActionBtn,),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                          const SizedBox(width: 16,),
+                          TextButton(
+                            child: Text('UPDATE', style: AppStyles
+                                .playerActionBtn.copyWith(color: AppStyles.blue2)),
+                            style: ButtonStyle(
+                                shape: MaterialStateProperty
+                                    .all<RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    )
+                                )
+                            ),
+                            onPressed: () async {
+                              final List<String> newCommands = savedCommands
+                                  .map((String cmd) => cmd == cmdToRemoved
+                                  ? _textFieldController.text : cmd).toList();
+                              _setSavedCmds(context, newCommands);
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 }
