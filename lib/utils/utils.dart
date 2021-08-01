@@ -85,7 +85,7 @@ class Utils {
 
     final List<String> mapsResponse = <String>[];
     for (final String mapString in mapStrings) {
-      if (mapString.contains('.bsp') && !mapString.contains('workshop')) {
+      if (mapString.contains('.bsp')) {
         mapsResponse.add(mapString.split('.bsp')[0].split(' ')[2]);
       }
     }
