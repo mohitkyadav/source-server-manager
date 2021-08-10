@@ -57,7 +57,3 @@ Made with <a href="https://github.com/Hexer10/source_server" title="Flaticon"> s
 Copyright (c) Mohit Kumar Yadav. All rights reserved.
 
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge&color=orange)](https://github.com/mohitkyadav/source-server-manager/blob/main/LICENSE)
-
-# Stargazers over time 📈
-
-[![Stargazers over time](https://starcharts.herokuapp.com/mohitkyadav/source-server-manager.svg)](https://starcharts.herokuapp.com/mohitkyadav/source-server-manager)
