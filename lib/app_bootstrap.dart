@@ -9,22 +9,22 @@ import 'localization/app_localizations.dart';
 import 'models/language.dart';
 
 class AppBootstrap extends StatefulWidget {
-  const AppBootstrap(this.selectedLocale, {Key key,}) : super(key: key);
+  const AppBootstrap(this.selectedLocale, {Key? key,}) : super(key: key);
 
-  final Locale selectedLocale;
+  final Locale? selectedLocale;
 
   @override
   _AppBootstrapState createState() => _AppBootstrapState();
 
   static void setLocale(BuildContext context, Locale locale) {
     final _AppBootstrapState state = context
-        .findAncestorStateOfType<_AppBootstrapState>();
+        .findAncestorStateOfType<_AppBootstrapState>()!;
     state.setLocale(locale);
   }
 }
 
 class _AppBootstrapState extends State<AppBootstrap> {
-  Locale _selectedLocale;
+  Locale? _selectedLocale;
 
   @override
   void initState() {
@@ -57,14 +57,14 @@ class _AppBootstrapState extends State<AppBootstrap> {
       ],
       locale: _selectedLocale,
       supportedLocales: Language.supportedLocales(),
-      localeResolutionCallback: (Locale deviceLocale,
+      localeResolutionCallback: (Locale? deviceLocale,
           Iterable<Locale> supportedLocales) {
         if (_selectedLocale != null) {
           return _selectedLocale;
         }
         // set device locale as selected locale
         for (final Locale locale in supportedLocales) {
-          if (locale.languageCode == deviceLocale.languageCode
+          if (locale.languageCode == deviceLocale!.languageCode
               && locale.countryCode == deviceLocale.countryCode) {
             return deviceLocale;
           }

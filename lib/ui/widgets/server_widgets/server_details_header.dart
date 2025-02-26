@@ -8,8 +8,8 @@ class ServerDetailsHeader extends StatelessWidget {
   const ServerDetailsHeader(this.server, this.map, this.availableMaps,
       this.isPublic, this.isVacEnabled, this.isTvEnabled);
 
-  final Server server;
-  final String map;
+  final Server? server;
+  final String? map;
   final bool isPublic;
   final bool isVacEnabled;
   final bool isTvEnabled;

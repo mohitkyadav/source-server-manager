@@ -16,7 +16,7 @@ import 'package:turrant/utils/utils.dart';
 class ServerDetailsPage extends StatefulWidget {
   const ServerDetailsPage(this.server);
 
-  final Server server;
+  final Server? server;
 
   @override
   _ServerDetailsPageState createState() => _ServerDetailsPageState();
@@ -26,9 +26,9 @@ class ServerDetailsPage extends StatefulWidget {
 class Choice {
   Choice({this.title, this.icon, this.onSelect});
 
-  final String title;
-  final IconData icon;
-  final Function onSelect;
+  final String? title;
+  final IconData? icon;
+  final Function? onSelect;
 }
 
 const List<String> defaultMaps = <String>[
@@ -37,20 +37,20 @@ const List<String> defaultMaps = <String>[
 ];
 
 class _ServerDetailsPageState extends State<ServerDetailsPage> {
-  String ip;
-  int port;
-  String rconPassword;
+  String? ip;
+  late int port;
+  String? rconPassword;
 
   bool isLoading = true;
-  SourceServer sourceServer;
-  List<Player> players;
+  SourceServer? sourceServer;
+  List<Player>? players;
   List<String> maps = defaultMaps;
   List<Command> commands = <Command>[];
-  String map;
-  String numOfPlayers;
-  String maxPlayers;
-  String version;
-  int tvPort;
+  String? map;
+  String? numOfPlayers;
+  String? maxPlayers;
+  String? version;
+  int? tvPort;
   bool isPublic = true;
   bool isVacEnabled = true;
   bool isTvEnabled = false;
@@ -62,9 +62,9 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
   void initState() {
     super.initState();
 
-    ip = widget.server.serverIp;
-    port = int.parse(widget.server.serverPort);
-    rconPassword = widget.server.serverRcon;
+    ip = widget.server!.serverIp;
+    port = int.parse(widget.server!.serverPort);
+    rconPassword = widget.server!.serverRcon;
 
     refreshInfo();
     choices = <Choice>[
@@ -77,9 +77,9 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
 
   @override
   void didUpdateWidget(covariant ServerDetailsPage oldWidget) {
-    ip = widget.server.serverIp;
-    port = int.parse(widget.server.serverPort);
-    rconPassword = widget.server.serverRcon;
+    ip = widget.server!.serverIp;
+    port = int.parse(widget.server!.serverPort);
+    rconPassword = widget.server!.serverRcon;
 
     refreshInfo();
     choices = <Choice>[
@@ -94,7 +94,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
 
   void _selectChoice(Choice choice) {
     if (choice.onSelect != null) {
-      choice.onSelect(context);
+      choice.onSelect!(context);
     }
   }
 
@@ -112,7 +112,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
         durationSec: 2);
 
     final ClipboardData data = ClipboardData(
-        text: '${widget.server.serverIp}:${widget.server.serverPort}');
+        text: '${widget.server!.serverIp}:${widget.server!.serverPort}');
 
     await Clipboard.setData(data);
   }
@@ -124,7 +124,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(widget.server.serverName),
+          title: Text(widget.server!.serverName!),
           actions: <Widget>[
             // overflow menu
             PopupMenuButton<Choice>(
@@ -137,7 +137,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
                       children: <Widget>[
                         Icon(choice.icon),
                         const SizedBox(width: 10,),
-                        Text(choice.title),
+                        Text(choice.title!),
                       ],
                     ),
                   );
@@ -167,8 +167,8 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
                       children: <Widget>[
                         const FaIcon(FontAwesomeIcons.infoCircle, size: 18),
                         const SizedBox(width: 10,),
-                        Text(AppLocalizations.of(context)
-                            .getTranslatedValue('details_tab_label'),
+                        Text(AppLocalizations.of(context)!
+                            .getTranslatedValue('details_tab_label')!,
                           style: AppStyles.tabItemLabelStyle,)
                       ],
                     ),
@@ -178,8 +178,8 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
                       children: <Widget>[
                         const FaIcon(FontAwesomeIcons.terminal, size: 18,),
                         const SizedBox(width: 10,),
-                        Text(AppLocalizations.of(context)
-                            .getTranslatedValue('console_tab_label'),
+                        Text(AppLocalizations.of(context)!
+                            .getTranslatedValue('console_tab_label')!,
                           style: AppStyles.tabItemLabelStyle,)
                       ],
                     ),
@@ -211,7 +211,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
               sendCommandToSv, showToast, maps, numOfPlayers,
               maxPlayers, version, tvPort, isSvOutDated),
           PlayersList(players, refreshInfo, sendCommandToSv, showToast),
-          if (players.isEmpty) EmptyServerState(),
+          if (players!.isEmpty) EmptyServerState(),
         ],
       ) : const Center(child: CircularProgressIndicator()),
     );
@@ -241,7 +241,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
     }
   }
 
-  Future<void> sendCommandToSv(String cmd, {Function callback}) async {
+  Future<void> sendCommandToSv(String cmd, {Function? callback}) async {
     // clear console history
     if (cmd == 'clear') {
       setState(() {

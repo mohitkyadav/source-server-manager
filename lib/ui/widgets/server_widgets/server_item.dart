@@ -25,7 +25,7 @@ class ServerItem extends StatefulWidget {
 
 class _ServerItemState extends State<ServerItem> {
   String playerInfo = '0 / 10';
-  Timer _periodicCheckInfo;
+  late Timer _periodicCheckInfo;
   bool _isTvEnabled = false;
   bool _isOffline = false;
 
@@ -83,7 +83,7 @@ class _ServerItemState extends State<ServerItem> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Flexible(
-                        child: Text(widget.server.serverName,
+                        child: Text(widget.server.serverName!,
                           overflow: TextOverflow.ellipsis,
                           style: AppStyles.serverItemTitle,),
                       ),
@@ -133,8 +133,8 @@ class _ServerItemState extends State<ServerItem> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     const Icon(Icons.clear),
-                    Text(AppLocalizations.of(context)
-                        .getTranslatedValue('delete_sv_msg'),
+                    Text(AppLocalizations.of(context)!
+                        .getTranslatedValue('delete_sv_msg')!,
                       style: AppStyles.serverItemActionText,)
                   ],
                 )
@@ -157,8 +157,8 @@ class _ServerItemState extends State<ServerItem> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     const Icon(Icons.edit),
-                    Text(AppLocalizations.of(context)
-                        .getTranslatedValue('edit_sv_msg'),
+                    Text(AppLocalizations.of(context)!
+                        .getTranslatedValue('edit_sv_msg')!,
                         style: AppStyles.serverItemActionText)
                   ],
                 )

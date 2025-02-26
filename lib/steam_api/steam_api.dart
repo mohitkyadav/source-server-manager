@@ -18,7 +18,7 @@ Future<dynamic> getPlayerDetails(String id) async {
   }
 }
 
-Future<dynamic> checkForSvUpdate(String ver) async {
+Future<dynamic> checkForSvUpdate(String? ver) async {
 
   final http.Response response = await http.get(
       Uri.parse('http://api.steampowered.com/ISteamApps/UpToDateCheck/v0001/'

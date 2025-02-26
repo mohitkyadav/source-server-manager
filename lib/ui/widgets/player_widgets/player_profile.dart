@@ -9,17 +9,17 @@ import 'package:turrant/themes/styling.dart';
 
 class PlayerProfile extends StatefulWidget {
   const PlayerProfile({
-    Key key,
+    Key? key,
     this.player,
     this.imgSize,
     this.bgColor,
     this.borderRadius,
   }) : super(key: key);
 
-  final Player player;
-  final double imgSize;
-  final Color bgColor;
-  final BorderRadius borderRadius;
+  final Player? player;
+  final double? imgSize;
+  final Color? bgColor;
+  final BorderRadius? borderRadius;
 
   @override
   _PlayerProfileState createState() => _PlayerProfileState();
@@ -27,16 +27,16 @@ class PlayerProfile extends StatefulWidget {
 
 class _PlayerProfileState extends State<PlayerProfile> {
   bool isLoading = true;
-  String profileImg;
-  String name;
-  String flags;
+  late String profileImg;
+  String? name;
+  String? flags;
 
   @override
   void initState() {
     _fetchProfile();
 
-    name = widget.player.name;
-    flags = widget.player.flag;
+    name = widget.player!.name;
+    flags = widget.player!.flag;
 
     super.initState();
   }
@@ -85,7 +85,7 @@ class _PlayerProfileState extends State<PlayerProfile> {
             children: <Widget>[
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.60,
-                child: Text(name, style: AppStyles.playerItemTitle,
+                child: Text(name!, style: AppStyles.playerItemTitle,
                   overflow: TextOverflow.ellipsis,),
               ),
               const SizedBox(height: 8,),
@@ -96,7 +96,7 @@ class _PlayerProfileState extends State<PlayerProfile> {
                   const SizedBox(width: 6,),
                   SizedBox(
                     width: 52,
-                    child: Text('${widget.player.ping}ms',
+                    child: Text('${widget.player!.ping}ms',
                       style: AppStyles.serverItemSubTitle,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -107,7 +107,7 @@ class _PlayerProfileState extends State<PlayerProfile> {
                   const SizedBox(width: 6,),
                   SizedBox(
                     width: 72,
-                    child: Text('${widget.player.duration} min',
+                    child: Text('${widget.player!.duration} min',
                       style: AppStyles.serverItemSubTitle,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -116,7 +116,7 @@ class _PlayerProfileState extends State<PlayerProfile> {
                   const Icon(FontAwesomeIcons.hashtag, size: 14,
                     color: AppStyles.white40,),
                   const SizedBox(width: 6,),
-                  Text(widget.player.timesConnected,
+                  Text(widget.player!.timesConnected,
                     style: AppStyles.serverItemSubTitle,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -146,7 +146,7 @@ class _PlayerProfileState extends State<PlayerProfile> {
     return Colors.transparent;
   }
 
-  Widget _buildBadges (BuildContext context) {
+  Widget? _buildBadges (BuildContext context) {
     final String userFlags = flags ?? '';
     final bool isRoot = userFlags.contains('root')
         || userFlags.contains('admin');
@@ -181,7 +181,7 @@ class _PlayerProfileState extends State<PlayerProfile> {
   }
 
   Future<void> _fetchProfile () async {
-    final dynamic playerProfile = await getPlayerDetails(widget.player.id);
+    final dynamic playerProfile = await getPlayerDetails(widget.player!.id);
 
     setState(() {
       isLoading = false;

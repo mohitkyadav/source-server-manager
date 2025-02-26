@@ -18,8 +18,8 @@ void main () {
   // get selected settings for theme and locale
   SharedPreferences.getInstance().then((SharedPreferences prefs) {
     final bool darkModeOn = prefs.getBool('darkMode') ?? true;
-    final String selectedLocaleCode = prefs.getString('selectedLocale');
-    Locale selectedLocale;
+    final String? selectedLocaleCode = prefs.getString('selectedLocale');
+    Locale? selectedLocale;
 
     if (selectedLocaleCode != null) {
       if (selectedLocaleCode.split('-').length == 2) {
@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
   const MyApp(this._darkModeOn, this._selectedLocale,);
 
   final bool _darkModeOn;
-  final Locale _selectedLocale;
+  final Locale? _selectedLocale;
 
   @override
   Widget build(BuildContext context) {
