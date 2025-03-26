@@ -13,9 +13,9 @@ import 'package:turrant/themes/styling.dart';
 
 class AddServerForm extends StatefulWidget {
   const AddServerForm(
-      {Key key, @required this.refreshServers, this.sv}) : super(key: key);
+      {Key? key, required this.refreshServers, this.sv}) : super(key: key);
   final Function refreshServers;
-  final Server sv;
+  final Server? sv;
 
   @override
   _AddServerFormState createState() => _AddServerFormState();
@@ -25,10 +25,10 @@ class _AddServerFormState extends State<AddServerForm> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
 
   // state
-  String ip;
-  String name;
-  int port;
-  String password;
+  String? ip;
+  String? name;
+  int? port;
+  String? password;
   bool isEditing = false;
   bool isLoading = false;
   int connectionAttempt = 0;
@@ -37,10 +37,10 @@ class _AddServerFormState extends State<AddServerForm> {
   void initState() {
     super.initState();
     if (widget.sv != null) {
-      name = widget.sv.serverName;
-      ip = widget.sv.serverIp;
-      port = int.parse(widget.sv.serverPort);
-      password = widget.sv.serverRcon;
+      name = widget.sv!.serverName;
+      ip = widget.sv!.serverIp;
+      port = int.parse(widget.sv!.serverPort);
+      password = widget.sv!.serverRcon;
       isEditing = true;
     }
   }
@@ -64,7 +64,7 @@ class _AddServerFormState extends State<AddServerForm> {
               const SizedBox(height: 10,),
               TextFormField(
                 enabled: !isLoading,
-                onSaved: (String val) => setState(() => name = val),
+                onSaved: (String? val) => setState(() => name = val),
                 initialValue: name,
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.all(10.0),
@@ -73,18 +73,18 @@ class _AddServerFormState extends State<AddServerForm> {
                       Radius.circular(10.0),
                     ),
                   ),
-                  labelText: AppLocalizations.of(context)
+                  labelText: AppLocalizations.of(context)!
                       .getTranslatedValue('form_name_field_txt'),
-                  hintText: AppLocalizations.of(context)
+                  hintText: AppLocalizations.of(context)!
                       .getTranslatedValue('form_name_field_txt'),
                 ),
               ),
               const SizedBox(height: 20,),
               TextFormField(
                 enabled: !isLoading,
-                validator: (String val)  => val.isEmpty ? AppLocalizations.of(context)
+                validator: (String? val)  => val!.isEmpty ? AppLocalizations.of(context)!
                     .getTranslatedValue('form_ip_field_err') : null,
-                onSaved: (String val) => setState(() => ip = val),
+                onSaved: (String? val) => setState(() => ip = val),
                 initialValue: ip,
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.all(10.0),
@@ -93,18 +93,18 @@ class _AddServerFormState extends State<AddServerForm> {
                       Radius.circular(10.0),
                     ),
                   ),
-                  labelText: AppLocalizations.of(context)
+                  labelText: AppLocalizations.of(context)!
                       .getTranslatedValue('form_ip_field_txt'),
-                  hintText: AppLocalizations.of(context)
+                  hintText: AppLocalizations.of(context)!
                       .getTranslatedValue('form_ip_field_txt'),
                 ),
               ),
               const SizedBox(height: 20,),
               TextFormField(
                 enabled: !isLoading,
-                validator: (String val)  => val.isEmpty ? AppLocalizations.of(context)
+                validator: (String? val)  => val!.isEmpty ? AppLocalizations.of(context)!
                     .getTranslatedValue('form_port_field_err') : null,
-                onSaved: (String val) => setState(() => port = int.parse(val)),
+                onSaved: (String? val) => setState(() => port = int.parse(val!)),
                 initialValue: port != null ? port.toString() : '',
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
@@ -114,18 +114,18 @@ class _AddServerFormState extends State<AddServerForm> {
                       Radius.circular(10.0),
                     ),
                   ),
-                  labelText: AppLocalizations.of(context)
+                  labelText: AppLocalizations.of(context)!
                       .getTranslatedValue('form_port_field_txt'),
-                  hintText: AppLocalizations.of(context)
+                  hintText: AppLocalizations.of(context)!
                       .getTranslatedValue('form_port_field_txt'),
                 ),
               ),
               const SizedBox(height: 20,),
               TextFormField(
                 enabled: !isLoading,
-                validator: (String val)  => val.isEmpty ? AppLocalizations.of(context)
+                validator: (String? val)  => val!.isEmpty ? AppLocalizations.of(context)!
                     .getTranslatedValue('form_pass_field_err') : null,
-                onSaved: (String val) => setState(() => password = val),
+                onSaved: (String? val) => setState(() => password = val),
                 initialValue: password,
                 obscureText: true,
                 decoration: InputDecoration(
@@ -135,22 +135,22 @@ class _AddServerFormState extends State<AddServerForm> {
                       Radius.circular(10.0),
                     ),
                   ),
-                  labelText: AppLocalizations.of(context)
+                  labelText: AppLocalizations.of(context)!
                       .getTranslatedValue('form_pass_field_txt'),
-                  hintText: AppLocalizations.of(context)
+                  hintText: AppLocalizations.of(context)!
                       .getTranslatedValue('form_pass_field_txt'),
                 ),
               ),
               const SizedBox(height: 15,),
               MaterialButton(
                 onPressed: isLoading ? null : () {
-                  if (_key.currentState.validate() && !isLoading) {
+                  if (_key.currentState!.validate() && !isLoading) {
                     setState(() {
                       connectionAttempt = 0;
                       isLoading = true;
                     });
 
-                    _key.currentState.save();
+                    _key.currentState!.save();
                     _connectToServer();
                   }
                 },
@@ -169,7 +169,7 @@ class _AddServerFormState extends State<AddServerForm> {
     );
   }
 
-  Future<SourceServer> _createSourceServer () async{
+  Future<SourceServer?> _createSourceServer () async{
     setState(() {
       connectionAttempt += 1;
     });
@@ -179,13 +179,13 @@ class _AddServerFormState extends State<AddServerForm> {
     }
 
     return await SourceServer.connect(
-        ip, port, password: password
+        ip, port!, password: password
     );
   }
 
   Future<void> _connectToServer() async {
     try {
-      final SourceServer server = await _createSourceServer()
+      final SourceServer? server = await _createSourceServer()
           .timeout(const Duration(seconds: 2));
 
       if (server == null) {
@@ -220,7 +220,7 @@ class _AddServerFormState extends State<AddServerForm> {
       server.close();
 
       final Server localServer = Server((name != null
-          && name.trim().length > 1) ? name : info.name,
+          && name!.trim().length > 1) ? name : info.name,
           ip, port.toString(), password, info.game);
 
       SharedPreferences.getInstance().then((SharedPreferences prefs) {
@@ -231,7 +231,7 @@ class _AddServerFormState extends State<AddServerForm> {
 
         if (isEditing) {
           final int indexOfCurrentSv = currentAddedServers
-              .indexOf(jsonEncode(widget.sv.toJson()));
+              .indexOf(jsonEncode(widget.sv!.toJson()));
           currentAddedServers.replaceRange(
               indexOfCurrentSv, indexOfCurrentSv + 1, <String>[jsonLocalServer]);
           currentAddedServers.join(', ');

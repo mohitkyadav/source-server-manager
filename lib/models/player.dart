@@ -8,7 +8,7 @@ class Player {
   String ping;
   String id;
   String steamId;
-  String flag;
+  String? flag;
   String timesConnected;
 
   @override
@@ -16,7 +16,7 @@ class Player {
     return name;
   }
 
-  Map<String, String> toJson() => <String, String> {
+  Map<String, String?> toJson() => <String, String?> {
     'name': name,
     'score': score,
     'duration': duration,

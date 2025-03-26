@@ -2,18 +2,18 @@ class Server {
   Server(this.serverName, this.serverIp, this.serverPort, this.serverRcon,
       this.serverGame);
 
-  String serverName;
-  String serverIp;
+  String? serverName;
+  String? serverIp;
   String serverPort;
-  String serverRcon;
+  String? serverRcon;
   String serverGame;
 
   @override
   String toString() {
-    return serverName;
+    return serverName!;
   }
 
-  Map<String, String> toJson() => <String, String> {
+  Map<String, String?> toJson() => <String, String?> {
     'serverName': serverName,
     'serverIp': serverIp,
     'serverPort': serverPort,

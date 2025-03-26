@@ -17,7 +17,7 @@ class CustomRouter {
       case serverDetailsRoute:
         return MaterialPageRoute<dynamic>(
             builder: (_) => ServerDetailsPage(
-                routeSettings.arguments as Server));
+                routeSettings.arguments as Server?));
 
       default:
         return MaterialPageRoute<dynamic>(builder: (_) => const HomePage());

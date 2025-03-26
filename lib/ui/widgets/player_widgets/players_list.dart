@@ -14,7 +14,7 @@ class PlayersList extends StatelessWidget {
   const PlayersList(this.players, this.refreshInfo,
       this.sendCommandToSv, this.showToast);
 
-  final List<Player> players;
+  final List<Player>? players;
   final Function refreshInfo;
   final Function sendCommandToSv;
   final Function showToast;
@@ -26,7 +26,7 @@ class PlayersList extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       padding: const EdgeInsets.all(8),
-      itemCount: players.length,
+      itemCount: players!.length,
       itemBuilder: (BuildContext context, int index) {
 
         return Material(
@@ -37,7 +37,7 @@ class PlayersList extends StatelessWidget {
                  context: context,
                  isScrollControlled: true,
                  builder: (BuildContext context) =>
-                     _buildPlayerOptions(context, players[index]));
+                     _buildPlayerOptions(context, players![index]));
             },
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 300),
@@ -46,7 +46,7 @@ class PlayersList extends StatelessWidget {
                 border: Border.all(width: 2,
                     color: _getBorderColor(context, index),)
               ),
-              child: PlayerProfile(player: players[index], imgSize: 50,
+              child: PlayerProfile(player: players![index], imgSize: 50,
                   bgColor: AppStyles.darkBg,
                   borderRadius: const BorderRadius.all(Radius.circular(8))
               ),
@@ -62,7 +62,7 @@ class PlayersList extends StatelessWidget {
 
 
   Color _getBorderColor (BuildContext context, int index) {
-    final String userFlags = players[index].flag ?? '';
+    final String userFlags = players![index].flag ?? '';
     final bool isRoot = userFlags.contains('root')
         || userFlags.contains('admin');
     final bool isVip = userFlags.contains('res');
@@ -147,7 +147,7 @@ class PlayersList extends StatelessWidget {
           if (player.flag != null)
             ListTile(
               leading: const FaIcon(FontAwesomeIcons.flag, size: 18,),
-              subtitle: Text(player.flag,
+              subtitle: Text(player.flag!,
                 style: AppStyles.playerActionSubText,),
               title: const Text('User flags',
                   style: AppStyles.playerActionText),

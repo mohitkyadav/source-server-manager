@@ -10,10 +10,10 @@ class AppLocalizations {
 
   final Locale locale;
 
-  static AppLocalizations of (BuildContext context) =>
+  static AppLocalizations? of (BuildContext context) =>
     Localizations.of<AppLocalizations>(context, AppLocalizations);
 
-  Map<String, String> _localizationValues;
+  late Map<String, String> _localizationValues;
 
   Future<dynamic> load() async {
     final String jsonStringValues = await rootBundle
@@ -25,7 +25,7 @@ class AppLocalizations {
                 MapEntry<String, String>(key, value.toString()));
   }
 
-  String getTranslatedValue(String key) => _localizationValues[key];
+  String? getTranslatedValue(String key) => _localizationValues[key];
 
   static const LocalizationsDelegate<AppLocalizations> delegate =
     _AppLocalizationsDelegate();

@@ -11,7 +11,7 @@ import 'package:turrant/themes/styling.dart';
 import 'package:turrant/themes/theme_notifier.dart';
 
 class SettingsPage extends StatefulWidget {
-  const SettingsPage({Key key,}) : super(key: key);
+  const SettingsPage({Key? key,}) : super(key: key);
 
   @override
   _SettingsPageState createState() => _SettingsPageState();
@@ -19,7 +19,7 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   bool isDarkModeOn = false;
-  Language currentLanguage = Language.supportedLanguages[0];
+  Language? currentLanguage = Language.supportedLanguages[0];
 
   @override
   void initState() {
@@ -29,8 +29,8 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final String _title = AppLocalizations.of(context)
-        .getTranslatedValue('setting_page_app_bar_title');
+    final String _title = AppLocalizations.of(context)!
+        .getTranslatedValue('setting_page_app_bar_title')!;
 
     return Scaffold(
       appBar: AppBar(
@@ -63,7 +63,7 @@ class _SettingsPageState extends State<SettingsPage> {
         dropdownColor: AppStyles.charcoalGrey,
         value: currentLanguage,
         underline: const SizedBox(),
-        onChanged: (Language language) {
+        onChanged: (Language? language) {
           _changeLanguage(context, language);
         },
         iconEnabledColor: Theme.of(context).accentColor,
@@ -82,10 +82,10 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  void _changeLanguage(BuildContext context, Language language) {
+  void _changeLanguage(BuildContext context, Language? language) {
     SharedPreferences.getInstance().then((SharedPreferences prefs) {
       prefs.setString('selectedLocale',
-          '${language.languageCode}-${language.countryCode}');
+          '${language!.languageCode}-${language.countryCode}');
       setState(() {
         currentLanguage = language;
       });

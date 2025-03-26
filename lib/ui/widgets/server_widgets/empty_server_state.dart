@@ -15,8 +15,8 @@ class EmptyServerState extends StatelessWidget {
               width: 200,
             ),
             const SizedBox(height: 20,),
-            Text(AppLocalizations.of(context)
-                .getTranslatedValue('empty_sv_msg'), style: AppStyles.emptySvMsg,),
+            Text(AppLocalizations.of(context)!
+                .getTranslatedValue('empty_sv_msg')!, style: AppStyles.emptySvMsg,),
           ],
         ),
       ),

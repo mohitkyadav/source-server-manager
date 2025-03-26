@@ -11,7 +11,7 @@ import 'package:turrant/ui/pages/pages.dart';
 import 'package:turrant/ui/widgets/widgets.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key key,}) : super(key: key);
+  const HomePage({Key? key,}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -20,7 +20,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   List<Server> servers = <Server>[];
-  Server _currentServer;
+  Server? _currentServer;
 
   @override
   void initState() {
@@ -30,19 +30,19 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final String _title = AppLocalizations.of(context)
+    final String? _title = AppLocalizations.of(context)!
         .getTranslatedValue('app_bar_title');
 
     final bool isSmallScreen = MediaQuery.of(context).size.width < 900;
 
     if (!isSmallScreen) {
-      return _buildLargeScreenLayout(context, _title);
+      return _buildLargeScreenLayout(context, _title!);
     }
 
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
-          _buildAppBar(context, _title),
+          _buildAppBar(context, _title!),
           ServersList(servers, _removeServer,
               _handleSvLongPress, _setSelectedServer),
         ],

@@ -13,16 +13,16 @@ class ServerControls extends StatelessWidget {
       this.sendCommandToSv, this.showToast, this.maps,  this.numOfPlayers,
       this.maxPlayers, this.version, this.tvPort, this.isSvOutDated);
 
-  final Server server;
-  final String map;
+  final Server? server;
+  final String? map;
   final Function refreshInfo;
   final Function sendCommandToSv;
   final Function showToast;
   final List<String> maps;
-  final String numOfPlayers;
-  final String maxPlayers;
-  final String version;
-  final int tvPort;
+  final String? numOfPlayers;
+  final String? maxPlayers;
+  final String? version;
+  final int? tvPort;
   final bool isSvOutDated;
 
   @override
@@ -55,10 +55,10 @@ class ServerControls extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text(map, overflow: TextOverflow.ellipsis,
+                              Text(map!, overflow: TextOverflow.ellipsis,
                                   style: AppStyles.serverDetailsHeaderTitle),
                               const SizedBox(height: 2,),
-                              Text('${server.serverIp}:${server.serverPort}',
+                              Text('${server!.serverIp}:${server!.serverPort}',
                                   style: AppStyles.serverDetailsHeaderSubTitle),
                             ],
                           ),
@@ -80,8 +80,8 @@ class ServerControls extends StatelessWidget {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                      child: Text(AppLocalizations.of(context)
-                          .getTranslatedValue('change_map'),
+                      child: Text(AppLocalizations.of(context)!
+                          .getTranslatedValue('change_map')!,
                         style: AppStyles.mapBtn,),
                     ),
                     onPressed: () {
@@ -113,7 +113,7 @@ class ServerControls extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                                 style: AppStyles.serverDetailsHeaderTitle),
                             const SizedBox(height: 2,),
-                            Text('${server.serverIp}:$tvPort',
+                            Text('${server!.serverIp}:$tvPort',
                                 style: AppStyles.serverDetailsHeaderSubTitle),
                           ],
                         ),
@@ -131,7 +131,7 @@ class ServerControls extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(version,
+                          Text(version!,
                             style: AppStyles.serverDetailsHeaderTitle,),
                           const SizedBox(height: 2,),
                           Text(isSvOutDated ? 'Update available!' : 'Up to Date',
@@ -153,7 +153,7 @@ class ServerControls extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text('${AppLocalizations.of(context).getTranslatedValue(
+              Text('${AppLocalizations.of(context)!.getTranslatedValue(
                   'player_count')} ($numOfPlayers/$maxPlayers)',
                 style: AppStyles.serverDetailsHeaderSubTitle
                     .copyWith(color: AppStyles.white),),
@@ -162,8 +162,8 @@ class ServerControls extends StatelessWidget {
                 child: Row(
                   children: <Widget>[
                     Text(
-                      AppLocalizations.of(context)
-                          .getTranslatedValue('refresh_players_tooltip'),
+                      AppLocalizations.of(context)!
+                          .getTranslatedValue('refresh_players_tooltip')!,
                       style: AppStyles.underlineButton,
                     ),
                   ],
